@@ -15,6 +15,16 @@
             --card-bg: #1E293B;
             --text-light: #F8FAFC;
             --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+            /* Junior Theme Colors */
+            --junior-primary: #FF6B6B;
+            --junior-accent: #FFD93D;
+            --junior-bg: #4D96FF;
+            
+            /* Pro Arcade Neon Colors */
+            --pro-neon: #00F0FF;
+            --pro-purple: #9D00FF;
+            --pro-dark: #070913;
         }
 
         * {
@@ -53,7 +63,7 @@
         /* Header HUD */
         .hud-header {
             background: #1E293B;
-            padding: 15px;
+            padding: 12px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -64,13 +74,20 @@
         .hud-stat {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
             background: #0F172A;
-            padding: 6px 12px;
+            padding: 6px 10px;
             border-radius: 20px;
             border: 1px solid #334155;
+        }
+
+        .tier-badge {
+            background: #312E81;
+            color: #A5B4FC;
+            border: 1px solid #6366F1;
+            cursor: pointer;
         }
 
         /* Screen Container */
@@ -92,7 +109,7 @@
             font-size: 22px;
             font-weight: 800;
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 6px;
             color: #F59E0B;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -102,7 +119,7 @@
             font-size: 13px;
             text-align: center;
             color: #94A3B8;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         /* Screen 1: Age Selector */
@@ -110,17 +127,35 @@
             background: linear-gradient(135deg, #334155, #1E293B);
             border: 2px solid #475569;
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 15px;
+            padding: 18px;
+            margin-bottom: 14px;
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
+            position: relative;
         }
 
-        .age-card:hover, .age-card.selected {
+        .age-card:hover {
+            transform: translateY(-2px);
+            border-color: #CBD5E1;
+        }
+
+        .age-card.selected {
             border-color: #F59E0B;
             transform: translateY(-2px);
             background: linear-gradient(135deg, #4F46E5, #3730A3);
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.4);
+        }
+
+        .age-card.selected::after {
+            content: "✓ ACTIVE";
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            font-size: 10px;
+            font-weight: 800;
+            color: #F59E0B;
+            letter-spacing: 0.5px;
         }
 
         .age-card h3 {
@@ -138,8 +173,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 25px;
-            padding: 20px 0;
+            gap: 20px;
+            padding: 15px 0;
             position: relative;
         }
 
@@ -158,6 +193,15 @@
             cursor: pointer;
             transition: transform 0.2s;
             position: relative;
+        }
+
+        .map-node.junior-node {
+            width: 78px;
+            height: 78px;
+            font-size: 26px;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            border-color: #FFE66D;
+            box-shadow: 0 10px 20px -3px rgba(255, 107, 107, 0.5);
         }
 
         .map-node.locked {
@@ -182,17 +226,24 @@
         .quiz-card {
             background: #1E293B;
             border-radius: 20px;
-            padding: 25px;
+            padding: 22px;
             text-align: center;
             border: 2px solid #334155;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .problem-text {
-            font-size: 36px;
+            font-size: 34px;
             font-weight: bold;
             color: #F8FAFC;
-            margin: 15px 0;
+            margin: 14px 0;
+        }
+
+        .visual-display {
+            font-size: 28px;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            line-height: 1.5;
         }
 
         .options-grid {
@@ -213,6 +264,14 @@
             transition: all 0.2s;
         }
 
+        .btn-option.junior-btn {
+            font-size: 24px;
+            padding: 20px;
+            border-radius: 18px;
+            background: #1E293B;
+            border: 3px solid #6366F1;
+        }
+
         .btn-option:hover {
             border-color: var(--primary-light);
             background: var(--primary);
@@ -229,6 +288,59 @@
             margin-top: 15px;
             cursor: pointer;
             width: 100%;
+        }
+
+        /* Pro Arcade Dashboard Styles */
+        .pro-hud {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+        }
+
+        .pro-badge {
+            color: var(--pro-neon);
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .arcade-card {
+            background: linear-gradient(135deg, #131A2E, #1F1938);
+            border: 1.5px solid #00F0FF;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 14px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            border-bottom: 1px solid #334155;
+            font-size: 13px;
+        }
+
+        .btn-arcade {
+            background: linear-gradient(135deg, #00F0FF, #7000FF);
+            color: #000;
+            font-weight: 800;
+            border: none;
+            padding: 15px;
+            border-radius: 14px;
+            font-size: 16px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
         }
 
         /* AI Drawer Modal */
@@ -287,6 +399,23 @@
             font-size: 16px;
             width: 100%;
             cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #94A3B8;
+            border: 1px solid #475569;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
         }
 
         /* Utility */
@@ -300,7 +429,7 @@
 
         .timer-progress {
             height: 100%;
-            width: 70%;
+            width: 100%;
             background: #10B981;
             transition: width 1s linear;
         }
@@ -313,141 +442,431 @@
         <div class="hud-header">
             <div class="hud-stat">⭐ <span id="hud-stars">120</span></div>
             <div class="hud-stat">🪙 <span id="hud-coins">450</span></div>
+            <button class="hud-stat tier-badge" onclick="switchScreen('screen-age')">
+                <span id="hud-tier-label">👶 5-8</span> ⚙️
+            </button>
             <button class="hud-stat" style="cursor:pointer;" onclick="openParentGate()">🔒 Parents</button>
         </div>
 
-        <!-- SCREEN 1: CHOOSE AGE -->
+        <!-- ==============================================
+             SCREEN 1: CHOOSE AGE TIER (ONBOARDING)
+        ============================================== -->
         <div class="screen active" id="screen-age">
             <div class="screen-title">Choose Age Tier</div>
             <div class="subtitle">Tailors math difficulty & visual aesthetics</div>
 
-            <div class="age-card" onclick="selectAge('5-8')">
+            <!-- Card 1: 5 - 8 Junior -->
+            <div class="age-card selected" id="tier-card-junior" onclick="selectAge('5-8')">
                 <h3>Ages 5 – 8 (Junior)</h3>
                 <p>Visual counting, addition & subtraction with interactive clues.</p>
             </div>
 
-            <div class="age-card selected" onclick="selectAge('9-13')">
+            <!-- Card 2: 9 - 13 Intermediate -->
+            <div class="age-card" id="tier-card-inter" onclick="selectAge('9-13')">
                 <h3>Ages 9 – 13 (Intermediate)</h3>
                 <p>Multiplication, division, and step-by-step AI explanations.</p>
             </div>
 
-            <div class="age-card" onclick="selectAge('14-20')">
+            <!-- Card 3: 14 - 20 Pro Arcade -->
+            <div class="age-card" id="tier-card-pro" onclick="selectAge('14-20')">
                 <h3>Ages 14 – 20 (Pro Arcade)</h3>
                 <p>Speed mental math, pre-algebra, and global leaderboards.</p>
             </div>
 
-            <button class="btn-primary" style="margin-top:auto;" onclick="switchScreen('screen-map')">Enter Adventure Map 🚀</button>
+            <button class="btn-primary" style="margin-top:auto;" id="btn-enter-hub" onclick="enterCurrentAgeHub()">
+                Enter Junior World 🎈
+            </button>
         </div>
 
-        <!-- SCREEN 2: ADVENTURE MAP -->
+        <!-- ==============================================
+             SCREEN 2A: JUNIOR ADVENTURE MAP (AGES 5 - 8)
+        ============================================== -->
+        <div class="screen" id="screen-map-junior">
+            <div class="screen-title" style="color:#FFD93D;">Junior Safari Map 🎈</div>
+            <div class="subtitle">Big friendly puzzles for budding math champions</div>
+
+            <div class="map-container">
+                <div class="map-node chest-node" onclick="showNotification('🎁 Daily Sparkle Chest: +30 Golden Stars!')">🎁</div>
+                <div class="map-node junior-node" onclick="startJuniorQuiz(3)">🍎 L3</div>
+                <div class="map-node junior-node" onclick="startJuniorQuiz(2)">🐶 L2</div>
+                <div class="map-node junior-node" onclick="startJuniorQuiz(1)">⭐ L1</div>
+                <div class="map-node locked">🔒</div>
+            </div>
+
+            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Age Bracket</button>
+        </div>
+
+        <!-- ==============================================
+             SCREEN 2B: INTERMEDIATE MAP (AGES 9 - 13)
+        ============================================== -->
         <div class="screen" id="screen-map">
-            <div class="screen-title">Adventure Map</div>
-            <div class="subtitle">Select a stage node to start quiz</div>
+            <div class="screen-title">Adventure Map 🗺️</div>
+            <div class="subtitle">Multiplication & Division Quest</div>
 
             <div class="map-container">
                 <div class="map-node chest-node" onclick="showNotification('🎁 You claimed 50 Free Daily Coins!')">🎁</div>
-                <div class="map-node" onclick="startQuiz(10)">L10</div>
-                <div class="map-node" onclick="startQuiz(9)">L9</div>
-                <div class="map-node" onclick="startQuiz(8)">L8</div>
+                <div class="map-node" onclick="startIntermediateQuiz(10)">L10</div>
+                <div class="map-node" onclick="startIntermediateQuiz(9)">L9</div>
+                <div class="map-node" onclick="startIntermediateQuiz(8)">L8</div>
                 <div class="map-node locked">🔒</div>
             </div>
+
+            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Age Bracket</button>
         </div>
 
-        <!-- SCREEN 3: CHALLENGES (QUIZ) -->
+        <!-- ==============================================
+             SCREEN 2C: PRO ARCADE HUB (AGES 14 - 20)
+        ============================================== -->
+        <div class="screen" id="screen-pro-hub">
+            <div class="screen-title" style="color:var(--pro-neon);">Arcade Dashboard ⚡</div>
+            <div class="subtitle">Speed Mental Math & Competitive Pre-Algebra</div>
+
+            <div class="pro-hud">
+                <div>
+                    <div class="pro-badge">Global Rank</div>
+                    <div style="font-size:18px; font-weight:800; color:#FFF;">#14 Masters</div>
+                </div>
+                <div>
+                    <div class="pro-badge">Win Streak</div>
+                    <div style="font-size:18px; font-weight:800; color:#10B981;">7 Streaks 🔥</div>
+                </div>
+            </div>
+
+            <div class="arcade-card">
+                <div style="font-size:14px; font-weight:bold; color:var(--pro-neon); margin-bottom:8px;">⚔️ Live Math Duel (PvP)</div>
+                <div style="font-size:12px; color:#94A3B8; margin-bottom:12px;">Real-time 60s speed match against live opponents.</div>
+                <button class="btn-arcade" onclick="startProQuiz('duel')">Find Match (1v1)</button>
+            </div>
+
+            <div class="arcade-card">
+                <div style="font-size:14px; font-weight:bold; color:#F59E0B; margin-bottom:8px;">📐 Daily Pre-Algebra Trial</div>
+                <div style="font-size:12px; color:#94A3B8; margin-bottom:12px;">Solve multi-step linear expressions under 20s.</div>
+                <button class="btn-primary" style="background:#7C3AED;" onclick="startProQuiz('algebra')">Start Algebra Trial</button>
+            </div>
+
+            <div style="background:#1E293B; border-radius:12px; padding:12px; margin-bottom:12px;">
+                <div style="font-size:11px; text-transform:uppercase; color:#94A3B8; margin-bottom:6px; font-weight:bold;">Top Global Rivals</div>
+                <div class="leaderboard-item"><span>🥇 CyberMath</span><span style="color:var(--pro-neon);">9,420 pts</span></div>
+                <div class="leaderboard-item"><span>🥈 NeoVortex</span><span style="color:var(--pro-neon);">8,910 pts</span></div>
+                <div class="leaderboard-item"><span>🥉 Jiya_BD (You)</span><span style="color:#F59E0B;">8,450 pts</span></div>
+            </div>
+
+            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Age Bracket</button>
+        </div>
+
+        <!-- ==============================================
+             SCREEN 3: ACTIVE GAMEPLAY / QUIZ CANVAS
+        ============================================== -->
         <div class="screen" id="screen-quiz">
             <div class="timer-bar"><div class="timer-progress" id="quiz-timer"></div></div>
 
             <div class="quiz-card">
-                <div style="font-size:12px; color:#94A3B8;">Division Challenge</div>
+                <div style="font-size:12px; color:#94A3B8;" id="quiz-mode-tag">Division Challenge</div>
+                <div class="visual-display" id="quiz-visual-display"></div>
                 <div class="problem-text" id="problem-text">24 ÷ 6 = ?</div>
-                <div style="font-size:12px; color:#64748B;">Tap the correct answer below</div>
+                <div style="font-size:12px; color:#64748B;" id="quiz-instruction-tag">Tap the correct answer below</div>
             </div>
 
-            <div class="options-grid">
-                <button class="btn-option" onclick="checkAnswer(3)">3</button>
-                <button class="btn-option" onclick="checkAnswer(4)">4</button>
-                <button class="btn-option" onclick="checkAnswer(6)">6</button>
-                <button class="btn-option" onclick="checkAnswer(8)">8</button>
+            <div class="options-grid" id="options-grid">
+                <!-- Dynamically populated buttons -->
             </div>
 
-            <button class="btn-hint" onclick="openHintDrawer()">💡 Need a Hint? (Socratic AI)</button>
+            <button class="btn-hint" id="btn-hint" onclick="openHintDrawer()">💡 Need a Hint? (Socratic AI)</button>
+            <button class="btn-secondary" style="margin-top:10px;" onclick="returnToCurrentHub()">↩️ Back to Map / Hub</button>
         </div>
 
-        <!-- SCREEN 5 & 6: RESULTS & REWARDS -->
+        <!-- ==============================================
+             SCREEN 4: RESULTS & REWARDS
+        ============================================== -->
         <div class="screen" id="screen-result">
-            <div class="screen-title" style="margin-top:40px;">Stage Complete! 🎉</div>
-            <div style="text-align:center; font-size:60px; margin:20px 0;">⭐⭐⭐</div>
-            <div class="subtitle">Accuracy: 100% | Time: 18s</div>
+            <div class="screen-title" style="margin-top:30px;" id="result-title">Stage Complete! 🎉</div>
+            <div style="text-align:center; font-size:55px; margin:16px 0;" id="result-stars">⭐⭐⭐</div>
+            <div class="subtitle" id="result-stats">Accuracy: 100% | Time: 12s</div>
 
             <div class="quiz-card">
                 <div style="font-size:14px; color:#CBD5E1;">Rewards Earned</div>
-                <div style="font-size:24px; font-weight:bold; color:#F59E0B; margin-top:5px;">+50 Coins 🪙</div>
+                <div style="font-size:24px; font-weight:bold; color:#F59E0B; margin-top:5px;" id="result-rewards">+50 Coins 🪙</div>
             </div>
 
-            <button class="btn-primary" style="margin-top:auto;" onclick="switchScreen('screen-map')">Back to Adventure Map</button>
+            <button class="btn-primary" style="margin-top:auto;" onclick="returnToCurrentHub()">Back to Map / Hub</button>
         </div>
 
-        <!-- AI HINT / EXPLANATION DRAWER -->
+        <!-- ==============================================
+             AI HINT & EXPLANATION DRAWER MODAL
+        ============================================== -->
         <div class="drawer-overlay" id="ai-drawer">
             <div class="drawer-content">
                 <div class="drawer-title" id="drawer-title">💡 Socratic AI Hint</div>
                 <div class="drawer-body" id="drawer-body">
                     Think about multiplication! What number multiplied by 6 gives 24?<br><b>(6 × ___ = 24)</b>
                 </div>
-                <button class="btn-primary" onclick="closeDrawer()">Got it!</button>
+                <button class="btn-primary" id="drawer-action-btn" onclick="closeDrawer()">Got it!</button>
             </div>
         </div>
     </div>
 
     <script>
+        // Active State
+        let currentTier = '5-8';
+        let currentQuizData = null;
+
+        // Quiz Question Pools for each tier
+        const quizBank = {
+            '5-8': [
+                {
+                    modeTag: '🍎 Counting & Addition Fun (Ages 5-8)',
+                    visual: '🍎 🍎 🍎 + 🍎 🍎',
+                    problem: '3 + 2 = ?',
+                    instruction: 'Count all the yummy apples!',
+                    options: [4, 5, 6, 7],
+                    correct: 5,
+                    hint: 'Count with your fingers! 1, 2, 3 apples... plus 2 more apples makes 5! 🍎',
+                    explanation: 'Awesome counting! 3 apples + 2 apples = 5 apples altogether! ⭐'
+                },
+                {
+                    modeTag: '🐶 Animal Addition (Ages 5-8)',
+                    visual: '🐶 🐶 🐶 🐶 + 🐶 🐶',
+                    problem: '4 + 2 = ?',
+                    instruction: 'How many puppies are playing?',
+                    options: [5, 6, 7, 8],
+                    correct: 6,
+                    hint: 'Start at 4 and count up two more: 5, 6! 🐶',
+                    explanation: 'Spot on! 4 puppies + 2 puppies = 6 happy puppies!'
+                },
+                {
+                    modeTag: '⭐ Star Subtraction (Ages 5-8)',
+                    visual: '⭐⭐⭐⭐⭐ - ⭐⭐',
+                    problem: '5 - 2 = ?',
+                    instruction: 'Take away 2 stars!',
+                    options: [2, 3, 4, 5],
+                    correct: 3,
+                    hint: 'Imagine having 5 shiny stars. If 2 float away, how many stay? ⭐',
+                    explanation: 'Terrific! 5 minus 2 leaves 3 sparkling stars!'
+                }
+            ],
+            '9-13': [
+                {
+                    modeTag: 'Division Quest (Ages 9-13)',
+                    visual: '',
+                    problem: '24 ÷ 6 = ?',
+                    instruction: 'Find the quotient',
+                    options: [3, 4, 6, 8],
+                    correct: 4,
+                    hint: 'Think multiplication! What number multiplied by 6 gives 24? (6 × ___ = 24)',
+                    explanation: '24 ÷ 6 = 4 because 6 × 4 = 24.'
+                },
+                {
+                    modeTag: 'Multiplication Master (Ages 9-13)',
+                    visual: '',
+                    problem: '7 × 8 = ?',
+                    instruction: 'Calculate the product',
+                    options: [48, 54, 56, 64],
+                    correct: 56,
+                    hint: 'Shortcut: 7 × 7 is 49. Now add 7 more to reach 7 × 8!',
+                    explanation: '7 × 8 = 56. Excellent mastery of the 8 times table!'
+                }
+            ],
+            '14-20': [
+                {
+                    modeTag: '⚡ Speed Pre-Algebra (Ages 14-20)',
+                    visual: '',
+                    problem: 'Solve for x: 3x + 7 = 22',
+                    instruction: 'Linear Equation Sprint',
+                    options: ['x = 4', 'x = 5', 'x = 6', 'x = 7'],
+                    correct: 'x = 5',
+                    hint: 'Step 1: Subtract 7 from both sides: 3x = 15.<br>Step 2: Divide both sides by 3.',
+                    explanation: '3x + 7 = 22 &rarr; 3x = 15 &rarr; <b>x = 5</b>. Rapid calculation!'
+                },
+                {
+                    modeTag: '⚔️ Rapid Mental Calculation (Ages 14-20)',
+                    visual: '',
+                    problem: '18 × 4 = ?',
+                    instruction: 'Arcade Mental Blitz (No Calculator)',
+                    options: ['64', '68', '72', '76'],
+                    correct: '72',
+                    hint: 'Mental math breakdown: (10 × 4) + (8 × 4) = 40 + 32.',
+                    explanation: '18 × 4 = 72! Speed mental decomposition executed in record time.'
+                }
+            ]
+        };
+
+        // Screen Switcher
         function switchScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-        }
-
-        function selectAge(tier) {
-            showNotification('Selected Age Tier: ' + tier);
-        }
-
-        function startQuiz(level) {
-            switchScreen('screen-quiz');
-        }
-
-        function checkAnswer(val) {
-            const drawer = document.getElementById('ai-drawer');
-            const title = document.getElementById('drawer-title');
-            const body = document.getElementById('drawer-body');
-
-            if (val === 4) {
-                // Correct
-                title.innerHTML = '✅ Correct!';
-                body.innerHTML = 'Awesome job! 24 ÷ 6 = 4 because 6 × 4 = 24.<br><br><b>+10 Stars Earned!</b>';
-                drawer.classList.add('active');
-                document.querySelector('#ai-drawer button').onclick = function() {
-                    closeDrawer();
-                    switchScreen('screen-result');
-                };
-            } else {
-                // Incorrect
-                title.innerHTML = '❌ Step-by-Step AI Explanation';
-                body.innerHTML = 'Not quite! You selected ' + val + '.<br><br><b>Explanation:</b> 24 ÷ 6 = 4 because 6 × 4 = 24.';
-                drawer.classList.add('active');
-                document.querySelector('#ai-drawer button').onclick = closeDrawer;
+            const target = document.getElementById(screenId);
+            if (target) {
+                target.classList.add('active');
             }
         }
 
+        // Select Age Tier Function
+        function selectAge(tier) {
+            currentTier = tier;
+
+            // Update Selected Card Styling
+            document.getElementById('tier-card-junior').classList.toggle('selected', tier === '5-8');
+            document.getElementById('tier-card-inter').classList.toggle('selected', tier === '9-13');
+            document.getElementById('tier-card-pro').classList.toggle('selected', tier === '14-20');
+
+            // Update Enter Button and HUD Badge Label
+            const btnEnter = document.getElementById('btn-enter-hub');
+            const hudBadge = document.getElementById('hud-tier-label');
+
+            if (tier === '5-8') {
+                btnEnter.innerHTML = 'Enter Junior World 🎈';
+                btnEnter.style.background = 'var(--primary)';
+                hudBadge.innerHTML = '👶 5-8';
+            } else if (tier === '9-13') {
+                btnEnter.innerHTML = 'Enter Adventure Map 🚀';
+                btnEnter.style.background = 'var(--primary)';
+                hudBadge.innerHTML = '🎒 9-13';
+            } else if (tier === '14-20') {
+                btnEnter.innerHTML = 'Enter Pro Arcade ⚡';
+                btnEnter.style.background = 'linear-gradient(135deg, #00F0FF, #7000FF)';
+                btnEnter.style.color = '#000';
+                hudBadge.innerHTML = '⚡ 14-20';
+            }
+        }
+
+        // Enter the Hub for the currently selected tier
+        function enterCurrentAgeHub() {
+            if (currentTier === '5-8') {
+                switchScreen('screen-map-junior');
+            } else if (currentTier === '9-13') {
+                switchScreen('screen-map');
+            } else if (currentTier === '14-20') {
+                switchScreen('screen-pro-hub');
+            }
+        }
+
+        // Return to Current Hub from Quiz or Result
+        function returnToCurrentHub() {
+            enterCurrentAgeHub();
+        }
+
+        // Launch Quizzes
+        function startJuniorQuiz(level) {
+            const index = (level - 1) % quizBank['5-8'].length;
+            loadQuiz('5-8', index);
+        }
+
+        function startIntermediateQuiz(level) {
+            const index = (level === 10) ? 0 : 1;
+            loadQuiz('9-13', index);
+        }
+
+        function startProQuiz(type) {
+            const index = (type === 'algebra') ? 0 : 1;
+            loadQuiz('14-20', index);
+        }
+
+        // Core Quiz Loader
+        function loadQuiz(tier, index) {
+            currentTier = tier;
+            const data = quizBank[tier][index];
+            currentQuizData = data;
+
+            document.getElementById('quiz-mode-tag').innerText = data.modeTag;
+            document.getElementById('quiz-visual-display').innerText = data.visual;
+            document.getElementById('problem-text').innerHTML = data.problem;
+            document.getElementById('quiz-instruction-tag').innerText = data.instruction;
+
+            // Render Options
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+
+            data.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-option' + (tier === '5-8' ? ' junior-btn' : '');
+                btn.innerText = opt;
+                btn.onclick = () => checkQuizAnswer(opt);
+                grid.appendChild(btn);
+            });
+
+            // Adjust hint button text for Junior vs Pro
+            const hintBtn = document.getElementById('btn-hint');
+            if (tier === '5-8') {
+                hintBtn.innerText = '🎈 Need a Gentle Clue?';
+            } else if (tier === '14-20') {
+                hintBtn.innerText = '⚡ Socratic Formula Scaffold';
+            } else {
+                hintBtn.innerText = '💡 Need a Hint? (Socratic AI)';
+            }
+
+            switchScreen('screen-quiz');
+        }
+
+        // Check Answer Logic
+        function checkQuizAnswer(selectedVal) {
+            const drawer = document.getElementById('ai-drawer');
+            const title = document.getElementById('drawer-title');
+            const body = document.getElementById('drawer-body');
+            const btn = document.getElementById('drawer-action-btn');
+
+            const isCorrect = (String(selectedVal) === String(currentQuizData.correct));
+
+            if (isCorrect) {
+                title.innerHTML = '✅ Correct!';
+                body.innerHTML = `<b>Spot on!</b><br>${currentQuizData.explanation}<br><br><span style="color:#F59E0B; font-weight:bold;">+15 Stars & +30 Coins Earned! ⭐</span>`;
+                drawer.classList.add('active');
+
+                // Update HUD
+                const starsElem = document.getElementById('hud-stars');
+                const coinsElem = document.getElementById('hud-coins');
+                starsElem.innerText = parseInt(starsElem.innerText) + 15;
+                coinsElem.innerText = parseInt(coinsElem.innerText) + 30;
+
+                btn.innerText = 'View Rewards 🎉';
+                btn.onclick = function() {
+                    closeDrawer();
+                    showResultScreen();
+                };
+            } else {
+                title.innerHTML = '❌ Guided Explanation';
+                body.innerHTML = `You chose <b>${selectedVal}</b>.<br><br><b>Hint:</b> ${currentQuizData.hint}`;
+                drawer.classList.add('active');
+                btn.innerText = 'Try Again 🔄';
+                btn.onclick = closeDrawer;
+            }
+        }
+
+        // Show Result Screen
+        function showResultScreen() {
+            if (currentTier === '5-8') {
+                document.getElementById('result-title').innerText = 'Super Star! 🌟';
+                document.getElementById('result-stars').innerText = '⭐⭐⭐';
+                document.getElementById('result-stats').innerText = 'Accuracy: 100% | Smile: 100%';
+                document.getElementById('result-rewards').innerText = '+30 Coins 🪙 & +1 Sticker 🎨';
+            } else if (currentTier === '14-20') {
+                document.getElementById('result-title').innerText = 'Speed Trial Cleared! ⚡';
+                document.getElementById('result-stars').innerText = '🔥 RANK S 🔥';
+                document.getElementById('result-stats').innerText = 'Speed: 1.8s | APM: 140 | Accuracy: 100%';
+                document.getElementById('result-rewards').innerText = '+100 XP ⚡ & Global Rating Boost';
+            } else {
+                document.getElementById('result-title').innerText = 'Stage Complete! 🎉';
+                document.getElementById('result-stars').innerText = '⭐⭐⭐';
+                document.getElementById('result-stats').innerText = 'Accuracy: 100% | Time: 14s';
+                document.getElementById('result-rewards').innerText = '+50 Coins 🪙';
+            }
+            switchScreen('screen-result');
+        }
+
+        // AI Hint Drawer
         function openHintDrawer() {
+            if (!currentQuizData) return;
             const drawer = document.getElementById('ai-drawer');
             document.getElementById('drawer-title').innerHTML = '💡 Socratic AI Hint';
-            document.getElementById('drawer-body').innerHTML = 'Think about multiplication! What number multiplied by 6 gives 24?<br><b>(6 × ___ = 24)</b>';
+            document.getElementById('drawer-body').innerHTML = currentQuizData.hint;
+            document.getElementById('drawer-action-btn').innerText = 'Got it!';
+            document.getElementById('drawer-action-btn').onclick = closeDrawer;
             drawer.classList.add('active');
-            document.querySelector('#ai-drawer button').onclick = closeDrawer;
         }
 
         function closeDrawer() {
             document.getElementById('ai-drawer').classList.remove('active');
         }
 
+        // Parents Gate
         function openParentGate() {
             const ans = prompt('🔒 PARENTS GATE: Solve to enter\nWhat is 7 × 8?');
             if (ans === '56') {
@@ -460,6 +879,9 @@
         function showNotification(msg) {
             alert(msg);
         }
+
+        // Initialize default selection
+        selectAge('5-8');
     </script>
 </body>
 </html>
