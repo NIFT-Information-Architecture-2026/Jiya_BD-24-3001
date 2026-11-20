@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Arcade & Adventure - Levels 1 to 100 Auto-Progression</title>
+    <title>Quizopia Escape - Math Arcade & Adventure</title>
     <style>
         :root {
             --primary: #4F46E5;
@@ -29,6 +29,7 @@
             padding: 0;
             font-family: var(--font-main);
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -56,11 +57,100 @@
             position: relative;
         }
 
+        /* ==============================================
+           COVER PAGE (QUIZOPIA ESCAPE)
+        ============================================== */
+        #screen-cover {
+            flex: 1;
+            position: relative;
+            background: url('cover.jpg') center top / 100% 100% no-repeat;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Interactive Hit Zones on Cover */
+        .cover-hit-area {
+            position: absolute;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.15s ease;
+            background: rgba(255, 255, 255, 0.001);
+            outline: none;
+            border: none;
+        }
+
+        .cover-hit-area:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* PLAY Button Hit Area */
+        .hit-play {
+            top: 42.5%;
+            left: 20%;
+            width: 60%;
+            height: 11.5%;
+            border-radius: 40px;
+            box-shadow: 0 0 25px rgba(255, 217, 61, 0.5);
+            animation: pulsePlay 1.8s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulsePlay {
+            0% { box-shadow: 0 0 15px rgba(255, 217, 61, 0.4); transform: scale(1); }
+            100% { box-shadow: 0 0 32px rgba(255, 217, 61, 0.9); transform: scale(1.03); }
+        }
+
+        /* ADVENTURE MAP Button Hit Area */
+        .hit-map {
+            top: 57%;
+            left: 24%;
+            width: 53%;
+            height: 9.5%;
+            border-radius: 28px;
+        }
+
+        /* SETTINGS Button Hit Area */
+        .hit-settings {
+            top: 68.5%;
+            left: 29%;
+            width: 44%;
+            height: 8.5%;
+            border-radius: 25px;
+        }
+
+        /* Bottom Nav Buttons (Trophy, Stats, Star, Gift) */
+        .hit-bottom-nav {
+            position: absolute;
+            bottom: 3.5%;
+            left: 12%;
+            right: 12%;
+            height: 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hit-bottom-icon {
+            width: 22%;
+            height: 100%;
+            border-radius: 22px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            transition: transform 0.15s;
+        }
+
+        .hit-bottom-icon:active {
+            transform: scale(0.9);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         /* Header HUD */
         .hud-header {
             background: #1E293B;
-            padding: 12px 14px;
-            display: flex;
+            padding: 10px 14px;
+            display: none; /* Shown only on in-app screens */
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid #334155;
@@ -184,22 +274,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background: #334155;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 6px;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #10B981, #00F0FF);
-            width: 3%;
-            transition: width 0.3s ease;
         }
 
         .continue-btn {
@@ -573,38 +647,71 @@
 <body>
 
     <div class="mobile-frame">
-        <!-- HUD Header -->
-        <div class="hud-header">
+
+        <!-- ==============================================
+             SCREEN 0: COVER PAGE (QUIZOPIA ESCAPE)
+        ============================================== -->
+        <div class="screen active" id="screen-cover">
+            <!-- 1. Play Button -> Leads directly to 3 Age Stages Page -->
+            <button class="cover-hit-area hit-play" onclick="onPlayClicked()" title="Play Quizopia Escape"></button>
+
+            <!-- 2. Adventure Map Button -> Leads to Age Stages / Map -->
+            <button class="cover-hit-area hit-map" onclick="onPlayClicked()" title="Adventure Map"></button>
+
+            <!-- 3. Settings Button -> Parents Gate / Settings -->
+            <button class="cover-hit-area hit-settings" onclick="openParentGate()" title="Settings"></button>
+
+            <!-- 4. Bottom Nav Hit Areas -->
+            <div class="hit-bottom-nav">
+                <button class="hit-bottom-icon" onclick="showCoverLeaderboard()" title="Trophy / Leaderboard"></button>
+                <button class="hit-bottom-icon" onclick="showCoverStats()" title="Analytics / Progress"></button>
+                <button class="hit-bottom-icon" onclick="showCoverStars()" title="Star Achievements"></button>
+                <button class="hit-bottom-icon" onclick="claimDailyReward()" title="Daily Gift Reward"></button>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             TOP HUD HEADER (Shown inside games & menus)
+        ============================================== -->
+        <div class="hud-header" id="main-hud">
+            <button class="hud-stat" style="cursor:pointer;" onclick="goToCoverPage()" title="Back to Title Screen">
+                🏰 Home
+            </button>
             <div class="hud-stat">⭐ <span id="hud-stars">120</span></div>
             <div class="hud-stat">🪙 <span id="hud-coins">450</span></div>
             <button class="hud-stat tier-badge" onclick="switchScreen('screen-age')">
                 <span id="hud-tier-label">👶 5-8</span> ⚙️
             </button>
-            <button class="hud-stat" style="cursor:pointer;" onclick="openParentGate()">🔒 Parents</button>
+            <button class="hud-stat" style="cursor:pointer;" onclick="openParentGate()">🔒</button>
         </div>
 
         <!-- ==============================================
-             SCREEN 1: CHOOSE AGE TIER (ONBOARDING)
+             SCREEN 1: CHOOSE AGE TIER (3 STAGES)
         ============================================== -->
-        <div class="screen active" id="screen-age">
-            <div class="screen-title">Select Age Tier</div>
-            <div class="subtitle">1 to 100 Levels with Auto-Advancing Challenges</div>
+        <div class="screen" id="screen-age">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <button class="hud-stat" style="cursor:pointer;" onclick="goToCoverPage()">← Cover Page</button>
+                <span style="font-size:12px; color:#F59E0B; font-weight:bold;">QUIZOPIA</span>
+            </div>
 
-            <!-- Card 1: 5 - 8 Junior -->
+            <div class="screen-title">Choose Age Tier</div>
+            <div class="subtitle">Select your stage to start 100 levels of adventure</div>
+
+            <!-- Stage 1: 5 - 8 Junior -->
             <div class="age-card selected" id="tier-card-junior" onclick="selectAge('5-8')">
                 <h3>Ages 5 – 8 (Junior)</h3>
                 <p>Visual counting, addition & subtraction with interactive clues.</p>
                 <div class="level-progress-pill" id="tier-pill-5-8">Levels 1 – 100 • Current: Level 1</div>
             </div>
 
-            <!-- Card 2: 9 - 13 Intermediate -->
+            <!-- Stage 2: 9 - 13 Intermediate -->
             <div class="age-card" id="tier-card-inter" onclick="selectAge('9-13')">
                 <h3>Ages 9 – 13 (Intermediate)</h3>
                 <p>Multiplication, division, order of operations, and fractions.</p>
                 <div class="level-progress-pill" id="tier-pill-9-13">Levels 1 – 100 • Current: Level 1</div>
             </div>
 
-            <!-- Card 3: 14 - 20 Pro Arcade -->
+            <!-- Stage 3: 14 - 20 Pro Arcade -->
             <div class="age-card" id="tier-card-pro" onclick="selectAge('14-20')">
                 <h3>Ages 14 – 20 (Pro Arcade)</h3>
                 <p>Speed mental math, linear equations, quadratics & leaderboards.</p>
@@ -636,7 +743,7 @@
             </button>
 
             <div class="map-container" id="junior-map-nodes">
-                <!-- Dynamically rendered 5-node view around current level -->
+                <!-- Dynamically rendered nodes -->
             </div>
 
             <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Age Bracket</button>
@@ -729,7 +836,7 @@
         </div>
 
         <!-- ==============================================
-             AUTO-NEXT LEVEL FANFARE OVERLAY (CONTINUOUS PLAY)
+             AUTO-NEXT LEVEL FANFARE OVERLAY
         ============================================= -->
         <div class="auto-next-overlay" id="auto-next-modal">
             <div class="celebrate-icon" id="auto-celebrate-icon">🎉</div>
@@ -786,12 +893,9 @@
             '14-20': { currentLevel: 1, maxUnlocked: 1 }
         };
 
-        // Load progress from localStorage if available
         try {
             const saved = localStorage.getItem('math_arcade_progress');
-            if (saved) {
-                progress = JSON.parse(saved);
-            }
+            if (saved) progress = JSON.parse(saved);
         } catch(e) {}
 
         function saveProgress() {
@@ -805,6 +909,36 @@
         let countdownSeconds = 3;
 
         // ==========================================
+        // COVER PAGE ACTIONS
+        // ==========================================
+        function onPlayClicked() {
+            // When PLAY or MAP is clicked on cover, navigate to 3 Age Stages Page
+            switchScreen('screen-age');
+        }
+
+        function goToCoverPage() {
+            switchScreen('screen-cover');
+        }
+
+        function showCoverLeaderboard() {
+            alert('🏆 QUIZOPIA LEADERBOARD\n\n1. 🥇 MathWizard - 9,840 pts\n2. 🥈 StarRacer - 9,210 pts\n3. 🥉 Jiya_BD (You) - 8,750 pts\n4.  NeonSolver - 8,400 pts');
+        }
+
+        function showCoverStats() {
+            alert(`📊 LEARNING ANALYTICS\n\n• Ages 5-8 Progress: Level ${progress['5-8'].maxUnlocked}/100\n• Ages 9-13 Progress: Level ${progress['9-13'].maxUnlocked}/100\n• Ages 14-20 Progress: Level ${progress['14-20'].maxUnlocked}/100\n• Overall Accuracy: 98%\n• Stars Earned: 120 ⭐`);
+        }
+
+        function showCoverStars() {
+            alert('⭐ STAR ACHIEVEMENTS\n\n✓ First Quiz Cleared!\n✓ 3-Level Streak Master\n✓ Socratic AI Explorer\n\nTotal Stars: 120 ⭐');
+        }
+
+        function claimDailyReward() {
+            alert('🎁 DAILY LOGIN CHEST!\n\nYou claimed 50 Free Daily Coins! 🪙\nKeep learning every day to unlock bonus chest rewards!');
+            const coinsElem = document.getElementById('hud-coins');
+            if (coinsElem) coinsElem.innerText = parseInt(coinsElem.innerText) + 50;
+        }
+
+        // ==========================================
         // DYNAMIC 1 TO 100 MATH GENERATOR ENGINE
         // ==========================================
         const fruitEmojis = ['🍎', '🍓', '🍌', '🍊', '🍇'];
@@ -814,9 +948,7 @@
             level = Math.max(1, Math.min(100, level));
 
             if (tier === '5-8') {
-                // AGES 5-8 (Levels 1 to 100)
                 if (level <= 20) {
-                    // Visual counting and simple addition (1 to 5)
                     const a = 1 + (level % 4);
                     const b = 1 + ((level * 3) % 4);
                     const sum = a + b;
@@ -834,7 +966,6 @@
                         explanation: `Awesome! ${a} + ${b} = ${sum} ${emoji} in total! ⭐`
                     };
                 } else if (level <= 50) {
-                    // Addition up to 10 & animal pals
                     const a = 3 + (level % 6);
                     const b = 2 + ((level * 2) % 5);
                     const sum = a + b;
@@ -852,7 +983,6 @@
                         explanation: `Terrific! ${a} + ${b} = ${sum} ${animal}!`
                     };
                 } else if (level <= 75) {
-                    // Fun Subtraction within 12
                     const b = 2 + (level % 5);
                     const diff = 2 + ((level * 2) % 6);
                     const a = diff + b;
@@ -869,7 +999,6 @@
                         explanation: `Spot on! ${a} minus ${b} leaves ${diff} sparkling stars!`
                     };
                 } else {
-                    // Double digit addition / Skip counting up to Level 100
                     const a = 10 + (level % 15);
                     const b = 3 + ((level * 3) % 12);
                     const sum = a + b;
@@ -886,9 +1015,7 @@
                     };
                 }
             } else if (tier === '9-13') {
-                // AGES 9-13 (Levels 1 to 100)
                 if (level <= 25) {
-                    // Times tables (2x to 9x)
                     const a = 2 + (level % 8);
                     const b = 3 + ((level * 3) % 7);
                     const product = a * b;
@@ -904,7 +1031,6 @@
                         explanation: `${a} × ${b} = ${product}. Great multiplication skill!`
                     };
                 } else if (level <= 50) {
-                    // Division Quest
                     const divisor = 3 + (level % 7);
                     const quotient = 4 + ((level * 2) % 8);
                     const dividend = divisor * quotient;
@@ -920,7 +1046,6 @@
                         explanation: `${dividend} ÷ ${divisor} = ${quotient} because ${divisor} × ${quotient} = ${dividend}.`
                     };
                 } else if (level <= 75) {
-                    // Order of Operations (BODMAS / PEMDAS)
                     const m1 = 3 + (level % 5);
                     const m2 = 2 + ((level * 2) % 6);
                     const add = 5 + (level % 15);
@@ -937,7 +1062,6 @@
                         explanation: `First multiply: ${m1} × ${m2} = ${m1 * m2}. Then add: ${m1 * m2} + ${add} = ${ans}!`
                     };
                 } else {
-                    // Pre-Algebra & Fractions up to Level 100
                     const coeff = 2 + (level % 4);
                     const x = 3 + (level % 8);
                     const constant = 4 + ((level * 3) % 10);
@@ -955,9 +1079,7 @@
                     };
                 }
             } else {
-                // AGES 14-20 (Levels 1 to 100)
                 if (level <= 25) {
-                    // Speed Mental Arithmetic
                     const base = 12 + (level % 15);
                     const mult = 3 + (level % 6);
                     const ans = base * mult;
@@ -973,7 +1095,6 @@
                         explanation: `${base} × ${mult} = ${ans}. Executed with blitz speed!`
                     };
                 } else if (level <= 50) {
-                    // Two-step linear equations
                     const a = 3 + (level % 5);
                     const x = 2 + ((level * 2) % 9);
                     const b = 5 + (level % 12);
@@ -990,7 +1111,6 @@
                         explanation: `${a}x = ${c - b} → x = ${x}. Sharp algebraic deduction!`
                     };
                 } else if (level <= 75) {
-                    // Exponents, Roots, and Percentages
                     const rootVal = 11 + (level % 15);
                     const squareVal = rootVal * rootVal;
                     return {
@@ -1005,7 +1125,6 @@
                         explanation: `√${squareVal} = ${rootVal} because ${rootVal}² = ${squareVal}.`
                     };
                 } else {
-                    // Quadratics & Advanced Competitive Math up to 100
                     const root1 = 2 + (level % 6);
                     const ans = root1;
                     const sq = root1 * root1;
@@ -1042,13 +1161,21 @@
             if (target) {
                 target.classList.add('active');
             }
+
+            // HUD Visibility: Hidden on Cover Screen, Visible elsewhere
+            const hud = document.getElementById('main-hud');
+            if (screenId === 'screen-cover') {
+                hud.style.display = 'none';
+            } else {
+                hud.style.display = 'flex';
+            }
+
             renderHubStats();
         }
 
         function selectAge(tier) {
             currentTier = tier;
 
-            // Update Card selected states
             document.getElementById('tier-card-junior').classList.toggle('selected', tier === '5-8');
             document.getElementById('tier-card-inter').classList.toggle('selected', tier === '9-13');
             document.getElementById('tier-card-pro').classList.toggle('selected', tier === '14-20');
@@ -1092,12 +1219,10 @@
         }
 
         function renderHubStats() {
-            // Update pills on screen-age
             document.getElementById('tier-pill-5-8').innerText = `Levels 1 – 100 • Current: Level ${progress['5-8'].currentLevel}`;
             document.getElementById('tier-pill-9-13').innerText = `Levels 1 – 100 • Current: Level ${progress['9-13'].currentLevel}`;
             document.getElementById('tier-pill-14-20').innerText = `Levels 1 – 100 • Current: Level ${progress['14-20'].currentLevel}`;
 
-            // Update maps
             renderMapNodes('5-8', 'junior-map-nodes', 'junior-progress-text', 'junior-continue-btn', 'junior-node');
             renderMapNodes('9-13', 'inter-map-nodes', 'inter-progress-text', 'inter-continue-btn', '');
             renderMapNodes('14-20', 'pro-map-nodes', 'pro-level-banner', 'pro-continue-btn', 'pro-node');
@@ -1110,7 +1235,6 @@
             const curLvl = progress[tier].currentLevel;
             const maxUnl = progress[tier].maxUnlocked;
 
-            // Update progress banner
             const progressElem = document.getElementById(progressId);
             if (progressElem) {
                 if (tier === '14-20') {
@@ -1120,23 +1244,19 @@
                 }
             }
 
-            // Update continue button
             const contBtn = document.getElementById(continueBtnId);
             if (contBtn) {
                 contBtn.innerHTML = `▶️ Continue Level ${curLvl} of 100 🚀`;
             }
 
-            // Render visible nodes around current level
             container.innerHTML = '';
 
-            // Add Daily Chest
             const chest = document.createElement('div');
             chest.className = 'map-node chest-node';
             chest.innerHTML = '🎁';
             chest.onclick = () => showNotification('🎁 You claimed 50 Free Daily Coins!');
             container.appendChild(chest);
 
-            // Display 4 consecutive nodes around current level
             const startNode = Math.min(97, Math.max(1, curLvl - 1));
             for (let lvl = startNode + 3; lvl >= startNode; lvl--) {
                 const node = document.createElement('div');
@@ -1177,7 +1297,6 @@
             document.getElementById('problem-text').innerHTML = quiz.problem;
             document.getElementById('quiz-instruction-tag').innerText = quiz.instruction;
 
-            // Render Options
             const grid = document.getElementById('options-grid');
             grid.innerHTML = '';
 
@@ -1189,7 +1308,6 @@
                 grid.appendChild(btn);
             });
 
-            // Adjust Hint Label
             const hintBtn = document.getElementById('btn-hint');
             if (tier === '5-8') {
                 hintBtn.innerText = '🎈 Need a Gentle Clue?';
@@ -1206,21 +1324,17 @@
             const isCorrect = (String(selectedVal) === String(currentActiveQuiz.correct));
 
             if (isCorrect) {
-                // Award stars & coins
                 const starsElem = document.getElementById('hud-stars');
                 const coinsElem = document.getElementById('hud-coins');
                 starsElem.innerText = parseInt(starsElem.innerText) + 10;
                 coinsElem.innerText = parseInt(coinsElem.innerText) + 25;
 
-                // Unlock next level (up to 100)
                 const nextLevel = Math.min(100, currentActiveQuiz.level + 1);
                 progress[currentTier].maxUnlocked = Math.max(progress[currentTier].maxUnlocked, nextLevel);
                 saveProgress();
 
-                // Trigger Continuous Auto-Advance Fanfare
                 openAutoAdvanceModal(currentActiveQuiz.level, nextLevel);
             } else {
-                // Show AI error feedback drawer
                 const drawer = document.getElementById('ai-drawer');
                 document.getElementById('drawer-title').innerHTML = '❌ Guided Explanation';
                 document.getElementById('drawer-body').innerHTML = `You chose <b>${selectedVal}</b>.<br><br><b>Explanation:</b> ${currentActiveQuiz.explanation}`;
@@ -1231,7 +1345,7 @@
         }
 
         // ==========================================
-        // AUTO ADVANCE MODAL (Direct progression to next level)
+        // AUTO ADVANCE MODAL
         // ==========================================
         function openAutoAdvanceModal(completedLevel, nextLevel) {
             const modal = document.getElementById('auto-next-modal');
@@ -1261,7 +1375,6 @@
 
             modal.classList.add('active');
 
-            // 3-second automatic timer to advance seamlessly
             autoAdvanceTimer = setInterval(() => {
                 countdownSeconds--;
                 if (countdownSeconds > 0) {
@@ -1288,7 +1401,7 @@
         }
 
         // ==========================================
-        // LEVEL PICKER (1 TO 100 JUMP SELECTOR)
+        // LEVEL PICKER (1 TO 100)
         // ==========================================
         function openLevelPicker() {
             const grid = document.getElementById('picker-grid');
@@ -1354,8 +1467,8 @@
             alert(msg);
         }
 
-        // Initialize with default state
-        selectAge('5-8');
+        // Default screen: Cover Page
+        switchScreen('screen-cover');
     </script>
 </body>
 </html>
