@@ -61,16 +61,54 @@
            COVER PAGE STYLES (QUIZOPIA ESCAPE)
         ============================================== */
         #screen-cover {
-            flex: 1;
             position: relative;
             background: radial-gradient(circle at 50% 30%, #38BDF8 0%, #1E40AF 45%, #0F172A 100%);
-            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
             padding: 30px 20px 25px;
             overflow: hidden;
             text-align: center;
+        }
+
+        /* Top Bar with Back Arrow */
+        .screen-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            width: 100%;
+        }
+
+        .btn-back-arrow {
+            width: 42px;
+            height: 42px;
+            background: #1E293B;
+            border: 2px solid #475569;
+            border-radius: 50%;
+            color: #F8FAFC;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .btn-back-arrow:hover, .btn-back-arrow:active {
+            background: #334155;
+            border-color: #F59E0B;
+            color: #F59E0B;
+            transform: scale(0.94);
+        }
+
+        .top-bar-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #F59E0B;
+            letter-spacing: 1px;
         }
 
         /* Ambient floating math symbols */
@@ -273,7 +311,7 @@
         /* Screen Container */
         .screen {
             flex: 1;
-            display: none;
+            display: none !important;
             flex-direction: column;
             padding: 18px;
             overflow-y: auto;
@@ -281,10 +319,19 @@
         }
 
         .screen.active {
-            display: flex;
+            display: flex !important;
         }
 
-        /* Screen Titles */
+        /* Screen 0: Cover Screen Styling */
+        #screen-cover {
+            position: relative;
+            background: radial-gradient(circle at 50% 30%, #38BDF8 0%, #1E40AF 45%, #0F172A 100%);
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px 20px 25px;
+            overflow: hidden;
+            text-align: center;
+        }
         .screen-title {
             font-size: 22px;
             font-weight: 800;
@@ -798,12 +845,15 @@
         </div>
 
         <!-- ==============================================
-             SCREEN 1: CHOOSE AGE TIER (3 STAGES)
+             SCREEN 1: CHOOSE AGE TIER (2nd PAGE)
         ============================================== -->
         <div class="screen" id="screen-age">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <button class="hud-stat" style="cursor:pointer;" onclick="switchScreen('screen-cover')">← Cover</button>
-                <span style="font-size:12px; color:#F59E0B; font-weight:bold;">QUIZOPIA ESCAPE</span>
+            <div class="screen-top-bar">
+                <button class="btn-back-arrow" onclick="switchScreen('screen-cover')" title="Back to Cover Page">
+                    ←
+                </button>
+                <span class="top-bar-title">QUIZOPIA ESCAPE</span>
+                <div style="width: 42px;"></div>
             </div>
 
             <div class="screen-title">Choose Age Tier</div>
@@ -839,6 +889,11 @@
              SCREEN 2A: JUNIOR MAP (AGES 5 - 8)
         ============================================== -->
         <div class="screen" id="screen-map-junior">
+            <div class="screen-top-bar">
+                <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
+                <span class="top-bar-title" style="color:#FFD93D;">JUNIOR SAFARI</span>
+                <div style="width: 42px;"></div>
+            </div>
             <div class="screen-title" style="color:#FFD93D;">Junior Safari Map 🎈</div>
             <div class="subtitle" id="junior-subtitle">Levels 1 – 100 Path</div>
 
@@ -865,6 +920,11 @@
              SCREEN 2B: INTERMEDIATE MAP (AGES 9 - 13)
         ============================================== -->
         <div class="screen" id="screen-map">
+            <div class="screen-top-bar">
+                <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
+                <span class="top-bar-title" style="color:#10B981;">ADVENTURE MAP</span>
+                <div style="width: 42px;"></div>
+            </div>
             <div class="screen-title">Adventure Map 🗺️</div>
             <div class="subtitle" id="inter-subtitle">Multiplication & Division 100-Level Quest</div>
 
@@ -891,6 +951,11 @@
              SCREEN 2C: PRO ARCADE HUB (AGES 14 - 20)
         ============================================== -->
         <div class="screen" id="screen-pro-hub">
+            <div class="screen-top-bar">
+                <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
+                <span class="top-bar-title" style="color:var(--pro-neon);">ARCADE HUB</span>
+                <div style="width: 42px;"></div>
+            </div>
             <div class="screen-title" style="color:var(--pro-neon);">Arcade Dashboard ⚡</div>
             <div class="subtitle" id="pro-subtitle">Speed Math & Algebra 100-Level Grind</div>
 
