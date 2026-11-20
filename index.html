@@ -3,24 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quizopia Escape - Math Arcade & Adventure</title>
+    <title>Quizopia Escape - Foxy Forest Math Adventure</title>
     <style>
         :root {
-            --primary: #4F46E5;
-            --primary-light: #6366F1;
-            --accent: #F59E0B;
-            --success: #10B981;
-            --danger: #EF4444;
-            --bg-dark: #0F172A;
-            --card-bg: #1E293B;
-            --text-light: #F8FAFC;
-            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Cute Foxy & Forest Pastel Palette */
+            --forest-mint: #A8D5BA;
+            --forest-sage: #81C784;
+            --forest-bg: #F4FBF7;
+            --forest-card: #FFFFFF;
             
-            /* Tier Colors */
-            --junior-primary: #FF6B6B;
-            --junior-accent: #FFD93D;
-            --pro-neon: #00F0FF;
-            --pro-purple: #9D00FF;
+            --foxy-peach: #FFB085;
+            --foxy-coral: #FF8A65;
+            --foxy-light: #FFF0EB;
+            
+            --honey-yellow: #FFE082;
+            --honey-light: #FFFDE7;
+            
+            --pastel-lavender: #D1C4E9;
+            --pastel-sky: #B3E5FC;
+            
+            --wood-dark: #4A3728;
+            --wood-medium: #795548;
+            --text-dark: #2D3748;
+            --text-muted: #718096;
+            
+            --font-main: 'Segoe UI', -apple-system, BlinkMacSystemFont, Tahoma, Geneva, Verdana, sans-serif;
         }
 
         * {
@@ -33,8 +40,8 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
+            background: linear-gradient(135deg, #E8F5E9 0%, #FFF3E0 50%, #E0F2F1 100%);
+            color: var(--text-dark);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,265 +54,286 @@
             width: 100%;
             max-width: 420px;
             height: 840px;
-            background: #000;
+            background: var(--forest-bg);
             border-radius: 40px;
-            border: 8px solid #334155;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border: 8px solid #C8E6C9;
+            box-shadow: 0 25px 50px -12px rgba(74, 55, 40, 0.25);
             overflow: hidden;
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
+        /* Ambient Forest Leaves Background Pattern */
+        .forest-pattern-bg {
+            background-color: #F7FCF9;
+            background-image: radial-gradient(#C8E6C9 1px, transparent 1px), radial-gradient(#FFE0B2 1px, #F7FCF9 1px);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+        }
+
         /* ==============================================
-           COVER PAGE STYLES (QUIZOPIA ESCAPE)
+           SCREEN 0: FOXY FOREST COVER PAGE
         ============================================== */
         #screen-cover {
             position: relative;
-            background: radial-gradient(circle at 50% 30%, #38BDF8 0%, #1E40AF 45%, #0F172A 100%);
+            background: linear-gradient(180deg, #E0F7FA 0%, #FFF9C4 45%, #E8F5E9 100%);
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 30px 20px 25px;
+            padding: 26px 20px 22px;
             overflow: hidden;
             text-align: center;
         }
 
-        /* Top Bar with Back Arrow */
-        .screen-top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-            width: 100%;
-        }
-
-        .btn-back-arrow {
-            width: 42px;
-            height: 42px;
-            background: #1E293B;
-            border: 2px solid #475569;
-            border-radius: 50%;
-            color: #F8FAFC;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .btn-back-arrow:hover, .btn-back-arrow:active {
-            background: #334155;
-            border-color: #F59E0B;
-            color: #F59E0B;
-            transform: scale(0.94);
-        }
-
-        .top-bar-title {
-            font-size: 13px;
-            font-weight: 800;
-            color: #F59E0B;
-            letter-spacing: 1px;
-        }
-
-        /* Ambient floating math symbols */
-        .math-symbol-floating {
+        /* Floating Forest Critters & Leaves */
+        .forest-floating-item {
             position: absolute;
-            font-size: 26px;
-            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
-            animation: floatSymbol 4s ease-in-out infinite alternate;
+            font-size: 24px;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.12));
+            animation: floatLeaf 4s ease-in-out infinite alternate;
             z-index: 1;
-            opacity: 0.85;
+            opacity: 0.9;
         }
 
-        .sym-1 { top: 40px; left: 24px; animation-delay: 0s; }
-        .sym-2 { top: 35px; right: 28px; animation-delay: 1.2s; }
-        .sym-3 { top: 230px; left: 20px; animation-delay: 0.7s; }
-        .sym-4 { top: 220px; right: 22px; animation-delay: 1.8s; }
+        .item-1 { top: 35px; left: 24px; animation-delay: 0s; }
+        .item-2 { top: 30px; right: 26px; animation-delay: 1.2s; }
+        .item-3 { top: 220px; left: 18px; animation-delay: 0.8s; }
+        .item-4 { top: 215px; right: 20px; animation-delay: 2s; }
 
-        @keyframes floatSymbol {
-            0% { transform: translateY(0px) rotate(-6deg); }
-            100% { transform: translateY(-12px) rotate(6deg); }
+        @keyframes floatLeaf {
+            0% { transform: translateY(0px) rotate(-8deg); }
+            100% { transform: translateY(-14px) rotate(8deg); }
         }
 
-        /* Mascot Circle */
-        .mascot-wrapper {
+        /* Cute Foxy Mascot Avatar */
+        .foxy-mascot-wrapper {
             position: relative;
             z-index: 2;
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
-        .mascot-avatar {
-            width: 110px;
-            height: 110px;
-            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-            border: 5px solid #F59E0B;
+        .foxy-mascot-avatar {
+            width: 115px;
+            height: 115px;
+            background: linear-gradient(135deg, #FFF9E6, #FFE0B2);
+            border: 5px solid var(--foxy-peach);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 56px;
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.45), 0 0 25px rgba(245, 158, 11, 0.5);
-            animation: mascotBounce 3s ease-in-out infinite alternate;
+            font-size: 60px;
+            box-shadow: 0 10px 25px rgba(255, 138, 101, 0.35), 0 0 20px rgba(255, 224, 130, 0.6);
+            animation: foxyBounce 2.8s ease-in-out infinite alternate;
         }
 
-        @keyframes mascotBounce {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-8px); }
+        @keyframes foxyBounce {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-8px) scale(1.02); }
         }
 
-        /* Carved Wooden / Stone Title Block */
-        .cover-title-box {
+        .foxy-badge {
+            position: absolute;
+            bottom: -6px;
+            background: #81C784;
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 12px;
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Woodland Title Banner */
+        .foxy-title-box {
             position: relative;
             z-index: 2;
-            background: linear-gradient(180deg, #78350F, #451A03);
-            border: 4px solid #B45309;
-            border-radius: 24px;
+            background: linear-gradient(180deg, #FFFFFF, #FFF8E1);
+            border: 3.5px solid #FFCC80;
+            border-radius: 26px;
             padding: 16px 20px;
-            width: 90%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.2);
-            margin: 15px 0;
+            width: 92%;
+            box-shadow: 0 8px 24px rgba(121, 85, 72, 0.12), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+            margin: 12px 0;
         }
 
-        .cover-logo-main {
-            font-size: 38px;
+        .foxy-logo-main {
+            font-size: 36px;
             font-weight: 900;
             letter-spacing: 2px;
-            color: #FEF08A;
-            text-shadow: 0 4px 0 #92400E, 0 8px 12px rgba(0, 0, 0, 0.7);
-            line-height: 1;
+            color: #E65100;
+            text-shadow: 0 3px 0 #FFE082, 0 6px 10px rgba(230, 81, 0, 0.2);
+            line-height: 1.1;
         }
 
-        .cover-logo-sub {
-            font-size: 26px;
-            font-weight: 900;
-            letter-spacing: 6px;
-            color: #FBBF24;
-            text-shadow: 0 3px 0 #78350F;
-            margin-top: 4px;
+        .foxy-logo-sub {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: #2E7D32;
+            text-shadow: 0 2px 0 #C8E6C9;
+            margin-top: 2px;
         }
 
-        .cover-tagline-pill {
+        .foxy-tagline {
             display: inline-block;
             margin-top: 8px;
-            background: #B45309;
-            color: #FEF3C7;
+            background: #E8F5E9;
+            color: #2E7D32;
             font-size: 11px;
             font-weight: 800;
             padding: 4px 14px;
             border-radius: 20px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 0.5px;
+            border: 1px solid #A5D6A7;
         }
 
-        /* Big Tactile 3D PLAY Button */
+        /* Big Playful Pastel PLAY Button */
         .cover-play-section {
-            width: 85%;
+            width: 86%;
             z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
-        .btn-cover-play {
+        .btn-foxy-play {
             width: 100%;
-            background: linear-gradient(180deg, #FDE047 0%, #F59E0B 50%, #D97706 100%);
-            border: 5px solid #78350F;
-            border-radius: 35px;
+            background: linear-gradient(180deg, #FFB085 0%, #FF8A65 100%);
+            border: 4px solid #FFFFFF;
+            border-radius: 36px;
             padding: 18px 24px;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 900;
-            color: #451A03;
-            letter-spacing: 2px;
+            color: #FFFFFF;
+            letter-spacing: 1.5px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 0 #78350F, 0 18px 28px rgba(0, 0, 0, 0.5), 0 0 30px rgba(245, 158, 11, 0.6);
+            gap: 10px;
+            box-shadow: 0 8px 20px rgba(255, 112, 67, 0.45), 0 0 25px rgba(255, 204, 128, 0.5);
             transition: all 0.15s ease;
             animation: pulsePlayGlow 2s infinite alternate;
         }
 
         @keyframes pulsePlayGlow {
-            0% { transform: scale(1); box-shadow: 0 10px 0 #78350F, 0 18px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.4); }
-            100% { transform: scale(1.04); box-shadow: 0 10px 0 #78350F, 0 24px 35px rgba(0, 0, 0, 0.6), 0 0 40px rgba(245, 158, 11, 0.9); }
+            0% { transform: scale(1); box-shadow: 0 8px 18px rgba(255, 112, 67, 0.4); }
+            100% { transform: scale(1.03); box-shadow: 0 10px 28px rgba(255, 112, 67, 0.6), 0 0 25px rgba(255, 224, 130, 0.7); }
         }
 
-        .btn-cover-play:active {
-            transform: translateY(6px);
-            box-shadow: 0 4px 0 #78350F, 0 10px 15px rgba(0, 0, 0, 0.5);
+        .btn-foxy-play:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 10px rgba(255, 112, 67, 0.4);
         }
 
-        .btn-cover-secondary {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            color: #CBD5E1;
-            padding: 10px 20px;
+        .btn-foxy-secondary {
+            background: #FFFFFF;
+            border: 2px solid #FFE082;
+            color: var(--wood-dark);
+            padding: 9px 20px;
             border-radius: 20px;
             font-size: 13px;
-            font-weight: bold;
+            font-weight: 800;
             cursor: pointer;
-            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
             transition: all 0.2s;
         }
 
-        .btn-cover-secondary:hover {
-            background: rgba(30, 41, 59, 0.9);
-            border-color: #F59E0B;
-            color: #FFF;
+        .btn-foxy-secondary:hover {
+            background: #FFF9C4;
         }
 
-        /* Cover Bottom Badges */
+        /* Cover Bottom Woodland Feature Badges */
         .cover-bottom-row {
             z-index: 2;
             display: flex;
-            gap: 12px;
+            gap: 8px;
             margin-bottom: 5px;
         }
 
         .cover-feature-tag {
             font-size: 11px;
-            color: #94A3B8;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 5px 12px;
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 700;
+            color: #37474F;
+            background: #FFFFFF;
+            padding: 6px 12px;
+            border-radius: 16px;
+            border: 1.5px solid #E0E0E0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
 
         /* Header HUD */
         .hud-header {
-            background: #1E293B;
+            background: #FFFFFF;
             padding: 10px 14px;
-            display: none; /* Hidden on cover page, visible inside app */
+            display: none; /* Shown only on in-app screens */
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #334155;
+            border-bottom: 2px solid #E8F5E9;
             z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .hud-stat {
             display: flex;
             align-items: center;
             gap: 5px;
-            font-weight: bold;
+            font-weight: 800;
             font-size: 13px;
-            background: #0F172A;
-            padding: 6px 10px;
+            background: #F1F8E9;
+            color: #2E7D32;
+            padding: 6px 12px;
             border-radius: 20px;
-            border: 1px solid #334155;
+            border: 1.5px solid #C8E6C9;
         }
 
         .tier-badge {
-            background: #312E81;
-            color: #A5B4FC;
-            border: 1px solid #6366F1;
+            background: #FFF3E0;
+            color: #E65100;
+            border: 1.5px solid #FFCC80;
             cursor: pointer;
+        }
+
+        /* Screen Top Bar with Back Arrow */
+        .screen-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            width: 100%;
+        }
+
+        .btn-back-arrow {
+            width: 40px;
+            height: 40px;
+            background: #FFFFFF;
+            border: 2px solid #C8E6C9;
+            border-radius: 50%;
+            color: #2E7D32;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+        }
+
+        .btn-back-arrow:hover, .btn-back-arrow:active {
+            background: #E8F5E9;
+            border-color: #81C784;
+            transform: scale(0.94);
+        }
+
+        .top-bar-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #4E342E;
+            letter-spacing: 1px;
         }
 
         /* Screen Container */
@@ -322,117 +350,117 @@
             display: flex !important;
         }
 
-        /* Screen 0: Cover Screen Styling */
-        #screen-cover {
-            position: relative;
-            background: radial-gradient(circle at 50% 30%, #38BDF8 0%, #1E40AF 45%, #0F172A 100%);
-            align-items: center;
-            justify-content: space-between;
-            padding: 30px 20px 25px;
-            overflow: hidden;
-            text-align: center;
-        }
+        /* Screen Titles */
         .screen-title {
             font-size: 22px;
-            font-weight: 800;
+            font-weight: 900;
             text-align: center;
             margin-bottom: 4px;
-            color: #F59E0B;
-            text-transform: uppercase;
+            color: #E65100;
             letter-spacing: 0.5px;
         }
 
         .subtitle {
             font-size: 13px;
             text-align: center;
-            color: #94A3B8;
+            color: #78909C;
             margin-bottom: 14px;
         }
 
-        /* Screen 1: Age Selector */
+        /* Screen 1: Age Selector Pastel Cards */
         .age-card {
-            background: linear-gradient(135deg, #334155, #1E293B);
-            border: 2px solid #475569;
-            border-radius: 16px;
+            background: #FFFFFF;
+            border: 2.5px solid #E0E0E0;
+            border-radius: 22px;
             padding: 16px;
             margin-bottom: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
             position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
 
         .age-card:hover {
             transform: translateY(-2px);
-            border-color: #CBD5E1;
+            border-color: #FFB085;
         }
 
         .age-card.selected {
-            border-color: #F59E0B;
+            border-color: #FF8A65;
             transform: translateY(-2px);
-            background: linear-gradient(135deg, #4F46E5, #3730A3);
-            box-shadow: 0 0 16px rgba(99, 102, 241, 0.4);
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFF3E0 100%);
+            box-shadow: 0 6px 18px rgba(255, 138, 101, 0.25);
         }
 
         .age-card.selected::after {
-            content: "✓ ACTIVE";
+            content: "✓ FOXY'S PICK";
             position: absolute;
-            top: 8px;
-            right: 12px;
+            top: 10px;
+            right: 14px;
             font-size: 10px;
-            font-weight: 800;
-            color: #F59E0B;
+            font-weight: 900;
+            color: #E65100;
+            background: #FFE0B2;
+            padding: 2px 8px;
+            border-radius: 10px;
         }
 
         .age-card h3 {
-            font-size: 17px;
+            font-size: 18px;
+            font-weight: 800;
+            color: #3E2723;
             margin-bottom: 4px;
         }
 
         .age-card p {
             font-size: 12px;
-            color: #CBD5E1;
+            color: #546E7A;
+            line-height: 1.4;
         }
 
         .level-progress-pill {
             display: inline-block;
-            margin-top: 6px;
+            margin-top: 8px;
             font-size: 11px;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 12px;
-            background: rgba(0,0,0,0.3);
-            color: #F59E0B;
-            font-weight: bold;
+            background: #E8F5E9;
+            color: #2E7D32;
+            font-weight: 800;
+            border: 1px solid #C8E6C9;
         }
 
         /* Screen 2: Adventure Map Nodes */
         .progress-banner {
-            background: linear-gradient(135deg, #1E293B, #0F172A);
-            border: 1.5px solid #334155;
-            border-radius: 14px;
-            padding: 12px;
+            background: #FFFFFF;
+            border: 2px solid #C8E6C9;
+            border-radius: 18px;
+            padding: 12px 14px;
             margin-bottom: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
 
         .continue-btn {
-            background: linear-gradient(135deg, #10B981, #059669);
+            background: linear-gradient(135deg, #81C784, #4CAF50);
             color: white;
             border: none;
-            padding: 12px;
-            border-radius: 14px;
-            font-weight: 800;
+            padding: 14px;
+            border-radius: 18px;
+            font-weight: 900;
             font-size: 15px;
             cursor: pointer;
             width: 100%;
             margin-bottom: 14px;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.35);
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 8px;
+            transition: all 0.15s;
         }
 
         .continue-btn:hover {
@@ -448,76 +476,79 @@
             position: relative;
         }
 
+        /* Stepping Stone Nodes */
         .map-node {
-            width: 68px;
-            height: 68px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #10B981, #059669);
+            background: linear-gradient(135deg, #A5D6A7, #81C784);
+            color: #FFFFFF;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-weight: bold;
+            font-weight: 900;
             font-size: 16px;
-            border: 4px solid #ECFDF5;
-            box-shadow: 0 8px 15px -3px rgba(16, 185, 129, 0.4);
+            border: 4px solid #FFFFFF;
+            box-shadow: 0 6px 14px rgba(76, 175, 80, 0.3);
             cursor: pointer;
             transition: transform 0.2s;
             position: relative;
         }
 
         .map-node.active-target {
-            border-color: #F59E0B;
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+            border-color: #FFB085;
+            box-shadow: 0 0 20px rgba(255, 138, 101, 0.6);
             transform: scale(1.08);
             animation: pulseTarget 1.5s infinite;
         }
 
         @keyframes pulseTarget {
-            0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.6); }
-            50% { box-shadow: 0 0 28px rgba(245, 158, 11, 0.95); }
+            0%, 100% { box-shadow: 0 0 12px rgba(255, 138, 101, 0.6); }
+            50% { box-shadow: 0 0 24px rgba(255, 138, 101, 0.9); }
         }
 
         .map-node.junior-node {
-            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-            border-color: #FFE66D;
+            background: linear-gradient(135deg, #FFB085, #FF8A65);
+            border-color: #FFF9C4;
         }
 
         .map-node.pro-node {
-            background: linear-gradient(135deg, #00F0FF, #7000FF);
-            border-color: #A5B4FC;
-            color: #000;
+            background: linear-gradient(135deg, #B3E5FC, #81D4FA);
+            color: #01579B;
+            border-color: #E1F5FE;
         }
 
         .map-node.locked {
-            background: #334155;
-            border-color: #64748B;
+            background: #CFD8DC;
+            border-color: #ECEFF1;
             box-shadow: none;
             cursor: not-allowed;
-            opacity: 0.55;
-            color: #94A3B8;
+            opacity: 0.6;
+            color: #78909C;
         }
 
         .chest-node {
-            background: linear-gradient(135deg, #F59E0B, #D97706);
-            border-color: #FEF3C7;
-            box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.4);
+            background: linear-gradient(135deg, #FFE082, #FFB300);
+            border-color: #FFFFFF;
+            box-shadow: 0 8px 16px rgba(255, 179, 0, 0.35);
         }
 
-        /* Screen 3: Quiz Challenges */
+        /* Screen 3: Quiz Challenges Pastel Card */
         .quiz-card {
-            background: #1E293B;
-            border-radius: 20px;
-            padding: 20px;
+            background: #FFFFFF;
+            border-radius: 24px;
+            padding: 22px 18px;
             text-align: center;
-            border: 2px solid #334155;
+            border: 3px solid #E8F5E9;
             margin-bottom: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.04);
         }
 
         .problem-text {
             font-size: 32px;
-            font-weight: bold;
-            color: #F8FAFC;
+            font-weight: 900;
+            color: #2E7D32;
             margin: 12px 0;
             line-height: 1.3;
         }
@@ -537,77 +568,80 @@
         }
 
         .btn-option {
-            background: #334155;
-            border: 2px solid #475569;
-            color: white;
+            background: #FFFFFF;
+            border: 2.5px solid #C8E6C9;
+            color: #2E7D32;
             padding: 16px 10px;
             font-size: 19px;
-            font-weight: bold;
-            border-radius: 14px;
+            font-weight: 900;
+            border-radius: 18px;
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
 
         .btn-option.junior-btn {
             font-size: 24px;
             padding: 18px 10px;
-            border-radius: 16px;
-            background: #1E293B;
-            border: 3px solid #6366F1;
+            border-radius: 20px;
+            background: #FFF8E1;
+            border: 3px solid #FFE082;
+            color: #E65100;
         }
 
         .btn-option:hover {
-            border-color: var(--primary-light);
-            background: var(--primary);
+            border-color: var(--foxy-peach);
+            background: var(--foxy-light);
+            color: #E65100;
             transform: translateY(-2px);
         }
 
         .btn-hint {
-            background: rgba(245, 158, 11, 0.15);
-            border: 1.5px dashed #F59E0B;
-            color: #F59E0B;
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: bold;
+            background: #FFF8E1;
+            border: 2px dashed #FFB300;
+            color: #E65100;
+            padding: 13px;
+            border-radius: 16px;
+            font-weight: 800;
             font-size: 13px;
             margin-top: 14px;
             cursor: pointer;
             width: 100%;
         }
 
-        /* Pro Arcade Dashboard */
+        /* Pro Arcade Dashboard in Forest Theme */
         .pro-hud {
             display: flex;
             justify-content: space-between;
-            background: rgba(0, 240, 255, 0.08);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            border-radius: 12px;
+            background: #E1F5FE;
+            border: 2px solid #B3E5FC;
+            border-radius: 16px;
             padding: 10px 14px;
             margin-bottom: 14px;
         }
 
         .pro-badge {
-            color: var(--pro-neon);
+            color: #0277BD;
             font-size: 11px;
-            font-weight: bold;
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .arcade-card {
-            background: linear-gradient(135deg, #131A2E, #1F1938);
-            border: 1.5px solid #00F0FF;
-            border-radius: 16px;
+            background: #FFFFFF;
+            border: 2px solid #B3E5FC;
+            border-radius: 20px;
             padding: 14px;
             margin-bottom: 14px;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.12);
+            box-shadow: 0 4px 12px rgba(2, 119, 189, 0.08);
         }
 
         /* Auto Next Level Overlay Modal */
         .auto-next-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.94);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(8px);
             display: none;
             justify-content: center;
@@ -643,13 +677,14 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            border: 4px solid #10B981;
+            border: 4px solid #81C784;
+            background: #E8F5E9;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 26px;
             font-weight: 900;
-            color: #10B981;
+            color: #2E7D32;
             margin: 15px auto;
         }
 
@@ -665,39 +700,43 @@
 
         .level-cell {
             padding: 10px 0;
-            background: #334155;
-            border-radius: 10px;
+            background: #F1F8E9;
+            border-radius: 12px;
             font-size: 13px;
-            font-weight: bold;
+            font-weight: 800;
             text-align: center;
             cursor: pointer;
-            border: 1px solid #475569;
+            border: 1.5px solid #C8E6C9;
+            color: #2E7D32;
         }
 
         .level-cell.unlocked {
-            background: #10B981;
-            color: white;
-            border-color: #A7F3D0;
+            background: #C8E6C9;
+            color: #1B5E20;
+            border-color: #81C784;
         }
 
         .level-cell.current {
-            background: #F59E0B;
-            color: black;
-            border-color: #FEF3C7;
-            box-shadow: 0 0 10px #F59E0B;
+            background: #FFE082;
+            color: #E65100;
+            border-color: #FFB300;
+            box-shadow: 0 0 10px rgba(255, 179, 0, 0.4);
         }
 
         .level-cell.locked {
-            opacity: 0.4;
+            opacity: 0.45;
             cursor: not-allowed;
-            background: #1E293B;
+            background: #ECEFF1;
+            border-color: #CFD8DC;
+            color: #90A4AE;
         }
 
         /* AI Drawer Modal */
         .drawer-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(46, 125, 50, 0.25);
+            backdrop-filter: blur(4px);
             display: none;
             justify-content: flex-end;
             flex-direction: column;
@@ -709,12 +748,13 @@
         }
 
         .drawer-content {
-            background: #1E293B;
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
+            background: #FFFFFF;
+            border-top-left-radius: 26px;
+            border-top-right-radius: 26px;
             padding: 24px;
-            border-top: 3px solid var(--primary-light);
+            border-top: 4px solid var(--forest-sage);
             animation: slideUp 0.25s ease-out;
+            box-shadow: 0 -8px 25px rgba(0,0,0,0.08);
         }
 
         @keyframes slideUp {
@@ -724,8 +764,8 @@
 
         .drawer-title {
             font-size: 17px;
-            font-weight: bold;
-            color: #F59E0B;
+            font-weight: 900;
+            color: #E65100;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
@@ -735,34 +775,37 @@
         .drawer-body {
             font-size: 14px;
             line-height: 1.5;
-            color: #CBD5E1;
+            color: #455A64;
             margin-bottom: 18px;
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: linear-gradient(135deg, #FFB085, #FF8A65);
             color: white;
             border: none;
-            padding: 13px;
-            border-radius: 12px;
-            font-weight: bold;
+            padding: 14px;
+            border-radius: 18px;
+            font-weight: 900;
             font-size: 15px;
             width: 100%;
             cursor: pointer;
             transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(255, 138, 101, 0.35);
         }
 
         .btn-primary:hover {
-            background: var(--primary-light);
+            opacity: 0.95;
+            transform: scale(1.01);
         }
 
         .btn-secondary {
-            background: transparent;
-            color: #94A3B8;
-            border: 1px solid #475569;
+            background: #FFFFFF;
+            color: #546E7A;
+            border: 1.5px solid #CFD8DC;
             padding: 10px;
-            border-radius: 10px;
+            border-radius: 14px;
             font-size: 12px;
+            font-weight: 800;
             cursor: pointer;
             margin-top: 8px;
             width: 100%;
@@ -770,9 +813,9 @@
 
         /* Utility */
         .timer-bar {
-            height: 6px;
-            background: #334155;
-            border-radius: 3px;
+            height: 7px;
+            background: #E8F5E9;
+            border-radius: 4px;
             overflow: hidden;
             margin-bottom: 16px;
         }
@@ -780,7 +823,7 @@
         .timer-progress {
             height: 100%;
             width: 100%;
-            background: #10B981;
+            background: #81C784;
             transition: width 1s linear;
         }
     </style>
@@ -790,42 +833,43 @@
     <div class="mobile-frame">
 
         <!-- ==============================================
-             SCREEN 0: COVER PAGE (QUIZOPIA ESCAPE)
+             SCREEN 0: CUTE FOXY FOREST COVER PAGE
         ============================================== -->
         <div class="screen active" id="screen-cover">
-            <!-- Floating Math Symbols -->
-            <span class="math-symbol-floating sym-1">➕</span>
-            <span class="math-symbol-floating sym-2">➗</span>
-            <span class="math-symbol-floating sym-3">✖️</span>
-            <span class="math-symbol-floating sym-4">➖</span>
+            <!-- Floating Forest Leaves & Acorns -->
+            <span class="forest-floating-item item-1">🍃</span>
+            <span class="forest-floating-item item-2">🍄</span>
+            <span class="forest-floating-item item-3">🌰</span>
+            <span class="forest-floating-item item-4">🌸</span>
 
-            <!-- Mascot / Hero Avatar -->
-            <div class="mascot-wrapper">
-                <div class="mascot-avatar">🦉</div>
+            <!-- Cute Foxy Mascot Avatar -->
+            <div class="foxy-mascot-wrapper">
+                <div class="foxy-mascot-avatar">🦊</div>
+                <div class="foxy-badge">MEET FOXY!</div>
             </div>
 
             <!-- Game Title Banner -->
-            <div class="cover-title-box">
-                <div class="cover-logo-main">QUIZOPIA</div>
-                <div class="cover-logo-sub">ESCAPE</div>
-                <div class="cover-tagline-pill">✦ Play • Think • Conquer! ✦</div>
+            <div class="foxy-title-box">
+                <div class="foxy-logo-main">QUIZOPIA</div>
+                <div class="foxy-logo-sub">FOXY ESCAPE</div>
+                <div class="foxy-tagline">✦ Play • Think • Explore! 🍃 ✦</div>
             </div>
 
-            <!-- Big Interactive PLAY Button -->
+            <!-- Big Cute PLAY Button -->
             <div class="cover-play-section">
-                <button class="btn-cover-play" onclick="onPlayClicked()">
-                    <span>▶</span> PLAY
+                <button class="btn-foxy-play" onclick="onPlayClicked()">
+                    <span>▶</span> PLAY WITH FOXY
                 </button>
-                <button class="btn-cover-secondary" onclick="openParentGate()">
-                    🔒 Parents & Settings
+                <button class="btn-foxy-secondary" onclick="openParentGate()">
+                    🦉 Wise Owl • Parents Gate
                 </button>
             </div>
 
-            <!-- Bottom Badges -->
+            <!-- Bottom Forest Badges -->
             <div class="cover-bottom-row">
-                <span class="cover-feature-tag">👶 5-8 Junior</span>
-                <span class="cover-feature-tag">🎒 9-13 Inter</span>
-                <span class="cover-feature-tag">⚡ 14-20 Pro</span>
+                <span class="cover-feature-tag">🦊 Little Kit 5-8</span>
+                <span class="cover-feature-tag">🐿️ Scout 9-13</span>
+                <span class="cover-feature-tag">🦉 Ranger 14-20</span>
             </div>
         </div>
 
@@ -834,12 +878,12 @@
         ============================================== -->
         <div class="hud-header" id="main-hud">
             <button class="hud-stat" style="cursor:pointer;" onclick="switchScreen('screen-cover')" title="Back to Title Screen">
-                🏰 Cover
+                🏡 Forest Home
             </button>
             <div class="hud-stat">⭐ <span id="hud-stars">120</span></div>
-            <div class="hud-stat">🪙 <span id="hud-coins">450</span></div>
+            <div class="hud-stat">🌰 <span id="hud-coins">450</span></div>
             <button class="hud-stat tier-badge" onclick="switchScreen('screen-age')">
-                <span id="hud-tier-label">👶 5-8</span> ⚙️
+                <span id="hud-tier-label">🦊 5-8</span> ⚙️
             </button>
             <button class="hud-stat" style="cursor:pointer;" onclick="openParentGate()">🔒</button>
         </div>
@@ -852,36 +896,36 @@
                 <button class="btn-back-arrow" onclick="switchScreen('screen-cover')" title="Back to Cover Page">
                     ←
                 </button>
-                <span class="top-bar-title">QUIZOPIA ESCAPE</span>
-                <div style="width: 42px;"></div>
+                <span class="top-bar-title">🍃 FOXY FOREST ADVENTURE</span>
+                <div style="width: 40px;"></div>
             </div>
 
-            <div class="screen-title">Choose Age Tier</div>
-            <div class="subtitle">Select your stage to start 100 levels of adventure</div>
+            <div class="screen-title">Choose Forest Path</div>
+            <div class="subtitle">Select your stage to begin the 100-level woodland quest</div>
 
             <!-- Stage 1: 5 - 8 Junior -->
             <div class="age-card selected" id="tier-card-junior" onclick="selectAge('5-8')">
-                <h3>Ages 5 – 8 (Junior)</h3>
-                <p>Visual counting, addition & subtraction with interactive clues.</p>
+                <h3>🦊 Little Kit (Ages 5 – 8)</h3>
+                <p>Visual fruit counting, playful animal addition & acorn puzzles.</p>
                 <div class="level-progress-pill" id="tier-pill-5-8">Levels 1 – 100 • Current: Level 1</div>
             </div>
 
             <!-- Stage 2: 9 - 13 Intermediate -->
             <div class="age-card" id="tier-card-inter" onclick="selectAge('9-13')">
-                <h3>Ages 9 – 13 (Intermediate)</h3>
-                <p>Multiplication, division, order of operations, and fractions.</p>
+                <h3>🐿️ Forest Scout (Ages 9 – 13)</h3>
+                <p>Multiplication trails, division logs, and woodland word logic.</p>
                 <div class="level-progress-pill" id="tier-pill-9-13">Levels 1 – 100 • Current: Level 1</div>
             </div>
 
             <!-- Stage 3: 14 - 20 Pro Arcade -->
             <div class="age-card" id="tier-card-pro" onclick="selectAge('14-20')">
-                <h3>Ages 14 – 20 (Pro Arcade)</h3>
-                <p>Speed mental math, linear equations, quadratics & leaderboards.</p>
+                <h3>🦉 Elder Ranger (Ages 14 – 20)</h3>
+                <p>Rapid mental arithmetic, algebra branches, and forest leaderboards.</p>
                 <div class="level-progress-pill" id="tier-pill-14-20">Levels 1 – 100 • Current: Level 1</div>
             </div>
 
             <button class="btn-primary" style="margin-top:auto;" id="btn-enter-hub" onclick="enterCurrentAgeHub()">
-                Start Level 1 🚀
+                Start Level 1 🐾
             </button>
         </div>
 
@@ -891,29 +935,29 @@
         <div class="screen" id="screen-map-junior">
             <div class="screen-top-bar">
                 <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
-                <span class="top-bar-title" style="color:#FFD93D;">JUNIOR SAFARI</span>
-                <div style="width: 42px;"></div>
+                <span class="top-bar-title" style="color:#E65100;">🦊 LITTLE KIT TRAIL</span>
+                <div style="width: 40px;"></div>
             </div>
-            <div class="screen-title" style="color:#FFD93D;">Junior Safari Map 🎈</div>
+            <div class="screen-title" style="color:#E65100;">Meadow Safari Map 🎈</div>
             <div class="subtitle" id="junior-subtitle">Levels 1 – 100 Path</div>
 
             <div class="progress-banner">
                 <div>
-                    <div style="font-size:11px; color:#94A3B8;">YOUR SAFARI PROGRESS</div>
-                    <div style="font-size:16px; font-weight:800; color:#FFD93D;" id="junior-progress-text">Level 1 of 100 (1%)</div>
+                    <div style="font-size:11px; color:#78909C; font-weight:700;">YOUR FOREST PROGRESS</div>
+                    <div style="font-size:16px; font-weight:900; color:#2E7D32;" id="junior-progress-text">Level 1 of 100 (1%)</div>
                 </div>
                 <button class="hud-stat" style="cursor:pointer;" onclick="openLevelPicker()">📑 1-100</button>
             </div>
 
             <button class="continue-btn" id="junior-continue-btn" onclick="startCurrentLevel()">
-                ▶️ Continue Level 1 🚀
+                ▶️ Continue Level 1 🐾
             </button>
 
             <div class="map-container" id="junior-map-nodes">
                 <!-- Dynamically rendered nodes -->
             </div>
 
-            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Age Bracket</button>
+            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Forest Path</button>
         </div>
 
         <!-- ==============================================
@@ -922,29 +966,29 @@
         <div class="screen" id="screen-map">
             <div class="screen-top-bar">
                 <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
-                <span class="top-bar-title" style="color:#10B981;">ADVENTURE MAP</span>
-                <div style="width: 42px;"></div>
+                <span class="top-bar-title" style="color:#2E7D32;">🐿️ SCOUT'S GROVE</span>
+                <div style="width: 40px;"></div>
             </div>
-            <div class="screen-title">Adventure Map 🗺️</div>
+            <div class="screen-title" style="color:#2E7D32;">Adventure Map 🗺️</div>
             <div class="subtitle" id="inter-subtitle">Multiplication & Division 100-Level Quest</div>
 
             <div class="progress-banner">
                 <div>
-                    <div style="font-size:11px; color:#94A3B8;">ADVENTURE MASTERY</div>
-                    <div style="font-size:16px; font-weight:800; color:#10B981;" id="inter-progress-text">Level 1 of 100 (1%)</div>
+                    <div style="font-size:11px; color:#78909C; font-weight:700;">WOODLAND MASTERY</div>
+                    <div style="font-size:16px; font-weight:900; color:#2E7D32;" id="inter-progress-text">Level 1 of 100 (1%)</div>
                 </div>
                 <button class="hud-stat" style="cursor:pointer;" onclick="openLevelPicker()">📑 1-100</button>
             </div>
 
             <button class="continue-btn" id="inter-continue-btn" onclick="startCurrentLevel()">
-                ▶️ Continue Level 1 🚀
+                ▶️ Continue Level 1 🐾
             </button>
 
             <div class="map-container" id="inter-map-nodes">
                 <!-- Dynamically rendered nodes -->
             </div>
 
-            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Age Bracket</button>
+            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Forest Path</button>
         </div>
 
         <!-- ==============================================
@@ -953,39 +997,39 @@
         <div class="screen" id="screen-pro-hub">
             <div class="screen-top-bar">
                 <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
-                <span class="top-bar-title" style="color:var(--pro-neon);">ARCADE HUB</span>
-                <div style="width: 42px;"></div>
+                <span class="top-bar-title" style="color:#0277BD;">🦉 RANGER'S CANOPY</span>
+                <div style="width: 40px;"></div>
             </div>
-            <div class="screen-title" style="color:var(--pro-neon);">Arcade Dashboard ⚡</div>
+            <div class="screen-title" style="color:#0277BD;">Ranger Dashboard ⚡</div>
             <div class="subtitle" id="pro-subtitle">Speed Math & Algebra 100-Level Grind</div>
 
             <div class="pro-hud">
                 <div>
                     <div class="pro-badge">Current Level</div>
-                    <div style="font-size:18px; font-weight:800; color:#FFF;" id="pro-level-banner">L1 / 100</div>
+                    <div style="font-size:18px; font-weight:900; color:#01579B;" id="pro-level-banner">L1 / 100</div>
                 </div>
                 <div>
-                    <div class="pro-badge">Global Rank</div>
-                    <div style="font-size:18px; font-weight:800; color:var(--pro-neon);">#14 Masters</div>
+                    <div class="pro-badge">Forest Rank</div>
+                    <div style="font-size:18px; font-weight:900; color:#0288D1;">#14 Masters</div>
                 </div>
                 <button class="hud-stat" style="cursor:pointer; font-size:11px;" onclick="openLevelPicker()">📑 1-100</button>
             </div>
 
-            <button class="continue-btn" id="pro-continue-btn" style="background:linear-gradient(135deg, #00F0FF, #7000FF); color:#000;" onclick="startCurrentLevel()">
-                ⚡ Quick Play Level 1 ⚡
+            <button class="continue-btn" id="pro-continue-btn" style="background:linear-gradient(135deg, #0288D1, #01579B); color:#FFF;" onclick="startCurrentLevel()">
+                ⚡ Play Ranger Level 1 ⚡
             </button>
 
             <div class="arcade-card">
-                <div style="font-size:13px; font-weight:bold; color:var(--pro-neon); margin-bottom:6px;">⚔️ Live Math Duel (PvP)</div>
-                <div style="font-size:11px; color:#94A3B8; margin-bottom:10px;">Solve level challenges faster than online rivals.</div>
-                <button class="btn-primary" style="background:#4F46E5;" onclick="startCurrentLevel()">Enter Duel Queue</button>
+                <div style="font-size:13px; font-weight:900; color:#0277BD; margin-bottom:6px;">⚔️ Live Math Duel (PvP)</div>
+                <div style="font-size:11px; color:#546E7A; margin-bottom:10px;">Solve challenges faster than online rivals in the forest.</div>
+                <button class="btn-primary" style="background:#0288D1;" onclick="startCurrentLevel()">Enter Duel Queue</button>
             </div>
 
             <div class="map-container" id="pro-map-nodes">
                 <!-- Dynamically rendered nodes -->
             </div>
 
-            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Age Bracket</button>
+            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Forest Path</button>
         </div>
 
         <!-- ==============================================
@@ -996,37 +1040,37 @@
 
             <div class="quiz-card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <span style="font-size:12px; color:#F59E0B; font-weight:bold;" id="quiz-level-indicator">Level 1 / 100</span>
-                    <span style="font-size:11px; color:#94A3B8;" id="quiz-mode-tag">Division Challenge</span>
+                    <span style="font-size:12px; color:#E65100; font-weight:900;" id="quiz-level-indicator">Level 1 / 100</span>
+                    <span style="font-size:11px; color:#78909C;" id="quiz-mode-tag">Forest Challenge</span>
                 </div>
                 <div class="visual-display" id="quiz-visual-display"></div>
                 <div class="problem-text" id="problem-text">24 ÷ 6 = ?</div>
-                <div style="font-size:12px; color:#64748B;" id="quiz-instruction-tag">Tap the correct answer below</div>
+                <div style="font-size:12px; color:#90A4AE;" id="quiz-instruction-tag">Tap the correct answer below</div>
             </div>
 
             <div class="options-grid" id="options-grid">
                 <!-- Dynamically populated buttons -->
             </div>
 
-            <button class="btn-hint" id="btn-hint" onclick="openHintDrawer()">💡 Need a Hint? (Socratic AI)</button>
-            <button class="btn-secondary" style="margin-top:10px;" onclick="returnToCurrentHub()">↩️ Back to Map / Hub</button>
+            <button class="btn-hint" id="btn-hint" onclick="openHintDrawer()">💡 Ask Foxy for a Hint! 🦊</button>
+            <button class="btn-secondary" style="margin-top:10px;" onclick="returnToCurrentHub()">↩️ Back to Map / Grove</button>
         </div>
 
         <!-- ==============================================
              AUTO-NEXT LEVEL FANFARE OVERLAY
         ============================================= -->
         <div class="auto-next-overlay" id="auto-next-modal">
-            <div class="celebrate-icon" id="auto-celebrate-icon">🎉</div>
-            <h2 style="font-size:24px; color:#10B981; margin-bottom:4px;" id="auto-win-title">Level 1 Cleared!</h2>
-            <p style="font-size:13px; color:#CBD5E1; margin-bottom:12px;" id="auto-win-sub">Excellent job! +25 Stars & +50 Coins earned.</p>
+            <div class="celebrate-icon" id="auto-celebrate-icon">🎉 🦊 🌸</div>
+            <h2 style="font-size:24px; color:#2E7D32; margin-bottom:4px;" id="auto-win-title">Level 1 Cleared!</h2>
+            <p style="font-size:13px; color:#546E7A; margin-bottom:12px;" id="auto-win-sub">Awesome job! +25 Stars & +50 Acorns earned.</p>
             
-            <div style="font-size:12px; color:#94A3B8;">Next Level starts automatically in:</div>
+            <div style="font-size:12px; color:#78909C;">Next Level starts automatically in:</div>
             <div class="auto-timer-circle" id="auto-timer-countdown">3</div>
 
             <button class="continue-btn" style="margin-top:10px;" id="btn-play-next-direct" onclick="triggerNextLevelDirectly()">
-                Play Next Level Now 🚀
+                Play Next Level Now 🐾
             </button>
-            <button class="btn-secondary" onclick="stopAutoAndReturnHub()">View Map / Hub</button>
+            <button class="btn-secondary" onclick="stopAutoAndReturnHub()">View Map / Grove</button>
         </div>
 
         <!-- ==============================================
@@ -1034,8 +1078,8 @@
         ============================================= -->
         <div class="drawer-overlay" id="level-picker-modal">
             <div class="drawer-content" style="max-height:85vh; display:flex; flex-direction:column;">
-                <div class="drawer-title">📑 Select Level (1 to 100)</div>
-                <div style="font-size:12px; color:#94A3B8; margin-bottom:10px;">Tap any unlocked level to play or practice:</div>
+                <div class="drawer-title">📑 Forest Level Map (1 to 100)</div>
+                <div style="font-size:12px; color:#78909C; margin-bottom:10px;">Tap any unlocked stone to play or practice:</div>
                 
                 <div class="levels-grid" id="picker-grid">
                     <!-- Populated 1 to 100 -->
@@ -1050,11 +1094,11 @@
         ============================================== -->
         <div class="drawer-overlay" id="ai-drawer">
             <div class="drawer-content">
-                <div class="drawer-title" id="drawer-title">💡 Socratic AI Hint</div>
+                <div class="drawer-title" id="drawer-title">🦊 Foxy's Woodland Clue</div>
                 <div class="drawer-body" id="drawer-body">
                     Think about multiplication! What number multiplied by 6 gives 24?
                 </div>
-                <button class="btn-primary" id="drawer-action-btn" onclick="closeDrawer()">Got it!</button>
+                <button class="btn-primary" id="drawer-action-btn" onclick="closeDrawer()">Got it, Foxy!</button>
             </div>
         </div>
     </div>
@@ -1089,15 +1133,14 @@
         // COVER PAGE LOGIC
         // ==========================================
         function onPlayClicked() {
-            // When PLAY button on cover page is clicked, transition to Age Tier page
             switchScreen('screen-age');
         }
 
         // ==========================================
         // DYNAMIC 1 TO 100 MATH GENERATOR ENGINE
         // ==========================================
-        const fruitEmojis = ['🍎', '🍓', '🍌', '🍊', '🍇'];
-        const cuteAnimals = ['🐶', '🐱', '🐰', '🐼', '🦊'];
+        const fruitEmojis = ['🍓', '🍎', '🍄', '🌰', '🍇'];
+        const cuteAnimals = ['🦊', '🐿️', '🦔', '🐰', '🦉'];
 
         function generateProblem(tier, level) {
             level = Math.max(1, Math.min(100, level));
@@ -1111,14 +1154,14 @@
                     const visual = `${emoji.repeat(a)} + ${emoji.repeat(b)}`;
                     return {
                         level: level,
-                        modeTag: `Visual Counting (Level ${level}/100)`,
+                        modeTag: `Forest Counting (Level ${level}/100)`,
                         visual: visual,
                         problem: `${a} + ${b} = ?`,
-                        instruction: 'Count the friendly items!',
+                        instruction: 'Count the yummy forest treats!',
                         options: shuffle([sum, sum + 1, Math.max(1, sum - 1), sum + 2]),
                         correct: sum,
-                        hint: `Count them together: start with ${a} and count ${b} more!`,
-                        explanation: `Awesome! ${a} + ${b} = ${sum} ${emoji} in total! ⭐`
+                        hint: `Foxy says: Start with ${a} and count up ${b} more forest treats! 🍓`,
+                        explanation: `Yum! ${a} + ${b} = ${sum} ${emoji} in the basket! ⭐`
                     };
                 } else if (level <= 50) {
                     const a = 3 + (level % 6);
@@ -1128,30 +1171,30 @@
                     const visual = `${animal.repeat(a)} + ${animal.repeat(b)}`;
                     return {
                         level: level,
-                        modeTag: `Animal Addition (Level ${level}/100)`,
+                        modeTag: `Woodland Friends (Level ${level}/100)`,
                         visual: visual,
                         problem: `${a} + ${b} = ?`,
-                        instruction: `How many ${animal} are there?`,
+                        instruction: `How many ${animal} friends are gathering?`,
                         options: shuffle([sum, sum + 1, sum - 1, sum + 2]),
                         correct: sum,
-                        hint: `Put ${a} in your head and count up ${b} fingers!`,
-                        explanation: `Terrific! ${a} + ${b} = ${sum} ${animal}!`
+                        hint: `Count ${a} forest friends plus ${b} more joining! 🐾`,
+                        explanation: `Hooray! ${a} + ${b} = ${sum} happy ${animal} friends!`
                     };
                 } else if (level <= 75) {
                     const b = 2 + (level % 5);
                     const diff = 2 + ((level * 2) % 6);
                     const a = diff + b;
-                    const visual = `⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐`.slice(0, a) + ` - Take away ${b}`;
+                    const visual = `🌰🌰🌰🌰🌰🌰🌰🌰🌰🌰`.slice(0, a * 2) + ` - Take away ${b}`;
                     return {
                         level: level,
-                        modeTag: `Star Subtraction (Level ${level}/100)`,
+                        modeTag: `Acorn Subtraction (Level ${level}/100)`,
                         visual: visual,
                         problem: `${a} - ${b} = ?`,
-                        instruction: 'Take away the stars!',
+                        instruction: 'Squirrel took away some acorns!',
                         options: shuffle([diff, diff + 1, Math.max(0, diff - 1), diff + 2]),
                         correct: diff,
-                        hint: `If you have ${a} stars and take away ${b}, count backwards from ${a}!`,
-                        explanation: `Spot on! ${a} minus ${b} leaves ${diff} sparkling stars!`
+                        hint: `If you hold ${a} acorns and give ${b} to the squirrel, count what remains! 🌰`,
+                        explanation: `Spot on! ${a} minus ${b} leaves ${diff} cozy acorns!`
                     };
                 } else {
                     const a = 10 + (level % 15);
@@ -1159,14 +1202,14 @@
                     const sum = a + b;
                     return {
                         level: level,
-                        modeTag: `Junior Champion (Level ${level}/100)`,
-                        visual: `🎈 10s & 1s Block Fun`,
+                        modeTag: `Foxy Champion (Level ${level}/100)`,
+                        visual: `🍃 Double-Digit Forest Trail`,
                         problem: `${a} + ${b} = ?`,
                         instruction: 'Add the two numbers together!',
                         options: shuffle([sum, sum + 2, sum - 2, sum + 10]),
                         correct: sum,
                         hint: `Add the ones place first: ${(a % 10)} + ${(b % 10)}, then add the tens!`,
-                        explanation: `Superstar! ${a} + ${b} = ${sum}. You're conquering Junior math!`
+                        explanation: `Superstar! ${a} + ${b} = ${sum}. You're conquering the Forest Trail!`
                     };
                 }
             } else if (tier === '9-13') {
@@ -1176,13 +1219,13 @@
                     const product = a * b;
                     return {
                         level: level,
-                        modeTag: `Times Tables Sprint (Level ${level}/100)`,
+                        modeTag: `Times Tables Grove (Level ${level}/100)`,
                         visual: '',
                         problem: `${a} × ${b} = ?`,
                         instruction: 'Calculate the product',
                         options: shuffle([product, product + a, product - b, product + 4]),
                         correct: product,
-                        hint: `Think: What is ${a} added together ${b} times?`,
+                        hint: `Think: What is ${a} added together ${b} times along the tree line?`,
                         explanation: `${a} × ${b} = ${product}. Great multiplication skill!`
                     };
                 } else if (level <= 50) {
@@ -1191,7 +1234,7 @@
                     const dividend = divisor * quotient;
                     return {
                         level: level,
-                        modeTag: `Division Quest (Level ${level}/100)`,
+                        modeTag: `Division Logs (Level ${level}/100)`,
                         visual: '',
                         problem: `${dividend} ÷ ${divisor} = ?`,
                         instruction: 'Find the quotient',
@@ -1223,14 +1266,14 @@
                     const result = (coeff * x) + constant;
                     return {
                         level: level,
-                        modeTag: `Intermediate Pre-Algebra (Level ${level}/100)`,
+                        modeTag: `Woodland Pre-Algebra (Level ${level}/100)`,
                         visual: '',
                         problem: `Solve for x: ${coeff}x + ${constant} = ${result}`,
                         instruction: 'Isolate the variable x',
                         options: shuffle([`x = ${x}`, `x = ${x + 1}`, `x = ${Math.max(1, x - 1)}`, `x = ${x + 2}`]),
                         correct: `x = ${x}`,
                         hint: `Subtract ${constant} from ${result} to get ${result - constant}. Then divide by ${coeff}!`,
-                        explanation: `${coeff}x + ${constant} = ${result} → ${coeff}x = ${result - constant} → x = ${x}. Mastery unlocked!`
+                        explanation: `${coeff}x + ${constant} = ${result} → ${coeff}x = ${result - constant} → x = ${x}. Forest mastery unlocked!`
                     };
                 }
             } else {
@@ -1240,14 +1283,14 @@
                     const ans = base * mult;
                     return {
                         level: level,
-                        modeTag: `Mental Speed Blitz (Level ${level}/100)`,
+                        modeTag: `Ranger Speed Blitz (Level ${level}/100)`,
                         visual: '',
                         problem: `${base} × ${mult} = ?`,
-                        instruction: 'Rapid Mental Decomposition (No Scratchpad)',
+                        instruction: 'Rapid Mental Arithmetic',
                         options: shuffle([ans, ans + mult, ans - base, ans + 12]),
                         correct: ans,
                         hint: `Decompose: (${Math.floor(base/10)*10} × ${mult}) + (${base%10} × ${mult})`,
-                        explanation: `${base} × ${mult} = ${ans}. Executed with blitz speed!`
+                        explanation: `${base} × ${mult} = ${ans}. Executed with ranger speed!`
                     };
                 } else if (level <= 50) {
                     const a = 3 + (level % 5);
@@ -1256,7 +1299,7 @@
                     const c = (a * x) + b;
                     return {
                         level: level,
-                        modeTag: `Linear Equations Sprint (Level ${level}/100)`,
+                        modeTag: `Linear Equations Canopy (Level ${level}/100)`,
                         visual: '',
                         problem: `Solve: ${a}x + ${b} = ${c}`,
                         instruction: 'Find the real value of x',
@@ -1285,14 +1328,14 @@
                     const sq = root1 * root1;
                     return {
                         level: level,
-                        modeTag: `Pro Masters Challenge (Level ${level}/100)`,
+                        modeTag: `Elder Masters Challenge (Level ${level}/100)`,
                         visual: '',
                         problem: `If x² - ${sq} = 0 and x > 0, find x`,
-                        instruction: 'Masters Tier Logic',
+                        instruction: 'Elder Tier Forest Logic',
                         options: shuffle([`x = ${ans}`, `x = ${ans + 1}`, `x = ${ans - 1}`, `x = ${sq}`]),
                         correct: `x = ${ans}`,
                         hint: `x² = ${sq}. Since x > 0, take the positive square root!`,
-                        explanation: `x² = ${sq} → x = ${ans}. You have conquered Level ${level} in Pro Arcade!`
+                        explanation: `x² = ${sq} → x = ${ans}. You have conquered Level ${level} in Elder Ranger!`
                     };
                 }
             }
@@ -1317,7 +1360,6 @@
                 target.classList.add('active');
             }
 
-            // Hide HUD header on Cover screen, show on all other screens
             const hud = document.getElementById('main-hud');
             if (hud) {
                 hud.style.display = (screenId === 'screen-cover') ? 'none' : 'flex';
@@ -1329,7 +1371,6 @@
         function selectAge(tier) {
             currentTier = tier;
 
-            // Update Card selected states
             document.getElementById('tier-card-junior').classList.toggle('selected', tier === '5-8');
             document.getElementById('tier-card-inter').classList.toggle('selected', tier === '9-13');
             document.getElementById('tier-card-pro').classList.toggle('selected', tier === '14-20');
@@ -1339,20 +1380,17 @@
             const hudBadge = document.getElementById('hud-tier-label');
 
             if (tier === '5-8') {
-                btnEnter.innerHTML = `Start Level ${curLvl} 🎈`;
-                btnEnter.style.background = 'var(--primary)';
-                btnEnter.style.color = '#fff';
-                hudBadge.innerHTML = '👶 5-8';
+                btnEnter.innerHTML = `Start Level ${curLvl} 🐾`;
+                btnEnter.style.background = 'linear-gradient(135deg, #FFB085, #FF8A65)';
+                hudBadge.innerHTML = '🦊 5-8';
             } else if (tier === '9-13') {
-                btnEnter.innerHTML = `Start Level ${curLvl} 🚀`;
-                btnEnter.style.background = 'var(--primary)';
-                btnEnter.style.color = '#fff';
-                hudBadge.innerHTML = '🎒 9-13';
+                btnEnter.innerHTML = `Start Level ${curLvl} 🐿️`;
+                btnEnter.style.background = 'linear-gradient(135deg, #81C784, #4CAF50)';
+                hudBadge.innerHTML = '🐿️ 9-13';
             } else if (tier === '14-20') {
-                btnEnter.innerHTML = `Start Level ${curLvl} ⚡`;
-                btnEnter.style.background = 'linear-gradient(135deg, #00F0FF, #7000FF)';
-                btnEnter.style.color = '#000';
-                hudBadge.innerHTML = '⚡ 14-20';
+                btnEnter.innerHTML = `Start Level ${curLvl} 🦉`;
+                btnEnter.style.background = 'linear-gradient(135deg, #0288D1, #01579B)';
+                hudBadge.innerHTML = '🦉 14-20';
             }
 
             renderHubStats();
@@ -1373,12 +1411,10 @@
         }
 
         function renderHubStats() {
-            // Update pills on screen-age
             document.getElementById('tier-pill-5-8').innerText = `Levels 1 – 100 • Current: Level ${progress['5-8'].currentLevel}`;
             document.getElementById('tier-pill-9-13').innerText = `Levels 1 – 100 • Current: Level ${progress['9-13'].currentLevel}`;
             document.getElementById('tier-pill-14-20').innerText = `Levels 1 – 100 • Current: Level ${progress['14-20'].currentLevel}`;
 
-            // Update maps
             renderMapNodes('5-8', 'junior-map-nodes', 'junior-progress-text', 'junior-continue-btn', 'junior-node');
             renderMapNodes('9-13', 'inter-map-nodes', 'inter-progress-text', 'inter-continue-btn', '');
             renderMapNodes('14-20', 'pro-map-nodes', 'pro-level-banner', 'pro-continue-btn', 'pro-node');
@@ -1391,7 +1427,6 @@
             const curLvl = progress[tier].currentLevel;
             const maxUnl = progress[tier].maxUnlocked;
 
-            // Update progress banner
             const progressElem = document.getElementById(progressId);
             if (progressElem) {
                 if (tier === '14-20') {
@@ -1401,23 +1436,19 @@
                 }
             }
 
-            // Update continue button
             const contBtn = document.getElementById(continueBtnId);
             if (contBtn) {
-                contBtn.innerHTML = `▶️ Continue Level ${curLvl} of 100 🚀`;
+                contBtn.innerHTML = `▶️ Continue Level ${curLvl} of 100 🐾`;
             }
 
-            // Render visible nodes around current level
             container.innerHTML = '';
 
-            // Add Daily Chest
             const chest = document.createElement('div');
             chest.className = 'map-node chest-node';
-            chest.innerHTML = '🎁';
-            chest.onclick = () => showNotification('🎁 You claimed 50 Free Daily Coins!');
+            chest.innerHTML = '🍄';
+            chest.onclick = () => showNotification('🍄 You discovered 50 Free Forest Acorns!');
             container.appendChild(chest);
 
-            // Display 4 consecutive nodes around current level
             const startNode = Math.min(97, Math.max(1, curLvl - 1));
             for (let lvl = startNode + 3; lvl >= startNode; lvl--) {
                 const node = document.createElement('div');
@@ -1427,11 +1458,11 @@
                 node.className = `map-node ${extraClass} ${isCurrent ? 'active-target' : ''} ${!isUnlocked ? 'locked' : ''}`;
                 
                 if (isUnlocked) {
-                    node.innerHTML = `<span>L${lvl}</span><span style="font-size:10px;">${isCurrent ? '⭐' : '✓'}</span>`;
+                    node.innerHTML = `<span>L${lvl}</span><span style="font-size:10px;">${isCurrent ? '🐾' : '✓'}</span>`;
                     node.onclick = () => launchLevel(tier, lvl);
                 } else {
                     node.innerHTML = `🔒<span style="font-size:9px;">L${lvl}</span>`;
-                    node.onclick = () => showNotification(`🔒 Level ${lvl} is locked. Win Level ${lvl-1} first!`);
+                    node.onclick = () => showNotification(`🔒 Level ${lvl} is locked. Clear Level ${lvl-1} first!`);
                 }
                 container.appendChild(node);
             }
@@ -1458,7 +1489,6 @@
             document.getElementById('problem-text').innerHTML = quiz.problem;
             document.getElementById('quiz-instruction-tag').innerText = quiz.instruction;
 
-            // Render Options
             const grid = document.getElementById('options-grid');
             grid.innerHTML = '';
 
@@ -1470,14 +1500,13 @@
                 grid.appendChild(btn);
             });
 
-            // Adjust Hint Label
             const hintBtn = document.getElementById('btn-hint');
             if (tier === '5-8') {
-                hintBtn.innerText = '🎈 Need a Gentle Clue?';
+                hintBtn.innerText = '🦊 Ask Foxy for a Gentle Clue!';
             } else if (tier === '14-20') {
-                hintBtn.innerText = '⚡ Socratic Formula Scaffold';
+                hintBtn.innerText = '🦉 Wise Owl Formula Scaffold';
             } else {
-                hintBtn.innerText = '💡 Need a Hint? (Socratic AI)';
+                hintBtn.innerText = '💡 Need a Hint? (Foxy AI)';
             }
 
             switchScreen('screen-quiz');
@@ -1487,24 +1516,20 @@
             const isCorrect = (String(selectedVal) === String(currentActiveQuiz.correct));
 
             if (isCorrect) {
-                // Award stars & coins
                 const starsElem = document.getElementById('hud-stars');
                 const coinsElem = document.getElementById('hud-coins');
                 starsElem.innerText = parseInt(starsElem.innerText) + 10;
                 coinsElem.innerText = parseInt(coinsElem.innerText) + 25;
 
-                // Unlock next level (up to 100)
                 const nextLevel = Math.min(100, currentActiveQuiz.level + 1);
                 progress[currentTier].maxUnlocked = Math.max(progress[currentTier].maxUnlocked, nextLevel);
                 saveProgress();
 
-                // Trigger Continuous Auto-Advance Fanfare
                 openAutoAdvanceModal(currentActiveQuiz.level, nextLevel);
             } else {
-                // Show AI error feedback drawer
                 const drawer = document.getElementById('ai-drawer');
-                document.getElementById('drawer-title').innerHTML = '❌ Guided Explanation';
-                document.getElementById('drawer-body').innerHTML = `You chose <b>${selectedVal}</b>.<br><br><b>Explanation:</b> ${currentActiveQuiz.explanation}`;
+                document.getElementById('drawer-title').innerHTML = '🦊 Foxy Gently Explains';
+                document.getElementById('drawer-body').innerHTML = `You chose <b>${selectedVal}</b>.<br><br><b>Woodland Solution:</b> ${currentActiveQuiz.explanation}`;
                 document.getElementById('drawer-action-btn').innerText = 'Try Again 🔄';
                 document.getElementById('drawer-action-btn').onclick = closeDrawer;
                 drawer.classList.add('active');
@@ -1512,7 +1537,7 @@
         }
 
         // ==========================================
-        // AUTO ADVANCE MODAL (Direct progression to next level)
+        // AUTO ADVANCE MODAL
         // ==========================================
         function openAutoAdvanceModal(completedLevel, nextLevel) {
             const modal = document.getElementById('auto-next-modal');
@@ -1521,18 +1546,18 @@
             const btnDirect = document.getElementById('btn-play-next-direct');
             const countdownElem = document.getElementById('auto-timer-countdown');
 
-            title.innerText = `Level ${completedLevel} Cleared! 🎉`;
+            title.innerText = `Level ${completedLevel} Cleared! 🐾`;
             
             if (completedLevel >= 100) {
-                sub.innerHTML = `🏆 <b>ULTIMATE GRAND MASTER!</b><br>You have conquered all 100 Levels!`;
+                sub.innerHTML = `🏆 <b>FOREST GRAND MASTER!</b><br>You have explored all 100 Forest Levels!`;
                 btnDirect.innerText = 'Replay Level 100';
                 countdownElem.style.display = 'none';
                 modal.classList.add('active');
                 return;
             }
 
-            sub.innerHTML = `Awesome job! Moving straight to <b>Level ${nextLevel}</b>.`;
-            btnDirect.innerText = `Play Level ${nextLevel} Now 🚀`;
+            sub.innerHTML = `Foxy is cheering! Advancing straight to <b>Level ${nextLevel}</b>.`;
+            btnDirect.innerText = `Play Level ${nextLevel} Now 🐾`;
             countdownElem.style.display = 'flex';
 
             countdownSeconds = 3;
@@ -1542,7 +1567,6 @@
 
             modal.classList.add('active');
 
-            // 3-second automatic timer to advance seamlessly
             autoAdvanceTimer = setInterval(() => {
                 countdownSeconds--;
                 if (countdownSeconds > 0) {
@@ -1569,7 +1593,7 @@
         }
 
         // ==========================================
-        // LEVEL PICKER (1 TO 100 JUMP SELECTOR)
+        // LEVEL PICKER (1 TO 100)
         // ==========================================
         function openLevelPicker() {
             const grid = document.getElementById('picker-grid');
@@ -1608,9 +1632,9 @@
         function openHintDrawer() {
             if (!currentActiveQuiz) return;
             const drawer = document.getElementById('ai-drawer');
-            document.getElementById('drawer-title').innerHTML = '💡 Socratic AI Hint';
+            document.getElementById('drawer-title').innerHTML = '🦊 Foxy\'s Woodland Clue';
             document.getElementById('drawer-body').innerHTML = currentActiveQuiz.hint;
-            document.getElementById('drawer-action-btn').innerText = 'Got it!';
+            document.getElementById('drawer-action-btn').innerText = 'Got it, Foxy!';
             document.getElementById('drawer-action-btn').onclick = closeDrawer;
             drawer.classList.add('active');
         }
@@ -1623,9 +1647,9 @@
         // Parents Gate
         // ==========================================
         function openParentGate() {
-            const ans = prompt('🔒 PARENTS GATE: Solve to enter\nWhat is 7 × 8?');
+            const ans = prompt('🔒 WISE OWL PARENTS GATE: Solve to enter\nWhat is 7 × 8?');
             if (ans === '56') {
-                alert(`✅ Parent Access Granted!\n\nLevels Completed:\n• Ages 5-8: Level ${progress['5-8'].maxUnlocked}/100\n• Ages 9-13: Level ${progress['9-13'].maxUnlocked}/100\n• Ages 14-20: Level ${progress['14-20'].maxUnlocked}/100`);
+                alert(`✅ Parent Access Granted!\n\nForest Levels Completed:\n• Ages 5-8: Level ${progress['5-8'].maxUnlocked}/100\n• Ages 9-13: Level ${progress['9-13'].maxUnlocked}/100\n• Ages 14-20: Level ${progress['14-20'].maxUnlocked}/100`);
             } else if (ans !== null) {
                 alert('❌ Incorrect PIN. Access Denied.');
             }
