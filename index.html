@@ -350,6 +350,79 @@
             display: flex !important;
         }
 
+        /* Frozen Headers and Footers for Map Screen */
+        .screen.map-screen {
+            padding: 0 !important;
+            overflow-y: hidden !important;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .map-fixed-header {
+            flex-shrink: 0;
+            padding: 12px 16px 8px;
+            background: #FFFFFF;
+            border-bottom: 2px solid #E8F5E9;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            z-index: 10;
+        }
+
+        .map-fixed-header .screen-title {
+            font-size: 19px;
+            margin-bottom: 2px;
+        }
+
+        .map-fixed-header .subtitle {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .map-fixed-header .progress-banner {
+            margin-bottom: 8px;
+            padding: 8px 12px;
+        }
+
+        .map-fixed-header .continue-btn {
+            margin-bottom: 0px;
+            padding: 11px;
+            font-size: 14px;
+        }
+
+        .map-scroll-area {
+            flex: 1;
+            overflow-y: auto !important;
+            overflow-x: hidden;
+            padding: 10px 12px 20px;
+            position: relative;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: #A5D6A7 transparent;
+        }
+
+        .map-scroll-area::-webkit-scrollbar {
+            width: 6px;
+        }
+        .map-scroll-area::-webkit-scrollbar-thumb {
+            background: #A5D6A7;
+            border-radius: 4px;
+        }
+
+        .map-fixed-footer {
+            flex-shrink: 0;
+            padding: 8px 16px 12px;
+            background: #FFFFFF;
+            border-top: 2px solid #E8F5E9;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.03);
+            z-index: 10;
+        }
+
+        .map-fixed-footer .btn-secondary {
+            margin-top: 0;
+            padding: 10px;
+            font-size: 13px;
+        }
+
         /* Screen Titles */
         .screen-title {
             font-size: 22px;
@@ -1007,104 +1080,131 @@
         <!-- ==============================================
              SCREEN 2A: JUNIOR MAP (AGES 5 - 8)
         ============================================== -->
-        <div class="screen" id="screen-map-junior">
-            <div class="screen-top-bar">
-                <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
-                <span class="top-bar-title" style="color:#E65100;">🦊 LITTLE KIT TRAIL</span>
-                <div style="width: 40px;"></div>
-            </div>
-            <div class="screen-title" style="color:#E65100;">Meadow Safari Map 🎈</div>
-            <div class="subtitle" id="junior-subtitle">Levels 1 – 100 Path</div>
-
-            <div class="progress-banner">
-                <div>
-                    <div style="font-size:11px; color:#78909C; font-weight:700;">YOUR FOREST PROGRESS</div>
-                    <div style="font-size:16px; font-weight:900; color:#2E7D32;" id="junior-progress-text">Level 1 of 100 (1%)</div>
+        <div class="screen map-screen" id="screen-map-junior">
+            <!-- FROZEN TOP PART -->
+            <div class="map-fixed-header">
+                <div class="screen-top-bar">
+                    <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
+                    <span class="top-bar-title" style="color:#E65100;">🦊 LITTLE KIT TRAIL</span>
+                    <div style="width: 40px;"></div>
                 </div>
-                <button class="hud-stat" style="cursor:pointer;" onclick="openLevelPicker()">📑 1-100</button>
+                <div class="screen-title" style="color:#E65100;">Meadow Safari Map 🎈</div>
+                <div class="subtitle" id="junior-subtitle">Levels 1 – 100 Path</div>
+
+                <div class="progress-banner">
+                    <div>
+                        <div style="font-size:11px; color:#78909C; font-weight:700;">YOUR FOREST PROGRESS</div>
+                        <div style="font-size:16px; font-weight:900; color:#2E7D32;" id="junior-progress-text">Level 1 of 100 (1%)</div>
+                    </div>
+                    <button class="hud-stat" style="cursor:pointer;" onclick="openLevelPicker()">📑 1-100</button>
+                </div>
+
+                <button class="continue-btn" id="junior-continue-btn" onclick="startCurrentLevel()">
+                    ▶️ Continue Level 1 🐾
+                </button>
             </div>
 
-            <button class="continue-btn" id="junior-continue-btn" onclick="startCurrentLevel()">
-                ▶️ Continue Level 1 🐾
-            </button>
-
-            <div class="map-container" id="junior-map-nodes">
-                <!-- Dynamically rendered nodes -->
+            <!-- SCROLLABLE MIDDLE PART: ONLY LEVEL ICONS MOVE -->
+            <div class="map-scroll-area">
+                <div class="map-container" id="junior-map-nodes">
+                    <!-- Dynamically rendered 1 to 100 nodes -->
+                </div>
             </div>
 
-            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Forest Path</button>
+            <!-- FROZEN BOTTOM PART -->
+            <div class="map-fixed-footer">
+                <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Forest Path</button>
+            </div>
         </div>
 
         <!-- ==============================================
              SCREEN 2B: INTERMEDIATE MAP (AGES 9 - 13)
         ============================================== -->
-        <div class="screen" id="screen-map">
-            <div class="screen-top-bar">
-                <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
-                <span class="top-bar-title" style="color:#2E7D32;">🐿️ SCOUT'S GROVE</span>
-                <div style="width: 40px;"></div>
-            </div>
-            <div class="screen-title" style="color:#2E7D32;">Adventure Map 🗺️</div>
-            <div class="subtitle" id="inter-subtitle">Multiplication & Division 100-Level Quest</div>
-
-            <div class="progress-banner">
-                <div>
-                    <div style="font-size:11px; color:#78909C; font-weight:700;">WOODLAND MASTERY</div>
-                    <div style="font-size:16px; font-weight:900; color:#2E7D32;" id="inter-progress-text">Level 1 of 100 (1%)</div>
+        <div class="screen map-screen" id="screen-map">
+            <!-- FROZEN TOP PART -->
+            <div class="map-fixed-header">
+                <div class="screen-top-bar">
+                    <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
+                    <span class="top-bar-title" style="color:#2E7D32;">🐿️ SCOUT'S GROVE</span>
+                    <div style="width: 40px;"></div>
                 </div>
-                <button class="hud-stat" style="cursor:pointer;" onclick="openLevelPicker()">📑 1-100</button>
+                <div class="screen-title" style="color:#2E7D32;">Adventure Map 🗺️</div>
+                <div class="subtitle" id="inter-subtitle">Multiplication & Division 100-Level Quest</div>
+
+                <div class="progress-banner">
+                    <div>
+                        <div style="font-size:11px; color:#78909C; font-weight:700;">WOODLAND MASTERY</div>
+                        <div style="font-size:16px; font-weight:900; color:#2E7D32;" id="inter-progress-text">Level 1 of 100 (1%)</div>
+                    </div>
+                    <button class="hud-stat" style="cursor:pointer;" onclick="openLevelPicker()">📑 1-100</button>
+                </div>
+
+                <button class="continue-btn" id="inter-continue-btn" onclick="startCurrentLevel()">
+                    ▶️ Continue Level 1 🐾
+                </button>
             </div>
 
-            <button class="continue-btn" id="inter-continue-btn" onclick="startCurrentLevel()">
-                ▶️ Continue Level 1 🐾
-            </button>
-
-            <div class="map-container" id="inter-map-nodes">
-                <!-- Dynamically rendered nodes -->
+            <!-- SCROLLABLE MIDDLE PART: ONLY LEVEL ICONS MOVE -->
+            <div class="map-scroll-area">
+                <div class="map-container" id="inter-map-nodes">
+                    <!-- Dynamically rendered 1 to 100 nodes -->
+                </div>
             </div>
 
-            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Forest Path</button>
+            <!-- FROZEN BOTTOM PART -->
+            <div class="map-fixed-footer">
+                <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Forest Path</button>
+            </div>
         </div>
 
         <!-- ==============================================
              SCREEN 2C: PRO ARCADE HUB (AGES 14 - 20)
         ============================================== -->
-        <div class="screen" id="screen-pro-hub">
-            <div class="screen-top-bar">
-                <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
-                <span class="top-bar-title" style="color:#0277BD;">🦉 RANGER'S CANOPY</span>
-                <div style="width: 40px;"></div>
-            </div>
-            <div class="screen-title" style="color:#0277BD;">Ranger Dashboard ⚡</div>
-            <div class="subtitle" id="pro-subtitle">Speed Math & Algebra 100-Level Grind</div>
-
-            <div class="pro-hud">
-                <div>
-                    <div class="pro-badge">Current Level</div>
-                    <div style="font-size:18px; font-weight:900; color:#01579B;" id="pro-level-banner">L1 / 100</div>
+        <div class="screen map-screen" id="screen-pro-hub">
+            <!-- FROZEN TOP PART -->
+            <div class="map-fixed-header">
+                <div class="screen-top-bar">
+                    <button class="btn-back-arrow" onclick="switchScreen('screen-age')" title="Back to Age Selection">←</button>
+                    <span class="top-bar-title" style="color:#0277BD;">🦉 RANGER'S CANOPY</span>
+                    <div style="width: 40px;"></div>
                 </div>
-                <div>
-                    <div class="pro-badge">Forest Rank</div>
-                    <div style="font-size:18px; font-weight:900; color:#0288D1;">#14 Masters</div>
+                <div class="screen-title" style="color:#0277BD;">Ranger Dashboard ⚡</div>
+                <div class="subtitle" id="pro-subtitle">Speed Math & Algebra 100-Level Grind</div>
+
+                <div class="pro-hud" style="margin-bottom:8px;">
+                    <div>
+                        <div class="pro-badge">Current Level</div>
+                        <div style="font-size:16px; font-weight:900; color:#01579B;" id="pro-level-banner">L1 / 100</div>
+                    </div>
+                    <div>
+                        <div class="pro-badge">Forest Rank</div>
+                        <div style="font-size:16px; font-weight:900; color:#0288D1;">#14 Masters</div>
+                    </div>
+                    <button class="hud-stat" style="cursor:pointer; font-size:11px;" onclick="openLevelPicker()">📑 1-100</button>
                 </div>
-                <button class="hud-stat" style="cursor:pointer; font-size:11px;" onclick="openLevelPicker()">📑 1-100</button>
+
+                <button class="continue-btn" id="pro-continue-btn" style="background:linear-gradient(135deg, #0288D1, #01579B); color:#FFF;" onclick="startCurrentLevel()">
+                    ⚡ Play Ranger Level 1 ⚡
+                </button>
             </div>
 
-            <button class="continue-btn" id="pro-continue-btn" style="background:linear-gradient(135deg, #0288D1, #01579B); color:#FFF;" onclick="startCurrentLevel()">
-                ⚡ Play Ranger Level 1 ⚡
-            </button>
+            <!-- SCROLLABLE MIDDLE PART: ONLY LEVEL ICONS MOVE -->
+            <div class="map-scroll-area">
+                <div class="arcade-card" style="margin-top:4px;">
+                    <div style="font-size:13px; font-weight:900; color:#0277BD; margin-bottom:6px;">⚔️ Live Math Duel (PvP)</div>
+                    <div style="font-size:11px; color:#546E7A; margin-bottom:10px;">Solve challenges faster than online rivals in the forest.</div>
+                    <button class="btn-primary" style="background:#0288D1; padding:10px;" onclick="startCurrentLevel()">Enter Duel Queue</button>
+                </div>
 
-            <div class="arcade-card">
-                <div style="font-size:13px; font-weight:900; color:#0277BD; margin-bottom:6px;">⚔️ Live Math Duel (PvP)</div>
-                <div style="font-size:11px; color:#546E7A; margin-bottom:10px;">Solve challenges faster than online rivals in the forest.</div>
-                <button class="btn-primary" style="background:#0288D1;" onclick="startCurrentLevel()">Enter Duel Queue</button>
+                <div class="map-container" id="pro-map-nodes">
+                    <!-- Dynamically rendered 1 to 100 nodes -->
+                </div>
             </div>
 
-            <div class="map-container" id="pro-map-nodes">
-                <!-- Dynamically rendered nodes -->
+            <!-- FROZEN BOTTOM PART -->
+            <div class="map-fixed-footer">
+                <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Forest Path</button>
             </div>
-
-            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Forest Path</button>
         </div>
 
         <!-- ==============================================
