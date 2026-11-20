@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quizopia Escape - Math Arcade & Adventure</title>
+    <title>Math Arcade & Adventure - Interactive IA Prototype</title>
     <style>
         :root {
             --primary: #4F46E5;
@@ -11,7 +11,7 @@
             --accent: #F59E0B;
             --success: #10B981;
             --danger: #EF4444;
-            --bg-dark: #0F172A;
+            --bg-dark: #0B0F19;
             --card-bg: #1E293B;
             --text-light: #F8FAFC;
             --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -33,7 +33,7 @@
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: #050811;
             color: var(--text-light);
             display: flex;
             justify-content: center;
@@ -58,7 +58,7 @@
         }
 
         /* ==============================================
-           COVER PAGE (QUIZOPIA ESCAPE)
+           SCREEN 0: COVER PAGE (QUIZOPIA ESCAPE)
         ============================================== */
         #screen-cover {
             flex: 1;
@@ -85,7 +85,7 @@
             background: rgba(255, 255, 255, 0.15);
         }
 
-        /* PLAY Button Hit Area */
+        /* PLAY Button Hit Area -> Directly opens Age Stages Screen */
         .hit-play {
             top: 42.5%;
             left: 20%;
@@ -101,7 +101,6 @@
             100% { box-shadow: 0 0 32px rgba(255, 217, 61, 0.9); transform: scale(1.03); }
         }
 
-        /* ADVENTURE MAP Button Hit Area */
         .hit-map {
             top: 57%;
             left: 24%;
@@ -110,7 +109,6 @@
             border-radius: 28px;
         }
 
-        /* SETTINGS Button Hit Area */
         .hit-settings {
             top: 68.5%;
             left: 29%;
@@ -119,7 +117,6 @@
             border-radius: 25px;
         }
 
-        /* Bottom Nav Buttons (Trophy, Stats, Star, Gift) */
         .hit-bottom-nav {
             position: absolute;
             bottom: 3.5%;
@@ -146,11 +143,101 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
-        /* Header HUD */
+        /* ==============================================
+           SCREEN 1: CHOOSE AGE SCREEN (EXACT MATCH TO SCREENSHOT)
+        ============================================== */
+        #screen-age {
+            background-color: #0F172A;
+            padding: 30px 20px 24px 20px;
+            display: none;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .age-subtitle {
+            font-size: 13px;
+            text-align: center;
+            color: #94A3B8;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            letter-spacing: 0.2px;
+        }
+
+        .age-card {
+            background: #1E293B;
+            border: 2px solid #334155;
+            border-radius: 18px;
+            padding: 24px 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .age-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #F8FAFC;
+        }
+
+        .age-card p {
+            font-size: 12px;
+            color: #94A3B8;
+            line-height: 1.4;
+        }
+
+        .age-card:hover {
+            border-color: #475569;
+        }
+
+        /* Selected Card Styling (Matches Purple & Orange Accent from Screenshot) */
+        .age-card.selected {
+            background: linear-gradient(135deg, #4338CA, #3730A3);
+            border: 2px solid #818CF8;
+            outline: 1.5px solid #F59E0B;
+            box-shadow: 0 0 18px rgba(99, 102, 241, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .age-card.selected h3 {
+            color: #FFFFFF;
+        }
+
+        .age-card.selected p {
+            color: #E2E8F0;
+        }
+
+        .btn-enter-map {
+            background: #4F46E5;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+            margin-top: auto;
+            margin-bottom: 6px;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-enter-map:hover {
+            background: #4338CA;
+            transform: translateY(-1px);
+        }
+
+        .btn-enter-map:active {
+            transform: scale(0.98);
+        }
+
+        /* Top HUD Header (Shown only during active gameplay and maps) */
         .hud-header {
             background: #1E293B;
             padding: 10px 14px;
-            display: none; /* Shown only on in-app screens */
+            display: none;
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid #334155;
@@ -206,62 +293,6 @@
             text-align: center;
             color: #94A3B8;
             margin-bottom: 14px;
-        }
-
-        /* Screen 1: Age Selector */
-        .age-card {
-            background: linear-gradient(135deg, #334155, #1E293B);
-            border: 2px solid #475569;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-            position: relative;
-        }
-
-        .age-card:hover {
-            transform: translateY(-2px);
-            border-color: #CBD5E1;
-        }
-
-        .age-card.selected {
-            border-color: #F59E0B;
-            transform: translateY(-2px);
-            background: linear-gradient(135deg, #4F46E5, #3730A3);
-            box-shadow: 0 0 16px rgba(99, 102, 241, 0.4);
-        }
-
-        .age-card.selected::after {
-            content: "✓ ACTIVE";
-            position: absolute;
-            top: 8px;
-            right: 12px;
-            font-size: 10px;
-            font-weight: 800;
-            color: #F59E0B;
-        }
-
-        .age-card h3 {
-            font-size: 17px;
-            margin-bottom: 4px;
-        }
-
-        .age-card p {
-            font-size: 12px;
-            color: #CBD5E1;
-        }
-
-        .level-progress-pill {
-            display: inline-block;
-            margin-top: 6px;
-            font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 12px;
-            background: rgba(0,0,0,0.3);
-            color: #F59E0B;
-            font-weight: bold;
         }
 
         /* Screen 2: Adventure Map Nodes */
@@ -652,16 +683,16 @@
              SCREEN 0: COVER PAGE (QUIZOPIA ESCAPE)
         ============================================== -->
         <div class="screen active" id="screen-cover">
-            <!-- 1. Play Button -> Leads directly to 3 Age Stages Page -->
-            <button class="cover-hit-area hit-play" onclick="onPlayClicked()" title="Play Quizopia Escape"></button>
+            <!-- Clicking PLAY directly opens the Age Selection Screen attached in screenshot -->
+            <button class="cover-hit-area hit-play" onclick="openAgeSelectionScreen()" title="Play Quizopia Escape"></button>
 
-            <!-- 2. Adventure Map Button -> Leads to Age Stages / Map -->
-            <button class="cover-hit-area hit-map" onclick="onPlayClicked()" title="Adventure Map"></button>
+            <!-- Adventure Map also opens Age Selection -->
+            <button class="cover-hit-area hit-map" onclick="openAgeSelectionScreen()" title="Adventure Map"></button>
 
-            <!-- 3. Settings Button -> Parents Gate / Settings -->
+            <!-- Settings Button -->
             <button class="cover-hit-area hit-settings" onclick="openParentGate()" title="Settings"></button>
 
-            <!-- 4. Bottom Nav Hit Areas -->
+            <!-- Bottom Nav Hit Areas -->
             <div class="hit-bottom-nav">
                 <button class="hit-bottom-icon" onclick="showCoverLeaderboard()" title="Trophy / Leaderboard"></button>
                 <button class="hit-bottom-icon" onclick="showCoverStats()" title="Analytics / Progress"></button>
@@ -671,7 +702,37 @@
         </div>
 
         <!-- ==============================================
-             TOP HUD HEADER (Shown inside games & menus)
+             SCREEN 1: CHOOSE AGE TIER (MATCHES USER SCREENSHOT EXACTLY)
+        ============================================== -->
+        <div class="screen" id="screen-age">
+            <div class="age-subtitle">Tailors math difficulty & visual aesthetics</div>
+
+            <!-- Stage 1: Ages 5 - 8 (Junior) -->
+            <div class="age-card" id="tier-card-junior" onclick="selectAge('5-8')">
+                <h3>Ages 5 – 8 (Junior)</h3>
+                <p>Visual counting, addition & subtraction with interactive clues.</p>
+            </div>
+
+            <!-- Stage 2: Ages 9 - 13 (Intermediate) -->
+            <div class="age-card selected" id="tier-card-inter" onclick="selectAge('9-13')">
+                <h3>Ages 9 – 13 (Intermediate)</h3>
+                <p>Multiplication, division, and step-by-step AI explanations.</p>
+            </div>
+
+            <!-- Stage 3: Ages 14 - 20 (Pro Arcade) -->
+            <div class="age-card" id="tier-card-pro" onclick="selectAge('14-20')">
+                <h3>Ages 14 – 20 (Pro Arcade)</h3>
+                <p>Speed mental math, pre-algebra, and global leaderboards.</p>
+            </div>
+
+            <!-- Button: Enter Adventure Map 🚀 -->
+            <button class="btn-enter-map" id="btn-enter-hub" onclick="enterCurrentAgeHub()">
+                Enter Adventure Map 🚀
+            </button>
+        </div>
+
+        <!-- ==============================================
+             TOP HUD HEADER (Shown inside games & adventure maps)
         ============================================== -->
         <div class="hud-header" id="main-hud">
             <button class="hud-stat" style="cursor:pointer;" onclick="goToCoverPage()" title="Back to Title Screen">
@@ -680,47 +741,9 @@
             <div class="hud-stat">⭐ <span id="hud-stars">120</span></div>
             <div class="hud-stat">🪙 <span id="hud-coins">450</span></div>
             <button class="hud-stat tier-badge" onclick="switchScreen('screen-age')">
-                <span id="hud-tier-label">👶 5-8</span> ⚙️
+                <span id="hud-tier-label">🎒 9-13</span> ⚙️
             </button>
             <button class="hud-stat" style="cursor:pointer;" onclick="openParentGate()">🔒</button>
-        </div>
-
-        <!-- ==============================================
-             SCREEN 1: CHOOSE AGE TIER (3 STAGES)
-        ============================================== -->
-        <div class="screen" id="screen-age">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <button class="hud-stat" style="cursor:pointer;" onclick="goToCoverPage()">← Cover Page</button>
-                <span style="font-size:12px; color:#F59E0B; font-weight:bold;">QUIZOPIA</span>
-            </div>
-
-            <div class="screen-title">Choose Age Tier</div>
-            <div class="subtitle">Select your stage to start 100 levels of adventure</div>
-
-            <!-- Stage 1: 5 - 8 Junior -->
-            <div class="age-card selected" id="tier-card-junior" onclick="selectAge('5-8')">
-                <h3>Ages 5 – 8 (Junior)</h3>
-                <p>Visual counting, addition & subtraction with interactive clues.</p>
-                <div class="level-progress-pill" id="tier-pill-5-8">Levels 1 – 100 • Current: Level 1</div>
-            </div>
-
-            <!-- Stage 2: 9 - 13 Intermediate -->
-            <div class="age-card" id="tier-card-inter" onclick="selectAge('9-13')">
-                <h3>Ages 9 – 13 (Intermediate)</h3>
-                <p>Multiplication, division, order of operations, and fractions.</p>
-                <div class="level-progress-pill" id="tier-pill-9-13">Levels 1 – 100 • Current: Level 1</div>
-            </div>
-
-            <!-- Stage 3: 14 - 20 Pro Arcade -->
-            <div class="age-card" id="tier-card-pro" onclick="selectAge('14-20')">
-                <h3>Ages 14 – 20 (Pro Arcade)</h3>
-                <p>Speed mental math, linear equations, quadratics & leaderboards.</p>
-                <div class="level-progress-pill" id="tier-pill-14-20">Levels 1 – 100 • Current: Level 1</div>
-            </div>
-
-            <button class="btn-primary" style="margin-top:auto;" id="btn-enter-hub" onclick="enterCurrentAgeHub()">
-                Start Level 1 🚀
-            </button>
         </div>
 
         <!-- ==============================================
@@ -886,7 +909,7 @@
         // ==========================================
         // APP STATE (PERSISTED)
         // ==========================================
-        let currentTier = '5-8';
+        let currentTier = '9-13'; // Default to 9-13 as in screenshot
         let progress = {
             '5-8': { currentLevel: 1, maxUnlocked: 1 },
             '9-13': { currentLevel: 1, maxUnlocked: 1 },
@@ -911,8 +934,8 @@
         // ==========================================
         // COVER PAGE ACTIONS
         // ==========================================
-        function onPlayClicked() {
-            // When PLAY or MAP is clicked on cover, navigate to 3 Age Stages Page
+        function openAgeSelectionScreen() {
+            // Directly opens the exact 3 Age Stages screen from screenshot
             switchScreen('screen-age');
         }
 
@@ -1162,9 +1185,9 @@
                 target.classList.add('active');
             }
 
-            // HUD Visibility: Hidden on Cover Screen, Visible elsewhere
+            // HUD is only shown on actual game maps and quiz, hidden on cover & age selector
             const hud = document.getElementById('main-hud');
-            if (screenId === 'screen-cover') {
+            if (screenId === 'screen-cover' || screenId === 'screen-age') {
                 hud.style.display = 'none';
             } else {
                 hud.style.display = 'flex';
@@ -1176,28 +1199,17 @@
         function selectAge(tier) {
             currentTier = tier;
 
+            // Highlight selected card exactly as in user's design
             document.getElementById('tier-card-junior').classList.toggle('selected', tier === '5-8');
             document.getElementById('tier-card-inter').classList.toggle('selected', tier === '9-13');
             document.getElementById('tier-card-pro').classList.toggle('selected', tier === '14-20');
 
-            const curLvl = progress[tier].currentLevel;
-            const btnEnter = document.getElementById('btn-enter-hub');
             const hudBadge = document.getElementById('hud-tier-label');
-
             if (tier === '5-8') {
-                btnEnter.innerHTML = `Start Level ${curLvl} 🎈`;
-                btnEnter.style.background = 'var(--primary)';
-                btnEnter.style.color = '#fff';
                 hudBadge.innerHTML = '👶 5-8';
             } else if (tier === '9-13') {
-                btnEnter.innerHTML = `Start Level ${curLvl} 🚀`;
-                btnEnter.style.background = 'var(--primary)';
-                btnEnter.style.color = '#fff';
                 hudBadge.innerHTML = '🎒 9-13';
             } else if (tier === '14-20') {
-                btnEnter.innerHTML = `Start Level ${curLvl} ⚡`;
-                btnEnter.style.background = 'linear-gradient(135deg, #00F0FF, #7000FF)';
-                btnEnter.style.color = '#000';
                 hudBadge.innerHTML = '⚡ 14-20';
             }
 
@@ -1219,10 +1231,6 @@
         }
 
         function renderHubStats() {
-            document.getElementById('tier-pill-5-8').innerText = `Levels 1 – 100 • Current: Level ${progress['5-8'].currentLevel}`;
-            document.getElementById('tier-pill-9-13').innerText = `Levels 1 – 100 • Current: Level ${progress['9-13'].currentLevel}`;
-            document.getElementById('tier-pill-14-20').innerText = `Levels 1 – 100 • Current: Level ${progress['14-20'].currentLevel}`;
-
             renderMapNodes('5-8', 'junior-map-nodes', 'junior-progress-text', 'junior-continue-btn', 'junior-node');
             renderMapNodes('9-13', 'inter-map-nodes', 'inter-progress-text', 'inter-continue-btn', '');
             renderMapNodes('14-20', 'pro-map-nodes', 'pro-level-banner', 'pro-continue-btn', 'pro-node');
