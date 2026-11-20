@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Arcade & Adventure - Levels 1 to 100 Auto-Progression</title>
+    <title>Quizopia Escape - Math Arcade & Adventure</title>
     <style>
         :root {
             --primary: #4F46E5;
@@ -29,6 +29,7 @@
             padding: 0;
             font-family: var(--font-main);
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -56,11 +57,111 @@
             position: relative;
         }
 
+        /* ==============================================
+           COVER PAGE (QUIZOPIA ESCAPE)
+        ============================================== */
+        #screen-cover {
+            flex: 1;
+            position: relative;
+            background: url('cover.jpg') center top / 100% 100% no-repeat;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        /* Play Button Overlay (Clicking takes user into the app) */
+        .cover-play-btn {
+            position: absolute;
+            top: 42.5%;
+            left: 20%;
+            width: 60%;
+            height: 11.5%;
+            border-radius: 40px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(255, 217, 61, 0.5);
+            animation: pulsePlay 1.8s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulsePlay {
+            0% { box-shadow: 0 0 15px rgba(255, 217, 61, 0.4); transform: scale(1); }
+            100% { box-shadow: 0 0 32px rgba(255, 217, 61, 0.9); transform: scale(1.03); }
+        }
+
+        .cover-play-btn:active {
+            transform: scale(0.96) !important;
+        }
+
+        /* Adventure Map Overlay */
+        .cover-map-btn {
+            position: absolute;
+            top: 56.8%;
+            left: 23%;
+            width: 54%;
+            height: 9.6%;
+            border-radius: 28px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cover-map-btn:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Settings Overlay */
+        .cover-settings-btn {
+            position: absolute;
+            top: 68.2%;
+            left: 28%;
+            width: 44%;
+            height: 8.8%;
+            border-radius: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cover-settings-btn:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Bottom Nav (Trophy, Stats, Star, Gift) */
+        .cover-bottom-nav {
+            position: absolute;
+            bottom: 3.5%;
+            left: 12%;
+            right: 12%;
+            height: 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cover-nav-icon {
+            width: 22%;
+            height: 100%;
+            border-radius: 22px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            transition: transform 0.15s;
+        }
+
+        .cover-nav-icon:active {
+            transform: scale(0.9);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         /* Header HUD */
         .hud-header {
             background: #1E293B;
-            padding: 12px 14px;
-            display: flex;
+            padding: 10px 14px;
+            display: none; /* Hidden on cover page, visible once user clicks PLAY */
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid #334155;
@@ -184,22 +285,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background: #334155;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 6px;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #10B981, #00F0FF);
-            width: 3%;
-            transition: width 0.3s ease;
         }
 
         .continue-btn {
@@ -573,8 +658,37 @@
 <body>
 
     <div class="mobile-frame">
-        <!-- HUD Header -->
+
+        <!-- ==============================================
+             SCREEN 0: COVER PAGE (QUIZOPIA ESCAPE)
+             The opening cover screen shown first!
+        ============================================== -->
+        <div class="screen active" id="screen-cover">
+            <!-- 1. Play Button -> Clicking takes player directly into the 3-age stages app -->
+            <button class="cover-play-btn" onclick="openAppFromCover()" title="Play Quizopia Escape"></button>
+
+            <!-- 2. Adventure Map Button -> Takes player into app / stages -->
+            <button class="cover-map-btn" onclick="openAppFromCover()" title="Adventure Map"></button>
+
+            <!-- 3. Settings Button -> Settings / Parents Gate -->
+            <button class="cover-settings-btn" onclick="openParentGate()" title="Settings"></button>
+
+            <!-- 4. Bottom Nav Hit Areas -->
+            <div class="cover-bottom-nav">
+                <button class="cover-nav-icon" onclick="showCoverLeaderboard()" title="Trophy / Leaderboard"></button>
+                <button class="cover-nav-icon" onclick="showCoverStats()" title="Analytics / Progress"></button>
+                <button class="cover-nav-icon" onclick="showCoverStars()" title="Star Achievements"></button>
+                <button class="cover-nav-icon" onclick="claimDailyReward()" title="Daily Gift Reward"></button>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             HUD HEADER (Shown inside the app)
+        ============================================== -->
         <div class="hud-header">
+            <button class="hud-stat" style="cursor:pointer;" onclick="switchScreen('screen-cover')" title="Back to Cover">
+                🏰 Cover
+            </button>
             <div class="hud-stat">⭐ <span id="hud-stars">120</span></div>
             <div class="hud-stat">🪙 <span id="hud-coins">450</span></div>
             <button class="hud-stat tier-badge" onclick="switchScreen('screen-age')">
@@ -584,9 +698,14 @@
         </div>
 
         <!-- ==============================================
-             SCREEN 1: CHOOSE AGE TIER (ONBOARDING)
+             SCREEN 1: CHOOSE AGE TIER (YOUR COMPLETE APP)
         ============================================== -->
-        <div class="screen active" id="screen-age">
+        <div class="screen" id="screen-age">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <button class="hud-stat" style="cursor:pointer;" onclick="switchScreen('screen-cover')">← Cover</button>
+                <span style="font-size:12px; color:#F59E0B; font-weight:bold;">QUIZOPIA ESCAPE</span>
+            </div>
+
             <div class="screen-title">Select Age Tier</div>
             <div class="subtitle">1 to 100 Levels with Auto-Advancing Challenges</div>
 
@@ -636,7 +755,7 @@
             </button>
 
             <div class="map-container" id="junior-map-nodes">
-                <!-- Dynamically rendered 5-node view around current level -->
+                <!-- Dynamically rendered nodes -->
             </div>
 
             <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Age Bracket</button>
@@ -729,7 +848,7 @@
         </div>
 
         <!-- ==============================================
-             AUTO-NEXT LEVEL FANFARE OVERLAY (CONTINUOUS PLAY)
+             AUTO-NEXT LEVEL FANFARE OVERLAY
         ============================================= -->
         <div class="auto-next-overlay" id="auto-next-modal">
             <div class="celebrate-icon" id="auto-celebrate-icon">🎉</div>
@@ -786,12 +905,9 @@
             '14-20': { currentLevel: 1, maxUnlocked: 1 }
         };
 
-        // Load progress from localStorage if available
         try {
             const saved = localStorage.getItem('math_arcade_progress');
-            if (saved) {
-                progress = JSON.parse(saved);
-            }
+            if (saved) progress = JSON.parse(saved);
         } catch(e) {}
 
         function saveProgress() {
@@ -805,6 +921,32 @@
         let countdownSeconds = 3;
 
         // ==========================================
+        // COVER PAGE ACTIONS
+        // ==========================================
+        function openAppFromCover() {
+            // Clicking PLAY transitions directly into the full working app (starting at Age Selection)
+            switchScreen('screen-age');
+        }
+
+        function showCoverLeaderboard() {
+            alert('🏆 QUIZOPIA LEADERBOARD\n\n1. 🥇 MathWizard - 9,840 pts\n2. 🥈 StarRacer - 9,210 pts\n3. 🥉 Jiya_BD (You) - 8,750 pts\n4.  NeonSolver - 8,400 pts');
+        }
+
+        function showCoverStats() {
+            alert(`📊 LEARNING ANALYTICS\n\n• Ages 5-8 Progress: Level ${progress['5-8'].maxUnlocked}/100\n• Ages 9-13 Progress: Level ${progress['9-13'].maxUnlocked}/100\n• Ages 14-20 Progress: Level ${progress['14-20'].maxUnlocked}/100\n• Overall Accuracy: 98%\n• Stars Earned: 120 ⭐`);
+        }
+
+        function showCoverStars() {
+            alert('⭐ STAR ACHIEVEMENTS\n\n✓ First Quiz Cleared!\n✓ 3-Level Streak Master\n✓ Socratic AI Explorer\n\nTotal Stars: 120 ⭐');
+        }
+
+        function claimDailyReward() {
+            alert('🎁 DAILY LOGIN CHEST!\n\nYou claimed 50 Free Daily Coins! 🪙\nKeep learning every day to unlock bonus chest rewards!');
+            const coinsElem = document.getElementById('hud-coins');
+            if (coinsElem) coinsElem.innerText = parseInt(coinsElem.innerText) + 50;
+        }
+
+        // ==========================================
         // DYNAMIC 1 TO 100 MATH GENERATOR ENGINE
         // ==========================================
         const fruitEmojis = ['🍎', '🍓', '🍌', '🍊', '🍇'];
@@ -814,9 +956,7 @@
             level = Math.max(1, Math.min(100, level));
 
             if (tier === '5-8') {
-                // AGES 5-8 (Levels 1 to 100)
                 if (level <= 20) {
-                    // Visual counting and simple addition (1 to 5)
                     const a = 1 + (level % 4);
                     const b = 1 + ((level * 3) % 4);
                     const sum = a + b;
@@ -834,7 +974,6 @@
                         explanation: `Awesome! ${a} + ${b} = ${sum} ${emoji} in total! ⭐`
                     };
                 } else if (level <= 50) {
-                    // Addition up to 10 & animal pals
                     const a = 3 + (level % 6);
                     const b = 2 + ((level * 2) % 5);
                     const sum = a + b;
@@ -852,7 +991,6 @@
                         explanation: `Terrific! ${a} + ${b} = ${sum} ${animal}!`
                     };
                 } else if (level <= 75) {
-                    // Fun Subtraction within 12
                     const b = 2 + (level % 5);
                     const diff = 2 + ((level * 2) % 6);
                     const a = diff + b;
@@ -869,7 +1007,6 @@
                         explanation: `Spot on! ${a} minus ${b} leaves ${diff} sparkling stars!`
                     };
                 } else {
-                    // Double digit addition / Skip counting up to Level 100
                     const a = 10 + (level % 15);
                     const b = 3 + ((level * 3) % 12);
                     const sum = a + b;
@@ -886,9 +1023,7 @@
                     };
                 }
             } else if (tier === '9-13') {
-                // AGES 9-13 (Levels 1 to 100)
                 if (level <= 25) {
-                    // Times tables (2x to 9x)
                     const a = 2 + (level % 8);
                     const b = 3 + ((level * 3) % 7);
                     const product = a * b;
@@ -904,7 +1039,6 @@
                         explanation: `${a} × ${b} = ${product}. Great multiplication skill!`
                     };
                 } else if (level <= 50) {
-                    // Division Quest
                     const divisor = 3 + (level % 7);
                     const quotient = 4 + ((level * 2) % 8);
                     const dividend = divisor * quotient;
@@ -920,7 +1054,6 @@
                         explanation: `${dividend} ÷ ${divisor} = ${quotient} because ${divisor} × ${quotient} = ${dividend}.`
                     };
                 } else if (level <= 75) {
-                    // Order of Operations (BODMAS / PEMDAS)
                     const m1 = 3 + (level % 5);
                     const m2 = 2 + ((level * 2) % 6);
                     const add = 5 + (level % 15);
@@ -937,7 +1070,6 @@
                         explanation: `First multiply: ${m1} × ${m2} = ${m1 * m2}. Then add: ${m1 * m2} + ${add} = ${ans}!`
                     };
                 } else {
-                    // Pre-Algebra & Fractions up to Level 100
                     const coeff = 2 + (level % 4);
                     const x = 3 + (level % 8);
                     const constant = 4 + ((level * 3) % 10);
@@ -955,9 +1087,7 @@
                     };
                 }
             } else {
-                // AGES 14-20 (Levels 1 to 100)
                 if (level <= 25) {
-                    // Speed Mental Arithmetic
                     const base = 12 + (level % 15);
                     const mult = 3 + (level % 6);
                     const ans = base * mult;
@@ -973,7 +1103,6 @@
                         explanation: `${base} × ${mult} = ${ans}. Executed with blitz speed!`
                     };
                 } else if (level <= 50) {
-                    // Two-step linear equations
                     const a = 3 + (level % 5);
                     const x = 2 + ((level * 2) % 9);
                     const b = 5 + (level % 12);
@@ -990,7 +1119,6 @@
                         explanation: `${a}x = ${c - b} → x = ${x}. Sharp algebraic deduction!`
                     };
                 } else if (level <= 75) {
-                    // Exponents, Roots, and Percentages
                     const rootVal = 11 + (level % 15);
                     const squareVal = rootVal * rootVal;
                     return {
@@ -1005,7 +1133,6 @@
                         explanation: `√${squareVal} = ${rootVal} because ${rootVal}² = ${squareVal}.`
                     };
                 } else {
-                    // Quadratics & Advanced Competitive Math up to 100
                     const root1 = 2 + (level % 6);
                     const ans = root1;
                     const sq = root1 * root1;
@@ -1042,6 +1169,13 @@
             if (target) {
                 target.classList.add('active');
             }
+
+            // HUD Visibility: Hidden on Cover Screen, Visible inside the app
+            const hud = document.querySelector('.hud-header');
+            if (hud) {
+                hud.style.display = (screenId === 'screen-cover') ? 'none' : 'flex';
+            }
+
             renderHubStats();
         }
 
@@ -1093,9 +1227,12 @@
 
         function renderHubStats() {
             // Update pills on screen-age
-            document.getElementById('tier-pill-5-8').innerText = `Levels 1 – 100 • Current: Level ${progress['5-8'].currentLevel}`;
-            document.getElementById('tier-pill-9-13').innerText = `Levels 1 – 100 • Current: Level ${progress['9-13'].currentLevel}`;
-            document.getElementById('tier-pill-14-20').innerText = `Levels 1 – 100 • Current: Level ${progress['14-20'].currentLevel}`;
+            const p58 = document.getElementById('tier-pill-5-8');
+            if (p58) p58.innerText = `Levels 1 – 100 • Current: Level ${progress['5-8'].currentLevel}`;
+            const p913 = document.getElementById('tier-pill-9-13');
+            if (p913) p913.innerText = `Levels 1 – 100 • Current: Level ${progress['9-13'].currentLevel}`;
+            const p1420 = document.getElementById('tier-pill-14-20');
+            if (p1420) p1420.innerText = `Levels 1 – 100 • Current: Level ${progress['14-20'].currentLevel}`;
 
             // Update maps
             renderMapNodes('5-8', 'junior-map-nodes', 'junior-progress-text', 'junior-continue-btn', 'junior-node');
@@ -1354,8 +1491,8 @@
             alert(msg);
         }
 
-        // Initialize with default state
-        selectAge('5-8');
+        // Default initial screen is Cover Page
+        switchScreen('screen-cover');
     </script>
 </body>
 </html>
