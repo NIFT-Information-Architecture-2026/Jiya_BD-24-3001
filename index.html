@@ -959,20 +959,156 @@
             width: 100%;
         }
 
-        /* Utility */
-        .timer-bar {
-            height: 7px;
-            background: #E8F5E9;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 16px;
+        /* Settings Page Styles */
+        .settings-card-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
         }
 
-        .timer-progress {
-            height: 100%;
-            width: 100%;
-            background: #81C784;
-            transition: width 1s linear;
+        .setting-item {
+            background: #FFFFFF;
+            border: 2px solid #E0E0E0;
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .setting-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .setting-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .setting-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #3E2723;
+        }
+
+        .setting-desc {
+            font-size: 11px;
+            color: #78909C;
+            margin-top: 2px;
+        }
+
+        /* Cute Pastel Toggle Switch */
+        .cute-toggle {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 30px;
+        }
+
+        .cute-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #CFD8DC;
+            transition: 0.3s;
+            border-radius: 30px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #81C784;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(22px);
+        }
+
+        .btn-theme-switch {
+            background: #FFF8E1;
+            border: 2px solid #FFCC80;
+            color: #E65100;
+            padding: 8px 14px;
+            border-radius: 18px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-theme-switch:hover {
+            background: #FFE0B2;
+        }
+
+        .settings-mascot-tip {
+            background: #FFF8E1;
+            border: 2px dashed #FFD54F;
+            border-radius: 20px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        /* Dark Forest Theme Overrides */
+        .mobile-frame.dark-theme {
+            background: #141E17 !important;
+            border-color: #2E4C33 !important;
+            color: #E8F5E9 !important;
+        }
+
+        .mobile-frame.dark-theme .setting-item,
+        .mobile-frame.dark-theme .age-card,
+        .mobile-frame.dark-theme .quiz-card,
+        .mobile-frame.dark-theme .map-fixed-header,
+        .mobile-frame.dark-theme .map-fixed-footer,
+        .mobile-frame.dark-theme .hud-header {
+            background: #1B291F !important;
+            border-color: #2E4C33 !important;
+            color: #E8F5E9 !important;
+        }
+
+        .mobile-frame.dark-theme .setting-title,
+        .mobile-frame.dark-theme .age-card h3 {
+            color: #FFE082 !important;
+        }
+
+        .mobile-frame.dark-theme .btn-back-arrow {
+            background: #1B291F !important;
+            border-color: #2E4C33 !important;
+            color: #81C784 !important;
         }
     </style>
 </head>
@@ -1008,8 +1144,8 @@
                 <button class="btn-foxy-play" onclick="onPlayClicked()">
                     <span>▶</span> PLAY WITH FOXY
                 </button>
-                <button class="btn-foxy-secondary" onclick="openParentGate()">
-                    🦉 Wise Owl • Parents Gate
+                <button class="btn-foxy-secondary" onclick="switchScreen('screen-settings')">
+                    ⚙️ Settings
                 </button>
             </div>
 
@@ -1019,6 +1155,80 @@
                 <span class="cover-feature-tag">🐿️ Scout 9-13</span>
                 <span class="cover-feature-tag">🦉 Ranger 14-20</span>
             </div>
+        </div>
+
+        <!-- ==============================================
+             SCREEN: SETTINGS PAGE (3rd PAGE)
+        ============================================== -->
+        <div class="screen" id="screen-settings">
+            <div class="screen-top-bar">
+                <button class="btn-back-arrow" onclick="switchScreen('screen-cover')" title="Back to Home Page">
+                    ←
+                </button>
+                <span class="top-bar-title">⚙️ GAME SETTINGS</span>
+                <div style="width: 40px;"></div>
+            </div>
+
+            <div class="screen-title" style="margin-top: 6px;">Settings</div>
+            <div class="subtitle">Sound, vibration, and woodland themes</div>
+
+            <div class="settings-card-group">
+                <!-- 1. Sound Button / Toggle -->
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-icon-box" style="background: #E8F5E9; color: #2E7D32;">🔊</div>
+                        <div>
+                            <div class="setting-title">Sound Effects</div>
+                            <div class="setting-desc">Forest chimes & gameplay music</div>
+                        </div>
+                    </div>
+                    <label class="cute-toggle">
+                        <input type="checkbox" id="setting-sound" checked onchange="toggleSound(this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- 2. Vibrate Button / Toggle -->
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-icon-box" style="background: #FFF3E0; color: #E65100;">📳</div>
+                        <div>
+                            <div class="setting-title">Haptic Vibration</div>
+                            <div class="setting-desc">Vibrate on tap & level win</div>
+                        </div>
+                    </div>
+                    <label class="cute-toggle">
+                        <input type="checkbox" id="setting-vibrate" checked onchange="toggleVibrate(this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <!-- 3. Dark Theme / Light Theme Button -->
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-icon-box" id="theme-icon-box" style="background: #FFFDE7; color: #F57F17;">☀️</div>
+                        <div>
+                            <div class="setting-title">Forest Theme</div>
+                            <div class="setting-desc" id="theme-label-desc">Light Meadow Theme</div>
+                        </div>
+                    </div>
+                    <button class="btn-theme-switch" id="btn-theme-toggle" onclick="toggleThemeMode()">
+                        <span id="theme-switch-icon">🌙</span> <span id="theme-switch-text">Dark Theme</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Foxy's Friendly Note -->
+            <div class="settings-mascot-tip">
+                <span style="font-size: 34px;">🦊</span>
+                <div style="font-size: 12px; color: #546E7A; line-height: 1.4;">
+                    <b>Foxy's Note:</b> Your sound, vibration, and theme preferences are saved automatically!
+                </div>
+            </div>
+
+            <button class="btn-primary" style="margin-top: auto;" onclick="switchScreen('screen-cover')">
+                ← Back to Home
+            </button>
         </div>
 
         <!-- ==============================================
@@ -1305,10 +1515,58 @@
         let countdownSeconds = 3;
 
         // ==========================================
-        // COVER PAGE LOGIC
+        // COVER PAGE & SETTINGS LOGIC
         // ==========================================
         function onPlayClicked() {
             switchScreen('screen-age');
+        }
+
+        let soundEnabled = true;
+        let vibrateEnabled = true;
+        let isDarkTheme = false;
+
+        function toggleSound(enabled) {
+            soundEnabled = enabled;
+            showNotification(enabled ? '🔊 Sound effects turned ON!' : '🔇 Sound effects muted!');
+        }
+
+        function toggleVibrate(enabled) {
+            vibrateEnabled = enabled;
+            if (enabled && navigator.vibrate) {
+                try { navigator.vibrate(60); } catch(e) {}
+            }
+            showNotification(enabled ? '📳 Haptic vibration turned ON!' : '📳 Haptic vibration turned OFF!');
+        }
+
+        function toggleThemeMode() {
+            isDarkTheme = !isDarkTheme;
+            const frame = document.querySelector('.mobile-frame');
+            const desc = document.getElementById('theme-label-desc');
+            const iconBox = document.getElementById('theme-icon-box');
+            const switchIcon = document.getElementById('theme-switch-icon');
+            const switchText = document.getElementById('theme-switch-text');
+
+            if (isDarkTheme) {
+                frame.classList.add('dark-theme');
+                if (desc) desc.innerText = 'Cozy Dark Forest Theme';
+                if (iconBox) {
+                    iconBox.innerHTML = '🌙';
+                    iconBox.style.background = '#EDE7F6';
+                    iconBox.style.color = '#512DA8';
+                }
+                if (switchIcon) switchIcon.innerText = '☀️';
+                if (switchText) switchText.innerText = 'Light Theme';
+            } else {
+                frame.classList.remove('dark-theme');
+                if (desc) desc.innerText = 'Light Meadow Theme';
+                if (iconBox) {
+                    iconBox.innerHTML = '☀️';
+                    iconBox.style.background = '#FFFDE7';
+                    iconBox.style.color = '#F57F17';
+                }
+                if (switchIcon) switchIcon.innerText = '🌙';
+                if (switchText) switchText.innerText = 'Dark Theme';
+            }
         }
 
         // ==========================================
