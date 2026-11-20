@@ -3,40 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quizopia Escape - Adventure Math Map</title>
-    <!-- Google Fonts: Fredoka & Nunito for cartoon game typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <title>Quizopia Escape - Math Arcade & Adventure</title>
     <style>
         :root {
-            --font-game: 'Fredoka', 'Nunito', 'Segoe UI', cursive, sans-serif;
-            --wood-dark: #5A2B11;
-            --wood-mid: #8B4513;
-            --wood-light: #E4B173;
-            --wood-cream: #FDE8C7;
-            --gold-bright: #FFE873;
-            --gold-deep: #F5A623;
-            --gold-border: #B86B14;
-            --purple-ribbon: #7B1FA2;
-            --purple-deep: #4A148C;
-            --green-grass: #4CAF50;
-            --blue-gem: #00BCD4;
-            --pink-gem: #E91E63;
+            --primary: #4F46E5;
+            --primary-light: #6366F1;
+            --accent: #F59E0B;
+            --success: #10B981;
+            --danger: #EF4444;
+            --bg-dark: #0F172A;
+            --card-bg: #1E293B;
+            --text-light: #F8FAFC;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+            /* Tier Colors */
+            --junior-primary: #FF6B6B;
+            --junior-accent: #FFD93D;
+            --pro-neon: #00F0FF;
+            --pro-purple: #9D00FF;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-game);
+            font-family: var(--font-main);
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: #1A120B radial-gradient(circle at center, #2C1B10 0%, #0F0804 100%);
-            color: #4A250E;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -51,768 +49,692 @@
             height: 840px;
             background: #000;
             border-radius: 40px;
-            border: 8px solid #3E2723;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(123, 31, 162, 0.3);
+            border: 8px solid #334155;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
             overflow: hidden;
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
-        /* Top HUD Header (Inspired by attached image) */
-        .hud-header {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 20;
-            pointer-events: auto;
-        }
-
-        /* Player Profile Pill */
-        .player-pill {
-            background: linear-gradient(180deg, #FDE6C1 0%, #E8B97E 100%);
-            border: 3px solid #6D3815;
-            border-radius: 25px;
-            padding: 3px 10px 3px 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 3px 0 #4A250E, 0 4px 8px rgba(0,0,0,0.3);
-            cursor: pointer;
-            transition: transform 0.15s;
-        }
-
-        .player-pill:active {
-            transform: scale(0.95);
-        }
-
-        .player-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #7B1FA2;
-            border: 2px solid #FFD54F;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .player-info {
+        /* ==============================================
+           COVER PAGE STYLES (QUIZOPIA ESCAPE)
+        ============================================== */
+        #screen-cover {
+            flex: 1;
+            position: relative;
+            background: radial-gradient(circle at 50% 30%, #38BDF8 0%, #1E40AF 45%, #0F172A 100%);
             display: flex;
             flex-direction: column;
-            line-height: 1.1;
-        }
-
-        .player-label {
-            font-size: 9px;
-            color: #8D5127;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .player-name {
-            font-size: 13px;
-            font-weight: 800;
-            color: #4A250E;
-            display: flex;
             align-items: center;
-            gap: 3px;
+            justify-content: space-between;
+            padding: 30px 20px 25px;
+            overflow: hidden;
+            text-align: center;
         }
 
-        /* Currency Badges */
-        .currency-cluster {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        /* Ambient floating math symbols */
+        .math-symbol-floating {
+            position: absolute;
+            font-size: 26px;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+            animation: floatSymbol 4s ease-in-out infinite alternate;
+            z-index: 1;
+            opacity: 0.85;
         }
 
-        .currency-badge {
-            background: linear-gradient(180deg, #FDE6C1 0%, #E8B97E 100%);
-            border: 3px solid #6D3815;
-            border-radius: 20px;
-            padding: 2px 6px 2px 5px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            box-shadow: 0 3px 0 #4A250E;
-            font-weight: 800;
-            font-size: 12px;
-            color: #4A250E;
+        .sym-1 { top: 40px; left: 24px; animation-delay: 0s; }
+        .sym-2 { top: 35px; right: 28px; animation-delay: 1.2s; }
+        .sym-3 { top: 230px; left: 20px; animation-delay: 0.7s; }
+        .sym-4 { top: 220px; right: 22px; animation-delay: 1.8s; }
+
+        @keyframes floatSymbol {
+            0% { transform: translateY(0px) rotate(-6deg); }
+            100% { transform: translateY(-12px) rotate(6deg); }
         }
 
-        .btn-plus {
-            width: 17px;
-            height: 17px;
+        /* Mascot Circle */
+        .mascot-wrapper {
+            position: relative;
+            z-index: 2;
+            margin-top: 25px;
+        }
+
+        .mascot-avatar {
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border: 5px solid #F59E0B;
             border-radius: 50%;
-            background: linear-gradient(180deg, #81C784 0%, #388E3C 100%);
-            border: 1.5px solid #1B5E20;
-            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 12px;
+            font-size: 56px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.45), 0 0 25px rgba(245, 158, 11, 0.5);
+            animation: mascotBounce 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes mascotBounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-8px); }
+        }
+
+        /* Carved Wooden / Stone Title Block */
+        .cover-title-box {
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(180deg, #78350F, #451A03);
+            border: 4px solid #B45309;
+            border-radius: 24px;
+            padding: 16px 20px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            margin: 15px 0;
+        }
+
+        .cover-logo-main {
+            font-size: 38px;
             font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 1px 0 #1B5E20;
+            letter-spacing: 2px;
+            color: #FEF08A;
+            text-shadow: 0 4px 0 #92400E, 0 8px 12px rgba(0, 0, 0, 0.7);
+            line-height: 1;
         }
 
-        /* Settings Gear Icon */
-        .btn-gear {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: linear-gradient(180deg, #FDE6C1 0%, #E8B97E 100%);
-            border: 3px solid #6D3815;
-            box-shadow: 0 3px 0 #4A250E, 0 4px 6px rgba(0,0,0,0.3);
+        .cover-logo-sub {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 6px;
+            color: #FBBF24;
+            text-shadow: 0 3px 0 #78350F;
+            margin-top: 4px;
+        }
+
+        .cover-tagline-pill {
+            display: inline-block;
+            margin-top: 8px;
+            background: #B45309;
+            color: #FEF3C7;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 14px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Big Tactile 3D PLAY Button */
+        .cover-play-section {
+            width: 85%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .btn-cover-play {
+            width: 100%;
+            background: linear-gradient(180deg, #FDE047 0%, #F59E0B 50%, #D97706 100%);
+            border: 5px solid #78350F;
+            border-radius: 35px;
+            padding: 18px 24px;
+            font-size: 32px;
+            font-weight: 900;
+            color: #451A03;
+            letter-spacing: 2px;
+            cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
+            gap: 12px;
+            box-shadow: 0 10px 0 #78350F, 0 18px 28px rgba(0, 0, 0, 0.5), 0 0 30px rgba(245, 158, 11, 0.6);
+            transition: all 0.15s ease;
+            animation: pulsePlayGlow 2s infinite alternate;
+        }
+
+        @keyframes pulsePlayGlow {
+            0% { transform: scale(1); box-shadow: 0 10px 0 #78350F, 0 18px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(245, 158, 11, 0.4); }
+            100% { transform: scale(1.04); box-shadow: 0 10px 0 #78350F, 0 24px 35px rgba(0, 0, 0, 0.6), 0 0 40px rgba(245, 158, 11, 0.9); }
+        }
+
+        .btn-cover-play:active {
+            transform: translateY(6px);
+            box-shadow: 0 4px 0 #78350F, 0 10px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-cover-secondary {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            color: #CBD5E1;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
             cursor: pointer;
-            transition: transform 0.15s;
+            backdrop-filter: blur(5px);
+            transition: all 0.2s;
         }
 
-        .btn-gear:active {
-            transform: scale(0.92);
+        .btn-cover-secondary:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: #F59E0B;
+            color: #FFF;
         }
 
-        /* Screen Wrapper */
+        /* Cover Bottom Badges */
+        .cover-bottom-row {
+            z-index: 2;
+            display: flex;
+            gap: 12px;
+            margin-bottom: 5px;
+        }
+
+        .cover-feature-tag {
+            font-size: 11px;
+            color: #94A3B8;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 5px 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Header HUD */
+        .hud-header {
+            background: #1E293B;
+            padding: 10px 14px;
+            display: none; /* Hidden on cover page, visible inside app */
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #334155;
+            z-index: 10;
+        }
+
+        .hud-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: bold;
+            font-size: 13px;
+            background: #0F172A;
+            padding: 6px 10px;
+            border-radius: 20px;
+            border: 1px solid #334155;
+        }
+
+        .tier-badge {
+            background: #312E81;
+            color: #A5B4FC;
+            border: 1px solid #6366F1;
+            cursor: pointer;
+        }
+
+        /* Screen Container */
         .screen {
             flex: 1;
             display: none;
             flex-direction: column;
+            padding: 18px;
+            overflow-y: auto;
             position: relative;
-            overflow: hidden;
         }
 
         .screen.active {
             display: flex;
         }
 
-        /* ==============================================
-           SCREEN: ADVENTURE LEVEL MAP
-        ============================================== */
-        #screen-map {
-            background: url('map_bg.jpg') center top / 100% 100% no-repeat;
+        /* Screen Titles */
+        .screen-title {
+            font-size: 22px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 4px;
+            color: #F59E0B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            text-align: center;
+            color: #94A3B8;
+            margin-bottom: 14px;
+        }
+
+        /* Screen 1: Age Selector */
+        .age-card {
+            background: linear-gradient(135deg, #334155, #1E293B);
+            border: 2px solid #475569;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
             position: relative;
         }
 
-        /* Top Title & World Signpost */
-        .map-top-banner {
-            position: absolute;
-            top: 60px;
-            left: 0;
-            right: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
-            pointer-events: none;
+        .age-card:hover {
+            transform: translateY(-2px);
+            border-color: #CBD5E1;
         }
 
-        .quizopia-title {
-            background: linear-gradient(180deg, #9C27B0 0%, #6A1B9A 50%, #4A148C 100%);
-            color: #FFE082;
-            font-size: 24px;
-            font-weight: 900;
-            padding: 6px 28px;
-            border-radius: 24px;
-            border: 3px solid #FFD54F;
-            text-shadow: 0 2px 4px #2A0845, 0 0 12px rgba(255, 213, 79, 0.6);
-            box-shadow: 0 4px 0 #2A0845, 0 8px 16px rgba(0,0,0,0.4);
-            letter-spacing: 1px;
-            transform: rotate(-1deg);
+        .age-card.selected {
+            border-color: #F59E0B;
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #4F46E5, #3730A3);
+            box-shadow: 0 0 16px rgba(99, 102, 241, 0.4);
         }
 
-        /* Wooden Signpost on Right */
-        .wooden-signpost {
+        .age-card.selected::after {
+            content: "✓ ACTIVE";
             position: absolute;
-            top: 75px;
+            top: 8px;
             right: 12px;
-            background: linear-gradient(180deg, #E29E57 0%, #B86725 100%);
-            border: 3px solid #5B2B0A;
-            border-radius: 12px;
-            padding: 5px 10px;
-            color: #FFF9E6;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 800;
-            text-shadow: 0 1px 2px #3E1B05;
-            box-shadow: 0 3px 0 #3E1B05, 0 4px 8px rgba(0,0,0,0.3);
-            cursor: pointer;
-            pointer-events: auto;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            transition: transform 0.15s;
+            color: #F59E0B;
         }
 
-        .wooden-signpost:hover {
-            transform: scale(1.04);
+        .age-card h3 {
+            font-size: 17px;
+            margin-bottom: 4px;
         }
 
-        /* World / Stage Switcher Bar */
-        .stage-nav-bar {
-            position: absolute;
-            top: 135px;
-            left: 12px;
-            right: 12px;
+        .age-card p {
+            font-size: 12px;
+            color: #CBD5E1;
+        }
+
+        .level-progress-pill {
+            display: inline-block;
+            margin-top: 6px;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.3);
+            color: #F59E0B;
+            font-weight: bold;
+        }
+
+        /* Screen 2: Adventure Map Nodes */
+        .progress-banner {
+            background: linear-gradient(135deg, #1E293B, #0F172A);
+            border: 1.5px solid #334155;
+            border-radius: 14px;
+            padding: 12px;
+            margin-bottom: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 15;
         }
 
-        .stage-pill {
-            background: rgba(45, 20, 8, 0.85);
-            backdrop-filter: blur(4px);
-            border: 2px solid #FFD54F;
-            border-radius: 20px;
-            padding: 4px 14px;
-            color: #FFE082;
-            font-size: 12px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-        }
-
-        .stage-btn {
-            background: linear-gradient(180deg, #FFE082 0%, #FFB300 100%);
-            border: 2px solid #6D3815;
-            border-radius: 16px;
-            padding: 4px 10px;
-            font-weight: 900;
-            font-size: 11px;
-            color: #4A250E;
-            cursor: pointer;
-            box-shadow: 0 2px 0 #4A250E;
-        }
-
-        /* Map Interactive Level Nodes Layer */
-        .map-interactive-nodes {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 85px;
-            pointer-events: auto;
-        }
-
-        /* Platform Level Node Style */
-        .level-platform {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            outline: none;
-            background: none;
+        .continue-btn {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
             border: none;
-        }
-
-        .level-platform:hover {
-            transform: translate(-50%, -50%) scale(1.08);
-        }
-
-        .level-platform:active {
-            transform: translate(-50%, -50%) scale(0.94);
-        }
-
-        /* Glowing aura around active level */
-        .node-aura {
-            position: absolute;
-            width: 105px;
-            height: 75px;
-            border-radius: 50%;
-            background: radial-gradient(ellipse at center, rgba(255, 235, 59, 0.7) 0%, rgba(255, 193, 7, 0) 70%);
-            animation: pulseGlow 1.8s infinite alternate ease-in-out;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(0.95); opacity: 0.6; }
-            100% { transform: scale(1.2); opacity: 1; }
-        }
-
-        /* Platform Pedestal */
-        .node-pedestal {
-            width: 78px;
-            height: 52px;
-            background: linear-gradient(180deg, #FDE6C1 0%, #DEAC74 55%, #AB723A 100%);
-            border: 3.5px solid #633211;
-            border-radius: 40px / 26px;
-            box-shadow: 0 6px 0 #451F06, 0 10px 14px rgba(0,0,0,0.45);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 26px;
-            font-weight: 900;
-            color: #4A250E;
-            text-shadow: 0 1px 0 #FFF0D4;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Purple Flag with Star */
-        .node-flag {
-            position: absolute;
-            top: -24px;
-            right: 6px;
-            background: linear-gradient(135deg, #AB47BC 0%, #7B1FA2 100%);
-            border: 2px solid #FFE082;
-            color: #FFF;
-            font-size: 11px;
-            padding: 1px 7px;
-            border-radius: 3px 8px 8px 3px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            font-weight: 900;
-            z-index: 4;
-        }
-
-        .node-flag::before {
-            content: "";
-            position: absolute;
-            left: -3px;
-            top: -2px;
-            bottom: -10px;
-            width: 3px;
-            background: #FFD54F;
-            border-radius: 2px;
-        }
-
-        /* Stars below node */
-        .node-stars {
-            display: flex;
-            gap: 2px;
-            margin-top: -6px;
-            z-index: 3;
-            font-size: 15px;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.4));
-        }
-
-        /* Locked Pedestal */
-        .level-platform.locked .node-pedestal {
-            background: linear-gradient(180deg, #A8B2C1 0%, #64748B 100%);
-            border-color: #334155;
-            box-shadow: 0 6px 0 #1E293B, 0 10px 14px rgba(0,0,0,0.45);
-            color: #E2E8F0;
-        }
-
-        .level-platform.locked .node-stars {
-            filter: grayscale(1);
-            opacity: 0.6;
-        }
-
-        /* Bottom Wooden Navigation Bar (Exact match to image) */
-        .bottom-nav-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 82px;
-            background: linear-gradient(180deg, #E2A05B 0%, #9F5419 100%);
-            border-top: 4px solid #633211;
-            box-shadow: 0 -4px 10px rgba(0,0,0,0.35);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0 10px 6px 10px;
-            z-index: 30;
-        }
-
-        .nav-btn {
-            flex: 1;
-            margin: 0 4px;
-            height: 64px;
-            background: linear-gradient(180deg, #FDE3BD 0%, #E0A669 100%);
-            border: 3px solid #633211;
-            border-radius: 18px;
-            box-shadow: 0 4px 0 #451F06, 0 4px 8px rgba(0,0,0,0.25);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .nav-btn:active, .nav-btn.active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #451F06;
-            background: linear-gradient(180deg, #FFE873 0%, #F5A623 100%);
-            border-color: #5A2B11;
-        }
-
-        .nav-btn .icon {
-            font-size: 22px;
-            margin-bottom: 2px;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
-        }
-
-        .nav-btn .label {
-            font-size: 11px;
+            padding: 12px;
+            border-radius: 14px;
             font-weight: 800;
-            color: #4A250E;
-            text-transform: capitalize;
-            letter-spacing: 0.3px;
+            font-size: 15px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 14px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* ==============================================
-           THEMATIC POPUPS & SUB-SCREENS (CHEST, QUIZ, ETC.)
-        ============================================== */
-        /* Screen: Choose Age Stage */
-        #screen-age {
-            background: url('map_bg.jpg') center top / 100% 100% no-repeat;
-            padding: 20px 16px 90px 16px;
-            overflow-y: auto;
+        .continue-btn:hover {
+            transform: scale(1.02);
         }
 
-        .age-board-container {
-            background: rgba(45, 20, 8, 0.92);
-            backdrop-filter: blur(8px);
-            border: 4px solid #FFD54F;
-            border-radius: 28px;
-            padding: 22px 18px;
-            margin-top: 60px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        .map-container {
             display: flex;
             flex-direction: column;
-            gap: 14px;
-        }
-
-        .theme-title {
-            font-size: 24px;
-            font-weight: 900;
-            color: #FFE082;
-            text-align: center;
-            text-shadow: 0 2px 4px #2A0845;
-            text-transform: uppercase;
-        }
-
-        .theme-sub {
-            font-size: 12px;
-            color: #E2D3BE;
-            text-align: center;
-            margin-bottom: 6px;
-        }
-
-        .wooden-age-card {
-            background: linear-gradient(180deg, #FDE6C1 0%, #D89E5F 100%);
-            border: 3.5px solid #633211;
-            border-radius: 20px;
-            padding: 14px 16px;
-            cursor: pointer;
-            box-shadow: 0 5px 0 #451F06, 0 6px 12px rgba(0,0,0,0.3);
-            transition: all 0.2s;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 0;
             position: relative;
         }
 
-        .wooden-age-card:hover {
-            transform: translateY(-2px);
+        .map-node {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10B981, #059669);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 16px;
+            border: 4px solid #ECFDF5;
+            box-shadow: 0 8px 15px -3px rgba(16, 185, 129, 0.4);
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
         }
 
-        .wooden-age-card.selected {
-            background: linear-gradient(180deg, #FFE873 0%, #FFA000 100%);
-            border-color: #4A148C;
-            box-shadow: 0 5px 0 #2A0845, 0 0 16px rgba(255, 215, 0, 0.7);
+        .map-node.active-target {
+            border-color: #F59E0B;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+            transform: scale(1.08);
+            animation: pulseTarget 1.5s infinite;
         }
 
-        .wooden-age-card.selected::after {
-            content: "⭐ ACTIVE";
-            position: absolute;
-            top: 10px;
-            right: 12px;
-            font-size: 10px;
-            font-weight: 900;
-            color: #4A148C;
-            background: #FFF;
-            padding: 2px 6px;
-            border-radius: 10px;
+        @keyframes pulseTarget {
+            0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.6); }
+            50% { box-shadow: 0 0 28px rgba(245, 158, 11, 0.95); }
         }
 
-        .wooden-age-card h3 {
-            font-size: 17px;
-            color: #4A250E;
-            font-weight: 900;
-            margin-bottom: 3px;
+        .map-node.junior-node {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            border-color: #FFE66D;
         }
 
-        .wooden-age-card p {
-            font-size: 12px;
-            color: #5D3315;
-            font-weight: 700;
+        .map-node.pro-node {
+            background: linear-gradient(135deg, #00F0FF, #7000FF);
+            border-color: #A5B4FC;
+            color: #000;
+        }
+
+        .map-node.locked {
+            background: #334155;
+            border-color: #64748B;
+            box-shadow: none;
+            cursor: not-allowed;
+            opacity: 0.55;
+            color: #94A3B8;
+        }
+
+        .chest-node {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            border-color: #FEF3C7;
+            box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Screen 3: Quiz Challenges */
+        .quiz-card {
+            background: #1E293B;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid #334155;
+            margin-bottom: 16px;
+        }
+
+        .problem-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #F8FAFC;
+            margin: 12px 0;
             line-height: 1.3;
         }
 
-        .btn-gold-large {
-            background: linear-gradient(180deg, #FFE873 0%, #F5A623 50%, #E65100 100%);
-            border: 3.5px solid #5A2B11;
-            border-radius: 24px;
-            padding: 15px;
-            color: #4A148C;
-            font-weight: 900;
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 0 1px 0 #FFF9C4;
-            box-shadow: 0 6px 0 #3E1B05, 0 8px 16px rgba(0,0,0,0.4);
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.15s;
-        }
-
-        .btn-gold-large:active {
-            transform: translateY(3px);
-            box-shadow: 0 3px 0 #3E1B05;
-        }
-
-        /* ==============================================
-           SCREEN: QUIZ CHALLENGE (STONE & WOOD BOARD)
-        ============================================== */
-        #screen-quiz {
-            background: url('map_bg.jpg') center top / 100% 100% no-repeat;
-            padding: 70px 14px 90px 14px;
-            overflow-y: auto;
-        }
-
-        .quiz-board {
-            background: linear-gradient(180deg, #FDE6C1 0%, #E5B47B 100%);
-            border: 4px solid #5A2B11;
-            border-radius: 26px;
-            padding: 20px 16px;
-            box-shadow: 0 8px 0 #3E1B05, 0 15px 30px rgba(0,0,0,0.6);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 14px;
-            position: relative;
-        }
-
-        .quiz-timer-wrap {
-            width: 100%;
-            height: 10px;
-            background: #4A250E;
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1.5px solid #6D3815;
-            margin-bottom: 14px;
-        }
-
-        .quiz-timer-fill {
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(90deg, #76FF03 0%, #00E676 100%);
-        }
-
-        .quiz-header-badge {
-            background: #7B1FA2;
-            color: #FFE082;
-            font-size: 12px;
-            font-weight: 900;
-            padding: 4px 14px;
-            border-radius: 14px;
-            border: 2px solid #FFD54F;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.25);
-            margin-bottom: 10px;
-        }
-
-        .quiz-visual-display {
-            font-size: 30px;
-            letter-spacing: 4px;
+        .visual-display {
+            font-size: 26px;
+            letter-spacing: 3px;
             margin-bottom: 8px;
-            min-height: 40px;
-            text-align: center;
+            line-height: 1.4;
+            min-height: 36px;
         }
 
-        .quiz-problem-text {
-            font-size: 36px;
-            font-weight: 900;
-            color: #3E1B05;
-            text-shadow: 0 2px 0 #FFF;
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .quiz-instruction {
-            font-size: 13px;
-            font-weight: 700;
-            color: #7A431D;
-            margin-bottom: 14px;
-        }
-
-        /* 3D Wooden Options Grid */
-        .quiz-options-grid {
+        .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            width: 100%;
         }
 
-        .btn-quiz-option {
-            background: linear-gradient(180deg, #FFFFFF 0%, #F5D7A1 50%, #D89E5F 100%);
-            border: 3.5px solid #5A2B11;
-            border-radius: 20px;
-            padding: 16px 8px;
-            font-size: 22px;
-            font-weight: 900;
-            color: #4A250E;
+        .btn-option {
+            background: #334155;
+            border: 2px solid #475569;
+            color: white;
+            padding: 16px 10px;
+            font-size: 19px;
+            font-weight: bold;
+            border-radius: 14px;
             cursor: pointer;
-            box-shadow: 0 5px 0 #3E1B05, 0 6px 10px rgba(0,0,0,0.25);
-            transition: all 0.15s ease;
+            transition: all 0.2s;
         }
 
-        .btn-quiz-option:hover {
-            background: linear-gradient(180deg, #FFF9C4 0%, #FFE082 100%);
+        .btn-option.junior-btn {
+            font-size: 24px;
+            padding: 18px 10px;
+            border-radius: 16px;
+            background: #1E293B;
+            border: 3px solid #6366F1;
+        }
+
+        .btn-option:hover {
+            border-color: var(--primary-light);
+            background: var(--primary);
             transform: translateY(-2px);
         }
 
-        .btn-quiz-option:active {
-            transform: translateY(3px);
-            box-shadow: 0 2px 0 #3E1B05;
-        }
-
-        /* Socratic Hint Button */
-        .btn-clue {
-            background: linear-gradient(180deg, #E1BEE7 0%, #BA68C8 100%);
-            border: 3px solid #4A148C;
-            border-radius: 18px;
+        .btn-hint {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1.5px dashed #F59E0B;
+            color: #F59E0B;
             padding: 12px;
-            color: #311B92;
-            font-size: 14px;
-            font-weight: 900;
-            width: 100%;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 13px;
+            margin-top: 14px;
             cursor: pointer;
-            box-shadow: 0 4px 0 #2A0845;
-            margin-top: 10px;
+            width: 100%;
+        }
+
+        /* Pro Arcade Dashboard */
+        .pro-hud {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
+            justify-content: space-between;
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 14px;
         }
 
-        .btn-clue:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #2A0845;
+        .pro-badge {
+            color: var(--pro-neon);
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* ==============================================
-           AUTO ADVANCE VICTORY FANFARE MODAL
-        ============================================== */
-        .game-modal-overlay {
+        .arcade-card {
+            background: linear-gradient(135deg, #131A2E, #1F1938);
+            border: 1.5px solid #00F0FF;
+            border-radius: 16px;
+            padding: 14px;
+            margin-bottom: 14px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.12);
+        }
+
+        /* Auto Next Level Overlay Modal */
+        .auto-next-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(18, 8, 3, 0.88);
+            background: rgba(15, 23, 42, 0.94);
             backdrop-filter: blur(8px);
             display: none;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            padding: 20px;
-            z-index: 50;
+            padding: 24px;
+            z-index: 30;
             text-align: center;
-            animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: fadeIn 0.25s ease-out;
         }
 
-        .game-modal-overlay.active {
+        .auto-next-overlay.active {
             display: flex;
         }
 
-        @keyframes popIn {
-            from { transform: scale(0.85); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        .modal-wooden-box {
-            background: linear-gradient(180deg, #FDE6C1 0%, #E5B47B 100%);
-            border: 5px solid #5A2B11;
-            border-radius: 30px;
-            padding: 24px 20px;
-            box-shadow: 0 10px 0 #3E1B05, 0 20px 40px rgba(0,0,0,0.8);
-            width: 100%;
-            max-width: 340px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
+        .celebrate-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+            animation: bounce 0.8s infinite alternate;
         }
 
-        .modal-title-ribbon {
-            background: linear-gradient(180deg, #AB47BC 0%, #6A1B9A 100%);
-            border: 3px solid #FFD54F;
-            border-radius: 20px;
-            padding: 6px 24px;
-            color: #FFE082;
-            font-size: 19px;
-            font-weight: 900;
-            text-shadow: 0 2px 4px #2A0845;
-            box-shadow: 0 4px 0 #2A0845;
-            margin-top: -38px;
-            margin-bottom: 12px;
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
         }
 
-        .countdown-circle {
-            width: 58px;
-            height: 58px;
+        .auto-timer-circle {
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            background: #4A148C;
-            border: 4px solid #FFD54F;
+            border: 4px solid #10B981;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 26px;
             font-weight: 900;
-            color: #FFE082;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-            margin: 12px 0;
+            color: #10B981;
+            margin: 15px auto;
         }
 
-        /* Level 1-100 Drawer Modal */
-        .picker-grid {
+        /* Level Drawer / Picker */
+        .levels-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             gap: 8px;
-            max-height: 300px;
+            max-height: 280px;
             overflow-y: auto;
-            width: 100%;
-            padding: 6px;
-            margin: 12px 0;
+            padding: 10px 4px;
         }
 
-        .picker-cell {
-            padding: 8px 0;
-            border-radius: 12px;
-            font-weight: 900;
+        .level-cell {
+            padding: 10px 0;
+            background: #334155;
+            border-radius: 10px;
             font-size: 13px;
+            font-weight: bold;
             text-align: center;
             cursor: pointer;
-            border: 2px solid #5A2B11;
-            box-shadow: 0 2px 0 #3E1B05;
+            border: 1px solid #475569;
         }
 
-        .picker-cell.unlocked {
-            background: #81C784;
-            color: #1B5E20;
+        .level-cell.unlocked {
+            background: #10B981;
+            color: white;
+            border-color: #A7F3D0;
         }
 
-        .picker-cell.current {
-            background: #FFD54F;
-            color: #E65100;
-            border-color: #E65100;
-            transform: scale(1.05);
+        .level-cell.current {
+            background: #F59E0B;
+            color: black;
+            border-color: #FEF3C7;
+            box-shadow: 0 0 10px #F59E0B;
         }
 
-        .picker-cell.locked {
-            background: #B0BEC5;
-            color: #546E7A;
-            opacity: 0.6;
+        .level-cell.locked {
+            opacity: 0.4;
             cursor: not-allowed;
+            background: #1E293B;
+        }
+
+        /* AI Drawer Modal */
+        .drawer-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: flex-end;
+            flex-direction: column;
+            z-index: 25;
+        }
+
+        .drawer-overlay.active {
+            display: flex;
+        }
+
+        .drawer-content {
+            background: #1E293B;
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            padding: 24px;
+            border-top: 3px solid var(--primary-light);
+            animation: slideUp 0.25s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .drawer-title {
+            font-size: 17px;
+            font-weight: bold;
+            color: #F59E0B;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .drawer-body {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #CBD5E1;
+            margin-bottom: 18px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 15px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #94A3B8;
+            border: 1px solid #475569;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        /* Utility */
+        .timer-bar {
+            height: 6px;
+            background: #334155;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .timer-progress {
+            height: 100%;
+            width: 100%;
+            background: #10B981;
+            transition: width 1s linear;
         }
     </style>
 </head>
@@ -821,205 +743,255 @@
     <div class="mobile-frame">
 
         <!-- ==============================================
-             TOP HUD HEADER (Exact match to theme)
+             SCREEN 0: COVER PAGE (QUIZOPIA ESCAPE)
         ============================================== -->
-        <div class="hud-header">
-            <!-- Player Avatar & Name -->
-            <div class="player-pill" onclick="promptPlayerName()">
-                <div class="player-avatar">👦</div>
-                <div class="player-info">
-                    <span class="player-label">Player</span>
-                    <span class="player-name"><span id="hud-name">Jiya</span> ✎</span>
-                </div>
+        <div class="screen active" id="screen-cover">
+            <!-- Floating Math Symbols -->
+            <span class="math-symbol-floating sym-1">➕</span>
+            <span class="math-symbol-floating sym-2">➗</span>
+            <span class="math-symbol-floating sym-3">✖️</span>
+            <span class="math-symbol-floating sym-4">➖</span>
+
+            <!-- Mascot / Hero Avatar -->
+            <div class="mascot-wrapper">
+                <div class="mascot-avatar">🦉</div>
             </div>
 
-            <!-- Currencies: Stars & Gems -->
-            <div class="currency-cluster">
-                <div class="currency-badge">
-                    <span>⭐</span>
-                    <span id="hud-stars">1250</span>
-                    <div class="btn-plus" onclick="claimDailyReward()">+</div>
-                </div>
-
-                <div class="currency-badge">
-                    <span>💎</span>
-                    <span id="hud-gems">25</span>
-                    <div class="btn-plus" onclick="claimDailyReward()">+</div>
-                </div>
+            <!-- Game Title Banner -->
+            <div class="cover-title-box">
+                <div class="cover-logo-main">QUIZOPIA</div>
+                <div class="cover-logo-sub">ESCAPE</div>
+                <div class="cover-tagline-pill">✦ Play • Think • Conquer! ✦</div>
             </div>
 
-            <!-- Settings Gear -->
-            <div class="btn-gear" onclick="openParentGate()" title="Settings">⚙️</div>
-        </div>
-
-        <!-- ==============================================
-             SCREEN 1: ADVENTURE LEVEL MAP (MAIN HUB)
-        ============================================== -->
-        <div class="screen active" id="screen-map">
-            <!-- Top Castle Title Ribbon -->
-            <div class="map-top-banner">
-                <div class="quizopia-title">Quizopia Escape</div>
-            </div>
-
-            <!-- Wooden Signpost: Active Age Stage Badge -->
-            <div class="wooden-signpost" onclick="switchScreen('screen-age')" title="Change Age Stage">
-                <span id="signpost-tier-icon">⭐</span>
-                <span id="signpost-tier-text">Ages 5–8 (Junior)</span>
-            </div>
-
-            <!-- World Stage Switcher Bar -->
-            <div class="stage-nav-bar">
-                <button class="stage-btn" onclick="prevStage()">◀ Prev</button>
-                <div class="stage-pill">
-                    <span id="stage-banner-text">Stage 1 (Levels 1–5)</span>
-                </div>
-                <button class="stage-btn" onclick="openLevelPicker()">📑 1-100</button>
-                <button class="stage-btn" onclick="nextStage()">Next ▶</button>
-            </div>
-
-            <!-- 5 Interactive Pedestal Nodes on the Winding Path -->
-            <div class="map-interactive-nodes" id="map-nodes-container">
-                <!-- Dynamically positioned nodes 1 to 5 mapped to actual coordinates -->
-            </div>
-        </div>
-
-        <!-- ==============================================
-             SCREEN 2: CHOOSE AGE STAGE (WOODEN THEME)
-        ============================================== -->
-        <div class="screen" id="screen-age">
-            <div class="age-board-container">
-                <div class="theme-title">Select Age Stage</div>
-                <div class="theme-sub">Tailors math difficulty, puzzles & visual cues</div>
-
-                <!-- Stage 1: 5 - 8 Junior -->
-                <div class="wooden-age-card selected" id="tier-card-junior" onclick="selectAge('5-8')">
-                    <h3>🍎 Ages 5 – 8 (Junior Explorer)</h3>
-                    <p>Visual counting, fruit & puppy addition, interactive gentle clues.</p>
-                </div>
-
-                <!-- Stage 2: 9 - 13 Intermediate -->
-                <div class="wooden-age-card" id="tier-card-inter" onclick="selectAge('9-13')">
-                    <h3>🎒 Ages 9 – 13 (Math Adventurer)</h3>
-                    <p>Multiplication, division quests, order of operations & fractions.</p>
-                </div>
-
-                <!-- Stage 3: 14 - 20 Pro Arcade -->
-                <div class="wooden-age-card" id="tier-card-pro" onclick="selectAge('14-20')">
-                    <h3>⚡ Ages 14 – 20 (Pro Arcade Master)</h3>
-                    <p>Rapid mental arithmetic, two-step linear equations & quadratics.</p>
-                </div>
-
-                <button class="btn-gold-large" style="margin-top:10px;" onclick="switchScreen('screen-map')">
-                    ▶ Play Adventure Map
+            <!-- Big Interactive PLAY Button -->
+            <div class="cover-play-section">
+                <button class="btn-cover-play" onclick="onPlayClicked()">
+                    <span>▶</span> PLAY
+                </button>
+                <button class="btn-cover-secondary" onclick="openParentGate()">
+                    🔒 Parents & Settings
                 </button>
             </div>
+
+            <!-- Bottom Badges -->
+            <div class="cover-bottom-row">
+                <span class="cover-feature-tag">👶 5-8 Junior</span>
+                <span class="cover-feature-tag">🎒 9-13 Inter</span>
+                <span class="cover-feature-tag">⚡ 14-20 Pro</span>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             TOP HUD HEADER (Shown inside games & menus)
+        ============================================== -->
+        <div class="hud-header" id="main-hud">
+            <button class="hud-stat" style="cursor:pointer;" onclick="switchScreen('screen-cover')" title="Back to Title Screen">
+                🏰 Cover
+            </button>
+            <div class="hud-stat">⭐ <span id="hud-stars">120</span></div>
+            <div class="hud-stat">🪙 <span id="hud-coins">450</span></div>
+            <button class="hud-stat tier-badge" onclick="switchScreen('screen-age')">
+                <span id="hud-tier-label">👶 5-8</span> ⚙️
+            </button>
+            <button class="hud-stat" style="cursor:pointer;" onclick="openParentGate()">🔒</button>
+        </div>
+
+        <!-- ==============================================
+             SCREEN 1: CHOOSE AGE TIER (3 STAGES)
+        ============================================== -->
+        <div class="screen" id="screen-age">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <button class="hud-stat" style="cursor:pointer;" onclick="switchScreen('screen-cover')">← Cover</button>
+                <span style="font-size:12px; color:#F59E0B; font-weight:bold;">QUIZOPIA ESCAPE</span>
+            </div>
+
+            <div class="screen-title">Choose Age Tier</div>
+            <div class="subtitle">Select your stage to start 100 levels of adventure</div>
+
+            <!-- Stage 1: 5 - 8 Junior -->
+            <div class="age-card selected" id="tier-card-junior" onclick="selectAge('5-8')">
+                <h3>Ages 5 – 8 (Junior)</h3>
+                <p>Visual counting, addition & subtraction with interactive clues.</p>
+                <div class="level-progress-pill" id="tier-pill-5-8">Levels 1 – 100 • Current: Level 1</div>
+            </div>
+
+            <!-- Stage 2: 9 - 13 Intermediate -->
+            <div class="age-card" id="tier-card-inter" onclick="selectAge('9-13')">
+                <h3>Ages 9 – 13 (Intermediate)</h3>
+                <p>Multiplication, division, order of operations, and fractions.</p>
+                <div class="level-progress-pill" id="tier-pill-9-13">Levels 1 – 100 • Current: Level 1</div>
+            </div>
+
+            <!-- Stage 3: 14 - 20 Pro Arcade -->
+            <div class="age-card" id="tier-card-pro" onclick="selectAge('14-20')">
+                <h3>Ages 14 – 20 (Pro Arcade)</h3>
+                <p>Speed mental math, linear equations, quadratics & leaderboards.</p>
+                <div class="level-progress-pill" id="tier-pill-14-20">Levels 1 – 100 • Current: Level 1</div>
+            </div>
+
+            <button class="btn-primary" style="margin-top:auto;" id="btn-enter-hub" onclick="enterCurrentAgeHub()">
+                Start Level 1 🚀
+            </button>
+        </div>
+
+        <!-- ==============================================
+             SCREEN 2A: JUNIOR MAP (AGES 5 - 8)
+        ============================================== -->
+        <div class="screen" id="screen-map-junior">
+            <div class="screen-title" style="color:#FFD93D;">Junior Safari Map 🎈</div>
+            <div class="subtitle" id="junior-subtitle">Levels 1 – 100 Path</div>
+
+            <div class="progress-banner">
+                <div>
+                    <div style="font-size:11px; color:#94A3B8;">YOUR SAFARI PROGRESS</div>
+                    <div style="font-size:16px; font-weight:800; color:#FFD93D;" id="junior-progress-text">Level 1 of 100 (1%)</div>
+                </div>
+                <button class="hud-stat" style="cursor:pointer;" onclick="openLevelPicker()">📑 1-100</button>
+            </div>
+
+            <button class="continue-btn" id="junior-continue-btn" onclick="startCurrentLevel()">
+                ▶️ Continue Level 1 🚀
+            </button>
+
+            <div class="map-container" id="junior-map-nodes">
+                <!-- Dynamically rendered nodes -->
+            </div>
+
+            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Age Bracket</button>
+        </div>
+
+        <!-- ==============================================
+             SCREEN 2B: INTERMEDIATE MAP (AGES 9 - 13)
+        ============================================== -->
+        <div class="screen" id="screen-map">
+            <div class="screen-title">Adventure Map 🗺️</div>
+            <div class="subtitle" id="inter-subtitle">Multiplication & Division 100-Level Quest</div>
+
+            <div class="progress-banner">
+                <div>
+                    <div style="font-size:11px; color:#94A3B8;">ADVENTURE MASTERY</div>
+                    <div style="font-size:16px; font-weight:800; color:#10B981;" id="inter-progress-text">Level 1 of 100 (1%)</div>
+                </div>
+                <button class="hud-stat" style="cursor:pointer;" onclick="openLevelPicker()">📑 1-100</button>
+            </div>
+
+            <button class="continue-btn" id="inter-continue-btn" onclick="startCurrentLevel()">
+                ▶️ Continue Level 1 🚀
+            </button>
+
+            <div class="map-container" id="inter-map-nodes">
+                <!-- Dynamically rendered nodes -->
+            </div>
+
+            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Age Bracket</button>
+        </div>
+
+        <!-- ==============================================
+             SCREEN 2C: PRO ARCADE HUB (AGES 14 - 20)
+        ============================================== -->
+        <div class="screen" id="screen-pro-hub">
+            <div class="screen-title" style="color:var(--pro-neon);">Arcade Dashboard ⚡</div>
+            <div class="subtitle" id="pro-subtitle">Speed Math & Algebra 100-Level Grind</div>
+
+            <div class="pro-hud">
+                <div>
+                    <div class="pro-badge">Current Level</div>
+                    <div style="font-size:18px; font-weight:800; color:#FFF;" id="pro-level-banner">L1 / 100</div>
+                </div>
+                <div>
+                    <div class="pro-badge">Global Rank</div>
+                    <div style="font-size:18px; font-weight:800; color:var(--pro-neon);">#14 Masters</div>
+                </div>
+                <button class="hud-stat" style="cursor:pointer; font-size:11px;" onclick="openLevelPicker()">📑 1-100</button>
+            </div>
+
+            <button class="continue-btn" id="pro-continue-btn" style="background:linear-gradient(135deg, #00F0FF, #7000FF); color:#000;" onclick="startCurrentLevel()">
+                ⚡ Quick Play Level 1 ⚡
+            </button>
+
+            <div class="arcade-card">
+                <div style="font-size:13px; font-weight:bold; color:var(--pro-neon); margin-bottom:6px;">⚔️ Live Math Duel (PvP)</div>
+                <div style="font-size:11px; color:#94A3B8; margin-bottom:10px;">Solve level challenges faster than online rivals.</div>
+                <button class="btn-primary" style="background:#4F46E5;" onclick="startCurrentLevel()">Enter Duel Queue</button>
+            </div>
+
+            <div class="map-container" id="pro-map-nodes">
+                <!-- Dynamically rendered nodes -->
+            </div>
+
+            <button class="btn-secondary" onclick="switchScreen('screen-age')">🔄 Switch Age Bracket</button>
         </div>
 
         <!-- ==============================================
              SCREEN 3: ACTIVE GAMEPLAY / QUIZ CANVAS
         ============================================== -->
         <div class="screen" id="screen-quiz">
-            <div class="quiz-board">
-                <div class="quiz-timer-wrap">
-                    <div class="quiz-timer-fill" id="quiz-timer-fill"></div>
+            <div class="timer-bar"><div class="timer-progress" id="quiz-timer"></div></div>
+
+            <div class="quiz-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:12px; color:#F59E0B; font-weight:bold;" id="quiz-level-indicator">Level 1 / 100</span>
+                    <span style="font-size:11px; color:#94A3B8;" id="quiz-mode-tag">Division Challenge</span>
                 </div>
-
-                <div class="quiz-header-badge" id="quiz-level-indicator">Level 1 / 100</div>
-                <div class="quiz-visual-display" id="quiz-visual-display">🍎 🍎 🍎 + 🍎 🍎</div>
-                <div class="quiz-problem-text" id="quiz-problem-text">3 + 2 = ?</div>
-                <div class="quiz-instruction" id="quiz-instruction-tag">Count all the yummy apples!</div>
-
-                <!-- 4 3D Wooden Answer Buttons -->
-                <div class="quiz-options-grid" id="quiz-options-grid">
-                    <!-- Populated dynamically -->
-                </div>
-
-                <button class="btn-clue" onclick="openHintDrawer()">
-                    💡 Need a Socratic Clue?
-                </button>
+                <div class="visual-display" id="quiz-visual-display"></div>
+                <div class="problem-text" id="problem-text">24 ÷ 6 = ?</div>
+                <div style="font-size:12px; color:#64748B;" id="quiz-instruction-tag">Tap the correct answer below</div>
             </div>
 
-            <button class="btn-gold-large" style="font-size:15px; padding:12px;" onclick="switchScreen('screen-map')">
-                ↩ Back to Map
+            <div class="options-grid" id="options-grid">
+                <!-- Dynamically populated buttons -->
+            </div>
+
+            <button class="btn-hint" id="btn-hint" onclick="openHintDrawer()">💡 Need a Hint? (Socratic AI)</button>
+            <button class="btn-secondary" style="margin-top:10px;" onclick="returnToCurrentHub()">↩️ Back to Map / Hub</button>
+        </div>
+
+        <!-- ==============================================
+             AUTO-NEXT LEVEL FANFARE OVERLAY
+        ============================================= -->
+        <div class="auto-next-overlay" id="auto-next-modal">
+            <div class="celebrate-icon" id="auto-celebrate-icon">🎉</div>
+            <h2 style="font-size:24px; color:#10B981; margin-bottom:4px;" id="auto-win-title">Level 1 Cleared!</h2>
+            <p style="font-size:13px; color:#CBD5E1; margin-bottom:12px;" id="auto-win-sub">Excellent job! +25 Stars & +50 Coins earned.</p>
+            
+            <div style="font-size:12px; color:#94A3B8;">Next Level starts automatically in:</div>
+            <div class="auto-timer-circle" id="auto-timer-countdown">3</div>
+
+            <button class="continue-btn" style="margin-top:10px;" id="btn-play-next-direct" onclick="triggerNextLevelDirectly()">
+                Play Next Level Now 🚀
             </button>
+            <button class="btn-secondary" onclick="stopAutoAndReturnHub()">View Map / Hub</button>
         </div>
 
         <!-- ==============================================
-             BOTTOM WOODEN NAVIGATION BAR
-        ============================================== -->
-        <div class="bottom-nav-bar">
-            <div class="nav-btn active" id="nav-home" onclick="onNavClicked('home')">
-                <div class="icon">🏠</div>
-                <div class="label">Home</div>
-            </div>
-
-            <div class="nav-btn" id="nav-challenges" onclick="onNavClicked('challenges')">
-                <div class="icon">🏆</div>
-                <div class="label">Challenges</div>
-            </div>
-
-            <div class="nav-btn" id="nav-rewards" onclick="onNavClicked('rewards')">
-                <div class="icon">🎁</div>
-                <div class="label">Rewards</div>
-            </div>
-
-            <div class="nav-btn" id="nav-leaderboard" onclick="onNavClicked('leaderboard')">
-                <div class="icon">👑</div>
-                <div class="label">Leaderboard</div>
-            </div>
-        </div>
-
-        <!-- ==============================================
-             AUTO-NEXT LEVEL VICTORY FANFARE MODAL
-        ============================================== -->
-        <div class="game-modal-overlay" id="modal-victory">
-            <div class="modal-wooden-box">
-                <div class="modal-title-ribbon">⭐ STAGE CLEARED! ⭐</div>
-                <div style="font-size:46px; margin:4px 0;">⭐⭐⭐</div>
-                <div style="font-size:16px; font-weight:800; color:#4A250E;" id="victory-level-text">Level 1 Complete!</div>
-                <div style="font-size:13px; font-weight:700; color:#6D3815; margin-bottom:6px;">+25 Stars ⭐ & +5 Gems 💎 Earned</div>
-
-                <div style="font-size:12px; font-weight:800; color:#5D3315;">Next Level starts in:</div>
-                <div class="countdown-circle" id="victory-countdown">3</div>
-
-                <button class="btn-gold-large" style="font-size:15px; padding:12px; margin-top:6px;" onclick="triggerNextLevelDirectly()">
-                    Play Next Level Now 🚀
-                </button>
-                <button class="stage-btn" style="margin-top:10px; width:100%; padding:8px;" onclick="closeVictoryModalAndMap()">
-                    View Adventure Map 🗺️
-                </button>
-            </div>
-        </div>
-
-        <!-- ==============================================
-             HINT / SOCRATIC AI DRAWER MODAL
-        ============================================== -->
-        <div class="game-modal-overlay" id="modal-hint">
-            <div class="modal-wooden-box">
-                <div class="modal-title-ribbon" style="background:linear-gradient(180deg, #BA68C8 0%, #7B1FA2 100%);">💡 SOCRATIC CLUE</div>
-                <div style="font-size:14px; font-weight:700; color:#4A250E; line-height:1.5; margin:14px 0;" id="hint-body-text">
-                    Count them together: start with 3 and count 2 more!
+             LEVEL SELECTOR / JUMP TO 1-100 MODAL
+        ============================================= -->
+        <div class="drawer-overlay" id="level-picker-modal">
+            <div class="drawer-content" style="max-height:85vh; display:flex; flex-direction:column;">
+                <div class="drawer-title">📑 Select Level (1 to 100)</div>
+                <div style="font-size:12px; color:#94A3B8; margin-bottom:10px;">Tap any unlocked level to play or practice:</div>
+                
+                <div class="levels-grid" id="picker-grid">
+                    <!-- Populated 1 to 100 -->
                 </div>
-                <button class="btn-gold-large" style="font-size:15px; padding:10px;" onclick="closeHintModal()">
-                    Got It! 👍
-                </button>
+
+                <button class="btn-primary" style="margin-top:14px;" onclick="closeLevelPicker()">Close</button>
             </div>
         </div>
 
         <!-- ==============================================
-             LEVEL SELECTOR (1 TO 100) MODAL
+             AI HINT & EXPLANATION DRAWER MODAL
         ============================================== -->
-        <div class="game-modal-overlay" id="modal-picker">
-            <div class="modal-wooden-box" style="max-height:80vh;">
-                <div class="modal-title-ribbon">📑 ALL LEVELS (1–100)</div>
-                <div style="font-size:12px; font-weight:700; color:#5D3315;">Tap any unlocked level to play:</div>
-                <div class="picker-grid" id="picker-grid"></div>
-                <button class="btn-gold-large" style="font-size:14px; padding:10px;" onclick="closeLevelPicker()">
-                    Close
-                </button>
+        <div class="drawer-overlay" id="ai-drawer">
+            <div class="drawer-content">
+                <div class="drawer-title" id="drawer-title">💡 Socratic AI Hint</div>
+                <div class="drawer-body" id="drawer-body">
+                    Think about multiplication! What number multiplied by 6 gives 24?
+                </div>
+                <button class="btn-primary" id="drawer-action-btn" onclick="closeDrawer()">Got it!</button>
             </div>
         </div>
-
     </div>
 
     <script>
@@ -1027,11 +999,6 @@
         // APP STATE (PERSISTED)
         // ==========================================
         let currentTier = '5-8';
-        let currentStagePage = 0; // Each page has 5 levels (0 = L1-5, 1 = L6-10, etc.)
-        let playerName = 'Jiya';
-        let stars = 1250;
-        let gems = 25;
-
         let progress = {
             '5-8': { currentLevel: 1, maxUnlocked: 1 },
             '9-13': { currentLevel: 1, maxUnlocked: 1 },
@@ -1039,48 +1006,27 @@
         };
 
         try {
-            const savedProg = localStorage.getItem('quizopia_progress');
-            if (savedProg) progress = JSON.parse(savedProg);
-            const savedStars = localStorage.getItem('quizopia_stars');
-            if (savedStars) stars = parseInt(savedStars);
-            const savedGems = localStorage.getItem('quizopia_gems');
-            if (savedGems) gems = parseInt(savedGems);
-            const savedName = localStorage.getItem('quizopia_name');
-            if (savedName) playerName = savedName;
+            const saved = localStorage.getItem('math_arcade_progress');
+            if (saved) progress = JSON.parse(saved);
         } catch(e) {}
 
-        function saveAll() {
+        function saveProgress() {
             try {
-                localStorage.setItem('quizopia_progress', JSON.stringify(progress));
-                localStorage.setItem('quizopia_stars', stars);
-                localStorage.setItem('quizopia_gems', gems);
-                localStorage.setItem('quizopia_name', playerName);
+                localStorage.setItem('math_arcade_progress', JSON.stringify(progress));
             } catch(e) {}
         }
 
         let currentActiveQuiz = null;
-        let victoryCountdownTimer = null;
-        let countdownSec = 3;
+        let autoAdvanceTimer = null;
+        let countdownSeconds = 3;
 
-        // Initialize HUD
-        document.getElementById('hud-name').innerText = playerName;
-        document.getElementById('hud-stars').innerText = stars;
-        document.getElementById('hud-gems').innerText = gems;
-
-        // Coordinates of 5 Platforms matching the image's winding path exactly:
-        // Level 1: Bottom center-left (X: 35%, Y: 76%)
-        // Level 2: Mid-lower right (X: 68%, Y: 62%)
-        // Level 3: Mid-lower left (X: 34%, Y: 50%)
-        // Level 4: Upper-mid right (X: 69%, Y: 43%)
-        // Level 5: High center-left (X: 39%, Y: 30%)
-        // Node 6 / Locked: High right (X: 74%, Y: 28%)
-        const nodeCoordinates = [
-            { x: 35, y: 76 },
-            { x: 68, y: 62 },
-            { x: 34, y: 50 },
-            { x: 69, y: 43 },
-            { x: 39, y: 30 }
-        ];
+        // ==========================================
+        // COVER PAGE LOGIC
+        // ==========================================
+        function onPlayClicked() {
+            // When PLAY button on cover page is clicked, transition to Age Tier page
+            switchScreen('screen-age');
+        }
 
         // ==========================================
         // DYNAMIC 1 TO 100 MATH GENERATOR ENGINE
@@ -1097,47 +1043,50 @@
                     const b = 1 + ((level * 3) % 4);
                     const sum = a + b;
                     const emoji = fruitEmojis[level % fruitEmojis.length];
+                    const visual = `${emoji.repeat(a)} + ${emoji.repeat(b)}`;
                     return {
                         level: level,
-                        modeTag: `Visual Counting (L${level}/100)`,
-                        visual: `${emoji.repeat(a)} + ${emoji.repeat(b)}`,
+                        modeTag: `Visual Counting (Level ${level}/100)`,
+                        visual: visual,
                         problem: `${a} + ${b} = ?`,
-                        instruction: `Count all the friendly ${emoji}!`,
+                        instruction: 'Count the friendly items!',
                         options: shuffle([sum, sum + 1, Math.max(1, sum - 1), sum + 2]),
                         correct: sum,
                         hint: `Count them together: start with ${a} and count ${b} more!`,
-                        explanation: `Super! ${a} + ${b} = ${sum} ${emoji} altogether! ⭐`
+                        explanation: `Awesome! ${a} + ${b} = ${sum} ${emoji} in total! ⭐`
                     };
                 } else if (level <= 50) {
                     const a = 3 + (level % 6);
                     const b = 2 + ((level * 2) % 5);
                     const sum = a + b;
                     const animal = cuteAnimals[level % cuteAnimals.length];
+                    const visual = `${animal.repeat(a)} + ${animal.repeat(b)}`;
                     return {
                         level: level,
-                        modeTag: `Animal Friends (L${level}/100)`,
-                        visual: `${animal.repeat(a)} + ${animal.repeat(b)}`,
+                        modeTag: `Animal Addition (Level ${level}/100)`,
+                        visual: visual,
                         problem: `${a} + ${b} = ?`,
-                        instruction: `How many ${animal} are playing?`,
+                        instruction: `How many ${animal} are there?`,
                         options: shuffle([sum, sum + 1, sum - 1, sum + 2]),
                         correct: sum,
-                        hint: `Put ${a} in your head and count up ${b} more!`,
-                        explanation: `Terrific! ${a} + ${b} = ${sum} happy ${animal}!`
+                        hint: `Put ${a} in your head and count up ${b} fingers!`,
+                        explanation: `Terrific! ${a} + ${b} = ${sum} ${animal}!`
                     };
                 } else if (level <= 75) {
                     const b = 2 + (level % 5);
                     const diff = 2 + ((level * 2) % 6);
                     const a = diff + b;
+                    const visual = `⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐`.slice(0, a) + ` - Take away ${b}`;
                     return {
                         level: level,
-                        modeTag: `Star Subtraction (L${level}/100)`,
-                        visual: `⭐⭐⭐⭐⭐⭐⭐⭐`.slice(0, a * 2) + ` - Take away ${b}`,
+                        modeTag: `Star Subtraction (Level ${level}/100)`,
+                        visual: visual,
                         problem: `${a} - ${b} = ?`,
-                        instruction: `Take away ${b} stars!`,
+                        instruction: 'Take away the stars!',
                         options: shuffle([diff, diff + 1, Math.max(0, diff - 1), diff + 2]),
                         correct: diff,
-                        hint: `If you have ${a} stars and ${b} float away, how many stay?`,
-                        explanation: `Spot on! ${a} minus ${b} leaves ${diff} stars!`
+                        hint: `If you have ${a} stars and take away ${b}, count backwards from ${a}!`,
+                        explanation: `Spot on! ${a} minus ${b} leaves ${diff} sparkling stars!`
                     };
                 } else {
                     const a = 10 + (level % 15);
@@ -1145,14 +1094,14 @@
                     const sum = a + b;
                     return {
                         level: level,
-                        modeTag: `Junior Champion (L${level}/100)`,
-                        visual: `🎈 10s & 1s Fun Challenge`,
+                        modeTag: `Junior Champion (Level ${level}/100)`,
+                        visual: `🎈 10s & 1s Block Fun`,
                         problem: `${a} + ${b} = ?`,
                         instruction: 'Add the two numbers together!',
                         options: shuffle([sum, sum + 2, sum - 2, sum + 10]),
                         correct: sum,
-                        hint: `Add the ones digits first: ${(a % 10)} + ${(b % 10)}, then add the tens!`,
-                        explanation: `Superstar! ${a} + ${b} = ${sum}. You conquered Level ${level}!`
+                        hint: `Add the ones place first: ${(a % 10)} + ${(b % 10)}, then add the tens!`,
+                        explanation: `Superstar! ${a} + ${b} = ${sum}. You're conquering Junior math!`
                     };
                 }
             } else if (tier === '9-13') {
@@ -1162,7 +1111,7 @@
                     const product = a * b;
                     return {
                         level: level,
-                        modeTag: `Multiplication Quest (L${level}/100)`,
+                        modeTag: `Times Tables Sprint (Level ${level}/100)`,
                         visual: '',
                         problem: `${a} × ${b} = ?`,
                         instruction: 'Calculate the product',
@@ -1177,7 +1126,7 @@
                     const dividend = divisor * quotient;
                     return {
                         level: level,
-                        modeTag: `Division Quest (L${level}/100)`,
+                        modeTag: `Division Quest (Level ${level}/100)`,
                         visual: '',
                         problem: `${dividend} ÷ ${divisor} = ?`,
                         instruction: 'Find the quotient',
@@ -1193,14 +1142,14 @@
                     const ans = (m1 * m2) + add;
                     return {
                         level: level,
-                        modeTag: `Order of Operations (L${level}/100)`,
+                        modeTag: `Order of Operations (Level ${level}/100)`,
                         visual: '',
                         problem: `(${m1} × ${m2}) + ${add} = ?`,
                         instruction: 'Multiply inside parentheses first!',
                         options: shuffle([ans, ans + 3, ans - m1, ans + 10]),
                         correct: ans,
-                        hint: `Step 1: ${m1} × ${m2} = ${m1 * m2}. Step 2: Add ${add}.`,
-                        explanation: `First multiply: ${m1 * m2}, then add: ${ans}!`
+                        hint: `Step 1: Calculate ${m1} × ${m2} = ${m1 * m2}. Step 2: Add ${add}.`,
+                        explanation: `First multiply: ${m1} × ${m2} = ${m1 * m2}. Then add: ${m1 * m2} + ${add} = ${ans}!`
                     };
                 } else {
                     const coeff = 2 + (level % 4);
@@ -1209,14 +1158,14 @@
                     const result = (coeff * x) + constant;
                     return {
                         level: level,
-                        modeTag: `Pre-Algebra (L${level}/100)`,
+                        modeTag: `Intermediate Pre-Algebra (Level ${level}/100)`,
                         visual: '',
-                        problem: `Solve: ${coeff}x + ${constant} = ${result}`,
+                        problem: `Solve for x: ${coeff}x + ${constant} = ${result}`,
                         instruction: 'Isolate the variable x',
                         options: shuffle([`x = ${x}`, `x = ${x + 1}`, `x = ${Math.max(1, x - 1)}`, `x = ${x + 2}`]),
                         correct: `x = ${x}`,
-                        hint: `Subtract ${constant} from ${result} = ${result - constant}. Then divide by ${coeff}.`,
-                        explanation: `${coeff}x = ${result - constant} → x = ${x}. Algebraic mastery!`
+                        hint: `Subtract ${constant} from ${result} to get ${result - constant}. Then divide by ${coeff}!`,
+                        explanation: `${coeff}x + ${constant} = ${result} → ${coeff}x = ${result - constant} → x = ${x}. Mastery unlocked!`
                     };
                 }
             } else {
@@ -1226,10 +1175,10 @@
                     const ans = base * mult;
                     return {
                         level: level,
-                        modeTag: `Speed Mental Blitz (L${level}/100)`,
+                        modeTag: `Mental Speed Blitz (Level ${level}/100)`,
                         visual: '',
                         problem: `${base} × ${mult} = ?`,
-                        instruction: 'Rapid Mental Calculation (No Calculator)',
+                        instruction: 'Rapid Mental Decomposition (No Scratchpad)',
                         options: shuffle([ans, ans + mult, ans - base, ans + 12]),
                         correct: ans,
                         hint: `Decompose: (${Math.floor(base/10)*10} × ${mult}) + (${base%10} × ${mult})`,
@@ -1242,27 +1191,27 @@
                     const c = (a * x) + b;
                     return {
                         level: level,
-                        modeTag: `Linear Sprint (L${level}/100)`,
+                        modeTag: `Linear Equations Sprint (Level ${level}/100)`,
                         visual: '',
                         problem: `Solve: ${a}x + ${b} = ${c}`,
                         instruction: 'Find the real value of x',
                         options: shuffle([`x = ${x}`, `x = ${x + 2}`, `x = ${Math.max(1, x - 1)}`, `x = ${x + 1}`]),
                         correct: `x = ${x}`,
                         hint: `Subtract ${b} from ${c} = ${c - b}. Then divide by ${a}.`,
-                        explanation: `${a}x = ${c - b} → x = ${x}. Sharp deduction!`
+                        explanation: `${a}x = ${c - b} → x = ${x}. Sharp algebraic deduction!`
                     };
                 } else if (level <= 75) {
                     const rootVal = 11 + (level % 15);
                     const squareVal = rootVal * rootVal;
                     return {
                         level: level,
-                        modeTag: `Radicals & Roots (L${level}/100)`,
+                        modeTag: `Exponents & Radicals (Level ${level}/100)`,
                         visual: '',
                         problem: `Evaluate: √${squareVal} = ?`,
-                        instruction: 'Identify principal square root',
+                        instruction: 'Identify the principal square root',
                         options: shuffle([rootVal, rootVal + 1, rootVal - 1, rootVal + 2]),
                         correct: rootVal,
-                        hint: `What positive number multiplied by itself gives ${squareVal}?`,
+                        hint: `Which positive number multiplied by itself gives ${squareVal}?`,
                         explanation: `√${squareVal} = ${rootVal} because ${rootVal}² = ${squareVal}.`
                     };
                 } else {
@@ -1271,14 +1220,14 @@
                     const sq = root1 * root1;
                     return {
                         level: level,
-                        modeTag: `Pro Masters (L${level}/100)`,
+                        modeTag: `Pro Masters Challenge (Level ${level}/100)`,
                         visual: '',
                         problem: `If x² - ${sq} = 0 and x > 0, find x`,
                         instruction: 'Masters Tier Logic',
                         options: shuffle([`x = ${ans}`, `x = ${ans + 1}`, `x = ${ans - 1}`, `x = ${sq}`]),
                         correct: `x = ${ans}`,
-                        hint: `x² = ${sq}. Take the positive square root!`,
-                        explanation: `x² = ${sq} → x = ${ans}. Level ${level} conquered!`
+                        hint: `x² = ${sq}. Since x > 0, take the positive square root!`,
+                        explanation: `x² = ${sq} → x = ${ans}. You have conquered Level ${level} in Pro Arcade!`
                     };
                 }
             }
@@ -1294,107 +1243,177 @@
         }
 
         // ==========================================
-        // MAP RENDERING: 5 INTERACTIVE PLATFORMS
+        // UI & NAVIGATION
         // ==========================================
-        function renderMap() {
-            const container = document.getElementById('map-nodes-container');
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(screenId);
+            if (target) {
+                target.classList.add('active');
+            }
+
+            // Hide HUD header on Cover screen, show on all other screens
+            const hud = document.getElementById('main-hud');
+            if (hud) {
+                hud.style.display = (screenId === 'screen-cover') ? 'none' : 'flex';
+            }
+
+            renderHubStats();
+        }
+
+        function selectAge(tier) {
+            currentTier = tier;
+
+            // Update Card selected states
+            document.getElementById('tier-card-junior').classList.toggle('selected', tier === '5-8');
+            document.getElementById('tier-card-inter').classList.toggle('selected', tier === '9-13');
+            document.getElementById('tier-card-pro').classList.toggle('selected', tier === '14-20');
+
+            const curLvl = progress[tier].currentLevel;
+            const btnEnter = document.getElementById('btn-enter-hub');
+            const hudBadge = document.getElementById('hud-tier-label');
+
+            if (tier === '5-8') {
+                btnEnter.innerHTML = `Start Level ${curLvl} 🎈`;
+                btnEnter.style.background = 'var(--primary)';
+                btnEnter.style.color = '#fff';
+                hudBadge.innerHTML = '👶 5-8';
+            } else if (tier === '9-13') {
+                btnEnter.innerHTML = `Start Level ${curLvl} 🚀`;
+                btnEnter.style.background = 'var(--primary)';
+                btnEnter.style.color = '#fff';
+                hudBadge.innerHTML = '🎒 9-13';
+            } else if (tier === '14-20') {
+                btnEnter.innerHTML = `Start Level ${curLvl} ⚡`;
+                btnEnter.style.background = 'linear-gradient(135deg, #00F0FF, #7000FF)';
+                btnEnter.style.color = '#000';
+                hudBadge.innerHTML = '⚡ 14-20';
+            }
+
+            renderHubStats();
+        }
+
+        function enterCurrentAgeHub() {
+            if (currentTier === '5-8') {
+                switchScreen('screen-map-junior');
+            } else if (currentTier === '9-13') {
+                switchScreen('screen-map');
+            } else if (currentTier === '14-20') {
+                switchScreen('screen-pro-hub');
+            }
+        }
+
+        function returnToCurrentHub() {
+            enterCurrentAgeHub();
+        }
+
+        function renderHubStats() {
+            // Update pills on screen-age
+            document.getElementById('tier-pill-5-8').innerText = `Levels 1 – 100 • Current: Level ${progress['5-8'].currentLevel}`;
+            document.getElementById('tier-pill-9-13').innerText = `Levels 1 – 100 • Current: Level ${progress['9-13'].currentLevel}`;
+            document.getElementById('tier-pill-14-20').innerText = `Levels 1 – 100 • Current: Level ${progress['14-20'].currentLevel}`;
+
+            // Update maps
+            renderMapNodes('5-8', 'junior-map-nodes', 'junior-progress-text', 'junior-continue-btn', 'junior-node');
+            renderMapNodes('9-13', 'inter-map-nodes', 'inter-progress-text', 'inter-continue-btn', '');
+            renderMapNodes('14-20', 'pro-map-nodes', 'pro-level-banner', 'pro-continue-btn', 'pro-node');
+        }
+
+        function renderMapNodes(tier, containerId, progressId, continueBtnId, extraClass) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const curLvl = progress[tier].currentLevel;
+            const maxUnl = progress[tier].maxUnlocked;
+
+            // Update progress banner
+            const progressElem = document.getElementById(progressId);
+            if (progressElem) {
+                if (tier === '14-20') {
+                    progressElem.innerText = `L${curLvl} / 100`;
+                } else {
+                    progressElem.innerText = `Level ${curLvl} of 100 (${curLvl}%)`;
+                }
+            }
+
+            // Update continue button
+            const contBtn = document.getElementById(continueBtnId);
+            if (contBtn) {
+                contBtn.innerHTML = `▶️ Continue Level ${curLvl} of 100 🚀`;
+            }
+
+            // Render visible nodes around current level
             container.innerHTML = '';
 
-            const startLevel = (currentStagePage * 5) + 1;
-            const endLevel = Math.min(100, startLevel + 4);
-            const maxUnl = progress[currentTier].maxUnlocked;
-            const curLvl = progress[currentTier].currentLevel;
+            // Add Daily Chest
+            const chest = document.createElement('div');
+            chest.className = 'map-node chest-node';
+            chest.innerHTML = '🎁';
+            chest.onclick = () => showNotification('🎁 You claimed 50 Free Daily Coins!');
+            container.appendChild(chest);
 
-            document.getElementById('stage-banner-text').innerText = `Stage ${currentStagePage + 1} (Levels ${startLevel}–${endLevel})`;
-
-            // Render 5 node pedestals
-            for (let i = 0; i < 5; i++) {
-                const lvl = startLevel + i;
-                if (lvl > 100) break;
-
-                const pos = nodeCoordinates[i];
+            // Display 4 consecutive nodes around current level
+            const startNode = Math.min(97, Math.max(1, curLvl - 1));
+            for (let lvl = startNode + 3; lvl >= startNode; lvl--) {
+                const node = document.createElement('div');
                 const isUnlocked = (lvl <= maxUnl);
                 const isCurrent = (lvl === curLvl);
 
-                const btn = document.createElement('button');
-                btn.className = `level-platform ${!isUnlocked ? 'locked' : ''}`;
-                btn.style.left = pos.x + '%';
-                btn.style.top = pos.y + '%';
-
-                let html = '';
-                if (isCurrent && isUnlocked) {
-                    html += '<div class="node-aura"></div>';
-                }
-
+                node.className = `map-node ${extraClass} ${isCurrent ? 'active-target' : ''} ${!isUnlocked ? 'locked' : ''}`;
+                
                 if (isUnlocked) {
-                    html += `<div class="node-flag">⭐</div>`;
-                    html += `<div class="node-pedestal">${lvl}</div>`;
-                    html += `<div class="node-stars">⭐⭐⭐</div>`;
-                    btn.onclick = () => launchLevel(lvl);
+                    node.innerHTML = `<span>L${lvl}</span><span style="font-size:10px;">${isCurrent ? '⭐' : '✓'}</span>`;
+                    node.onclick = () => launchLevel(tier, lvl);
                 } else {
-                    html += `<div class="node-pedestal" style="font-size:22px;">🔒</div>`;
-                    html += `<div class="node-stars">☆☆☆</div>`;
-                    btn.onclick = () => alert(`🔒 Level ${lvl} is locked!\nWin Level ${lvl - 1} to unlock this magical platform.`);
+                    node.innerHTML = `🔒<span style="font-size:9px;">L${lvl}</span>`;
+                    node.onclick = () => showNotification(`🔒 Level ${lvl} is locked. Win Level ${lvl-1} first!`);
                 }
-
-                btn.innerHTML = html;
-                container.appendChild(btn);
-            }
-
-            // Update Signpost
-            const signIcon = document.getElementById('signpost-tier-icon');
-            const signText = document.getElementById('signpost-tier-text');
-            if (currentTier === '5-8') {
-                signIcon.innerText = '🍎';
-                signText.innerText = 'Ages 5–8 (Junior)';
-            } else if (currentTier === '9-13') {
-                signIcon.innerText = '🎒';
-                signText.innerText = 'Ages 9–13 (Inter)';
-            } else {
-                signIcon.innerText = '⚡';
-                signText.innerText = 'Ages 14–20 (Pro)';
-            }
-        }
-
-        function nextStage() {
-            if ((currentStagePage + 1) * 5 < 100) {
-                currentStagePage++;
-                renderMap();
-            }
-        }
-
-        function prevStage() {
-            if (currentStagePage > 0) {
-                currentStagePage--;
-                renderMap();
+                container.appendChild(node);
             }
         }
 
         // ==========================================
-        // QUIZ LAUNCH & PLAY
+        // QUIZ PLAY & CONTINUOUS LEVEL PROGRESSION
         // ==========================================
-        function launchLevel(level) {
-            progress[currentTier].currentLevel = level;
-            saveAll();
+        function startCurrentLevel() {
+            launchLevel(currentTier, progress[currentTier].currentLevel);
+        }
 
-            const quiz = generateProblem(currentTier, level);
+        function launchLevel(tier, level) {
+            currentTier = tier;
+            progress[tier].currentLevel = level;
+            saveProgress();
+
+            const quiz = generateProblem(tier, level);
             currentActiveQuiz = quiz;
 
-            document.getElementById('quiz-level-indicator').innerText = `Level ${quiz.level} / 100 • ${quiz.modeTag}`;
+            document.getElementById('quiz-level-indicator').innerText = `Level ${quiz.level} / 100`;
+            document.getElementById('quiz-mode-tag').innerText = quiz.modeTag;
             document.getElementById('quiz-visual-display').innerText = quiz.visual || '';
-            document.getElementById('quiz-problem-text').innerHTML = quiz.problem;
+            document.getElementById('problem-text').innerHTML = quiz.problem;
             document.getElementById('quiz-instruction-tag').innerText = quiz.instruction;
 
-            const grid = document.getElementById('quiz-options-grid');
+            // Render Options
+            const grid = document.getElementById('options-grid');
             grid.innerHTML = '';
 
             quiz.options.forEach(opt => {
                 const btn = document.createElement('button');
-                btn.className = 'btn-quiz-option';
+                btn.className = 'btn-option' + (tier === '5-8' ? ' junior-btn' : '');
                 btn.innerText = opt;
                 btn.onclick = () => checkQuizAnswer(opt);
                 grid.appendChild(btn);
             });
+
+            // Adjust Hint Label
+            const hintBtn = document.getElementById('btn-hint');
+            if (tier === '5-8') {
+                hintBtn.innerText = '🎈 Need a Gentle Clue?';
+            } else if (tier === '14-20') {
+                hintBtn.innerText = '⚡ Socratic Formula Scaffold';
+            } else {
+                hintBtn.innerText = '💡 Need a Hint? (Socratic AI)';
+            }
 
             switchScreen('screen-quiz');
         }
@@ -1403,141 +1422,89 @@
             const isCorrect = (String(selectedVal) === String(currentActiveQuiz.correct));
 
             if (isCorrect) {
-                // Award stars & gems
-                stars += 25;
-                gems += 5;
-                document.getElementById('hud-stars').innerText = stars;
-                document.getElementById('hud-gems').innerText = gems;
+                // Award stars & coins
+                const starsElem = document.getElementById('hud-stars');
+                const coinsElem = document.getElementById('hud-coins');
+                starsElem.innerText = parseInt(starsElem.innerText) + 10;
+                coinsElem.innerText = parseInt(coinsElem.innerText) + 25;
 
-                const nextLvl = Math.min(100, currentActiveQuiz.level + 1);
-                progress[currentTier].maxUnlocked = Math.max(progress[currentTier].maxUnlocked, nextLvl);
-                progress[currentTier].currentLevel = nextLvl;
-                saveAll();
+                // Unlock next level (up to 100)
+                const nextLevel = Math.min(100, currentActiveQuiz.level + 1);
+                progress[currentTier].maxUnlocked = Math.max(progress[currentTier].maxUnlocked, nextLevel);
+                saveProgress();
 
                 // Trigger Continuous Auto-Advance Fanfare
-                openVictoryModal(currentActiveQuiz.level, nextLvl);
+                openAutoAdvanceModal(currentActiveQuiz.level, nextLevel);
             } else {
-                // Show Socratic AI Hint
-                const hintModal = document.getElementById('modal-hint');
-                document.getElementById('hint-body-text').innerHTML = `You chose <b>${selectedVal}</b>.<br><br><b>Explanation:</b> ${currentActiveQuiz.explanation}`;
-                hintModal.classList.add('active');
+                // Show AI error feedback drawer
+                const drawer = document.getElementById('ai-drawer');
+                document.getElementById('drawer-title').innerHTML = '❌ Guided Explanation';
+                document.getElementById('drawer-body').innerHTML = `You chose <b>${selectedVal}</b>.<br><br><b>Explanation:</b> ${currentActiveQuiz.explanation}`;
+                document.getElementById('drawer-action-btn').innerText = 'Try Again 🔄';
+                document.getElementById('drawer-action-btn').onclick = closeDrawer;
+                drawer.classList.add('active');
             }
         }
 
         // ==========================================
-        // VICTORY AUTO-ADVANCE MODAL
+        // AUTO ADVANCE MODAL (Direct progression to next level)
         // ==========================================
-        function openVictoryModal(completedLevel, nextLevel) {
-            const modal = document.getElementById('modal-victory');
-            const countdownElem = document.getElementById('victory-countdown');
-            document.getElementById('victory-level-text').innerText = `Level ${completedLevel} Cleared! 🎉`;
+        function openAutoAdvanceModal(completedLevel, nextLevel) {
+            const modal = document.getElementById('auto-next-modal');
+            const title = document.getElementById('auto-win-title');
+            const sub = document.getElementById('auto-win-sub');
+            const btnDirect = document.getElementById('btn-play-next-direct');
+            const countdownElem = document.getElementById('auto-timer-countdown');
 
-            countdownSec = 3;
-            countdownElem.innerText = countdownSec;
+            title.innerText = `Level ${completedLevel} Cleared! 🎉`;
+            
+            if (completedLevel >= 100) {
+                sub.innerHTML = `🏆 <b>ULTIMATE GRAND MASTER!</b><br>You have conquered all 100 Levels!`;
+                btnDirect.innerText = 'Replay Level 100';
+                countdownElem.style.display = 'none';
+                modal.classList.add('active');
+                return;
+            }
+
+            sub.innerHTML = `Awesome job! Moving straight to <b>Level ${nextLevel}</b>.`;
+            btnDirect.innerText = `Play Level ${nextLevel} Now 🚀`;
+            countdownElem.style.display = 'flex';
+
+            countdownSeconds = 3;
+            countdownElem.innerText = countdownSeconds;
+
+            if (autoAdvanceTimer) clearInterval(autoAdvanceTimer);
+
             modal.classList.add('active');
 
-            if (victoryCountdownTimer) clearInterval(victoryCountdownTimer);
-
-            victoryCountdownTimer = setInterval(() => {
-                countdownSec--;
-                if (countdownSec > 0) {
-                    countdownElem.innerText = countdownSec;
+            // 3-second automatic timer to advance seamlessly
+            autoAdvanceTimer = setInterval(() => {
+                countdownSeconds--;
+                if (countdownSeconds > 0) {
+                    countdownElem.innerText = countdownSeconds;
                 } else {
-                    clearInterval(victoryCountdownTimer);
+                    clearInterval(autoAdvanceTimer);
                     triggerNextLevelDirectly();
                 }
             }, 1000);
         }
 
         function triggerNextLevelDirectly() {
-            if (victoryCountdownTimer) clearInterval(victoryCountdownTimer);
-            document.getElementById('modal-victory').classList.remove('active');
+            if (autoAdvanceTimer) clearInterval(autoAdvanceTimer);
+            document.getElementById('auto-next-modal').classList.remove('active');
 
-            const nextLvl = progress[currentTier].currentLevel;
-            currentStagePage = Math.floor((nextLvl - 1) / 5);
-            launchLevel(nextLvl);
+            const nextLevel = Math.min(100, currentActiveQuiz.level + 1);
+            launchLevel(currentTier, nextLevel);
         }
 
-        function closeVictoryModalAndMap() {
-            if (victoryCountdownTimer) clearInterval(victoryCountdownTimer);
-            document.getElementById('modal-victory').classList.remove('active');
-            renderMap();
-            switchScreen('screen-map');
-        }
-
-        // ==========================================
-        // UI & NAVIGATION
-        // ==========================================
-        function switchScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById(screenId);
-            if (target) target.classList.add('active');
-
-            // Bottom Nav Active State
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            if (screenId === 'screen-map') {
-                document.getElementById('nav-home').classList.add('active');
-                renderMap();
-            }
-        }
-
-        function selectAge(tier) {
-            currentTier = tier;
-            document.getElementById('tier-card-junior').classList.toggle('selected', tier === '5-8');
-            document.getElementById('tier-card-inter').classList.toggle('selected', tier === '9-13');
-            document.getElementById('tier-card-pro').classList.toggle('selected', tier === '14-20');
-
-            const curLvl = progress[tier].currentLevel;
-            currentStagePage = Math.floor((curLvl - 1) / 5);
-            renderMap();
-        }
-
-        function onNavClicked(tab) {
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            const btn = document.getElementById('nav-' + tab);
-            if (btn) btn.classList.add('active');
-
-            if (tab === 'home') {
-                switchScreen('screen-map');
-            } else if (tab === 'challenges') {
-                alert('🏆 QUIZOPIA CHALLENGES\n\n1. ⚔️ Math Duel (1v1 Live)\n2. ⏱️ 60-Second Speed Arithmetic\n3. 🌟 Daily Star Streak (+100 Stars)\n\nComplete today\'s challenges to climb the leaderboard!');
-            } else if (tab === 'rewards') {
-                claimDailyReward();
-            } else if (tab === 'leaderboard') {
-                alert('👑 QUIZOPIA GLOBAL LEADERBOARD\n\n1. 🥇 MathMaster_99 — 12,450 pts\n2. 🥈 StarRacer — 11,800 pts\n3. 🥉 Jiya (You) — ' + stars + ' pts\n4.  NeoWizard — 9,400 pts');
-            }
-        }
-
-        function claimDailyReward() {
-            stars += 50;
-            gems += 5;
-            document.getElementById('hud-stars').innerText = stars;
-            document.getElementById('hud-gems').innerText = gems;
-            saveAll();
-            alert('🎁 DAILY REWARD CLAIMED!\n\n+50 Golden Stars ⭐\n+5 Sparkling Gems 💎\n\nCome back tomorrow for another magical chest!');
-        }
-
-        function promptPlayerName() {
-            const n = prompt('Enter your adventurer name:', playerName);
-            if (n && n.trim()) {
-                playerName = n.trim();
-                document.getElementById('hud-name').innerText = playerName;
-                saveAll();
-            }
-        }
-
-        function openHintDrawer() {
-            if (!currentActiveQuiz) return;
-            document.getElementById('hint-body-text').innerHTML = currentActiveQuiz.hint;
-            document.getElementById('modal-hint').classList.add('active');
-        }
-
-        function closeHintModal() {
-            document.getElementById('modal-hint').classList.remove('active');
+        function stopAutoAndReturnHub() {
+            if (autoAdvanceTimer) clearInterval(autoAdvanceTimer);
+            document.getElementById('auto-next-modal').classList.remove('active');
+            returnToCurrentHub();
         }
 
         // ==========================================
-        // 1-100 LEVEL PICKER
+        // LEVEL PICKER (1 TO 100 JUMP SELECTOR)
         // ==========================================
         function openLevelPicker() {
             const grid = document.getElementById('picker-grid');
@@ -1551,37 +1518,60 @@
                 const isUnlocked = (i <= maxUnl);
                 const isCurrent = (i === curLvl);
 
-                cell.className = `picker-cell ${isCurrent ? 'current' : (isUnlocked ? 'unlocked' : 'locked')}`;
+                cell.className = `level-cell ${isCurrent ? 'current' : (isUnlocked ? 'unlocked' : 'locked')}`;
                 cell.innerText = i;
 
                 if (isUnlocked) {
                     cell.onclick = () => {
                         closeLevelPicker();
-                        currentStagePage = Math.floor((i - 1) / 5);
-                        launchLevel(i);
+                        launchLevel(currentTier, i);
                     };
                 }
                 grid.appendChild(cell);
             }
 
-            document.getElementById('modal-picker').classList.add('active');
+            document.getElementById('level-picker-modal').classList.add('active');
         }
 
         function closeLevelPicker() {
-            document.getElementById('modal-picker').classList.remove('active');
+            document.getElementById('level-picker-modal').classList.remove('active');
         }
 
+        // ==========================================
+        // Socratic AI Drawer
+        // ==========================================
+        function openHintDrawer() {
+            if (!currentActiveQuiz) return;
+            const drawer = document.getElementById('ai-drawer');
+            document.getElementById('drawer-title').innerHTML = '💡 Socratic AI Hint';
+            document.getElementById('drawer-body').innerHTML = currentActiveQuiz.hint;
+            document.getElementById('drawer-action-btn').innerText = 'Got it!';
+            document.getElementById('drawer-action-btn').onclick = closeDrawer;
+            drawer.classList.add('active');
+        }
+
+        function closeDrawer() {
+            document.getElementById('ai-drawer').classList.remove('active');
+        }
+
+        // ==========================================
+        // Parents Gate
+        // ==========================================
         function openParentGate() {
-            const ans = prompt('🔒 PARENTS & TEACHER GATE\nWhat is 8 × 7?');
+            const ans = prompt('🔒 PARENTS GATE: Solve to enter\nWhat is 7 × 8?');
             if (ans === '56') {
-                alert(`✅ ACCESS GRANTED\n\nAdventurer: ${playerName}\n• Ages 5-8: Level ${progress['5-8'].maxUnlocked}/100\n• Ages 9-13: Level ${progress['9-13'].maxUnlocked}/100\n• Ages 14-20: Level ${progress['14-20'].maxUnlocked}/100\n\nTotal Stars: ${stars} ⭐ | Gems: ${gems} 💎`);
+                alert(`✅ Parent Access Granted!\n\nLevels Completed:\n• Ages 5-8: Level ${progress['5-8'].maxUnlocked}/100\n• Ages 9-13: Level ${progress['9-13'].maxUnlocked}/100\n• Ages 14-20: Level ${progress['14-20'].maxUnlocked}/100`);
             } else if (ans !== null) {
                 alert('❌ Incorrect PIN. Access Denied.');
             }
         }
 
-        // Initial setup
-        renderMap();
+        function showNotification(msg) {
+            alert(msg);
+        }
+
+        // Initialize directly to the Cover Page
+        switchScreen('screen-cover');
     </script>
 </body>
 </html>
