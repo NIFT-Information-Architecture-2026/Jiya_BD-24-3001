@@ -1082,33 +1082,404 @@
             margin-top: 18px;
         }
 
-        /* Dark Forest Theme Overrides */
+        /* App Toast Notification */
+        .app-toast {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(50px);
+            background: rgba(30, 41, 59, 0.95);
+            color: #FFFFFF;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 800;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            pointer-events: none;
+            opacity: 0;
+            transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 100;
+            max-width: 86%;
+            text-align: center;
+            border: 1.5px solid rgba(255,255,255,0.15);
+        }
+
+        .app-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-frame.dark-theme .app-toast {
+            background: rgba(20, 36, 26, 0.96) !important;
+            border: 1.5px solid #385E44 !important;
+            color: #E8F5E9 !important;
+        }
+
+        /* ==============================================
+           COMPREHENSIVE DARK FOREST THEME (ALL PAGES)
+        ============================================== */
+        body.dark-theme {
+            background: linear-gradient(135deg, #0A120D 0%, #111F17 50%, #0F1722 100%) !important;
+        }
+
         .mobile-frame.dark-theme {
-            background: #141E17 !important;
-            border-color: #2E4C33 !important;
+            background: #0F1A13 !important;
+            border-color: #233D2B !important;
             color: #E8F5E9 !important;
+            box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.75) !important;
         }
 
-        .mobile-frame.dark-theme .setting-item,
-        .mobile-frame.dark-theme .age-card,
-        .mobile-frame.dark-theme .quiz-card,
-        .mobile-frame.dark-theme .map-fixed-header,
-        .mobile-frame.dark-theme .map-fixed-footer,
+        /* 0. COVER PAGE DARK MODE */
+        .mobile-frame.dark-theme #screen-cover {
+            background: linear-gradient(180deg, #0D1C14 0%, #16281E 50%, #0E1A13 100%) !important;
+        }
+
+        .mobile-frame.dark-theme .foxy-mascot-avatar {
+            background: linear-gradient(135deg, #243E2C, #182B1E) !important;
+            border-color: #FFB085 !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6), 0 0 25px rgba(255, 176, 133, 0.35) !important;
+        }
+
+        .mobile-frame.dark-theme .foxy-title-box {
+            background: linear-gradient(180deg, #182B1F, #122218) !important;
+            border-color: #385E44 !important;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
+        }
+
+        .mobile-frame.dark-theme .foxy-logo-main {
+            color: #FFB085 !important;
+            text-shadow: 0 3px 0 #7A3508, 0 6px 12px rgba(0,0,0,0.5) !important;
+        }
+
+        .mobile-frame.dark-theme .foxy-logo-sub {
+            color: #A8D5BA !important;
+            text-shadow: 0 2px 0 #153A22 !important;
+        }
+
+        .mobile-frame.dark-theme .foxy-tagline {
+            background: #193122 !important;
+            color: #C8E6C9 !important;
+            border-color: #2F573D !important;
+        }
+
+        .mobile-frame.dark-theme .btn-foxy-secondary {
+            background: #182B1F !important;
+            border-color: #385E44 !important;
+            color: #E8F5E9 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+        }
+
+        .mobile-frame.dark-theme .cover-feature-tag {
+            background: #16281D !important;
+            border-color: #2A4834 !important;
+            color: #C8E6C9 !important;
+        }
+
+        /* 1. TOP HUD & NAVIGATION BARS */
         .mobile-frame.dark-theme .hud-header {
-            background: #1B291F !important;
-            border-color: #2E4C33 !important;
+            background: #132218 !important;
+            border-color: #233C2A !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+        }
+
+        .mobile-frame.dark-theme .hud-stat {
+            background: #1B2F22 !important;
+            border-color: #2E5039 !important;
             color: #E8F5E9 !important;
         }
 
-        .mobile-frame.dark-theme .setting-title,
-        .mobile-frame.dark-theme .age-card h3 {
+        .mobile-frame.dark-theme .hud-stat span {
             color: #FFE082 !important;
         }
 
+        .mobile-frame.dark-theme .tier-badge {
+            background: #2D2313 !important;
+            border-color: #5E461B !important;
+            color: #FFB085 !important;
+        }
+
         .mobile-frame.dark-theme .btn-back-arrow {
-            background: #1B291F !important;
-            border-color: #2E4C33 !important;
+            background: #182B1F !important;
+            border-color: #2E5039 !important;
             color: #81C784 !important;
+        }
+
+        .mobile-frame.dark-theme .top-bar-title {
+            color: #FFE082 !important;
+        }
+
+        /* 2. GENERAL SCREEN TITLES & CARDS */
+        .mobile-frame.dark-theme .screen {
+            background: #0F1A13 !important;
+            color: #E8F5E9 !important;
+        }
+
+        .mobile-frame.dark-theme .screen-title {
+            color: #FFE082 !important;
+        }
+
+        .mobile-frame.dark-theme .subtitle {
+            color: #94A3B8 !important;
+        }
+
+        /* 3. SETTINGS SCREEN */
+        .mobile-frame.dark-theme #screen-settings {
+            background: #0F1A13 !important;
+        }
+
+        .mobile-frame.dark-theme .setting-item {
+            background: #16281D !important;
+            border-color: #2A4834 !important;
+            color: #E8F5E9 !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+        }
+
+        .mobile-frame.dark-theme .setting-title {
+            color: #F1F8E9 !important;
+        }
+
+        .mobile-frame.dark-theme .setting-desc {
+            color: #94A3B8 !important;
+        }
+
+        .mobile-frame.dark-theme .toggle-slider {
+            background-color: #2B3D30 !important;
+        }
+
+        .mobile-frame.dark-theme input:checked + .toggle-slider {
+            background-color: #4CAF50 !important;
+        }
+
+        .mobile-frame.dark-theme .btn-theme-switch {
+            background: #203828 !important;
+            border-color: #3E6B4E !important;
+            color: #FFE082 !important;
+        }
+
+        .mobile-frame.dark-theme .settings-mascot-tip {
+            background: #182B1F !important;
+            border-color: #385E44 !important;
+        }
+
+        .mobile-frame.dark-theme .settings-mascot-tip div {
+            color: #C8E6C9 !important;
+        }
+
+        /* 4. AGE SELECTION SCREEN */
+        .mobile-frame.dark-theme .age-card {
+            background: #16281D !important;
+            border-color: #2A4834 !important;
+            color: #E8F5E9 !important;
+        }
+
+        .mobile-frame.dark-theme .age-card h3 {
+            color: #F1F8E9 !important;
+        }
+
+        .mobile-frame.dark-theme .age-card p {
+            color: #94A3B8 !important;
+        }
+
+        .mobile-frame.dark-theme .age-card.selected {
+            background: linear-gradient(135deg, #1F3827 0%, #294D36 100%) !important;
+            border-color: #81C784 !important;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4) !important;
+        }
+
+        .mobile-frame.dark-theme .age-card.selected::after {
+            background: #2E5039 !important;
+            color: #A7F3D0 !important;
+        }
+
+        .mobile-frame.dark-theme .level-progress-pill {
+            background: #132418 !important;
+            border-color: #284732 !important;
+            color: #A7F3D0 !important;
+        }
+
+        /* 5. ADVENTURE MAPS (JUNIOR, INTER, PRO) */
+        .mobile-frame.dark-theme .map-fixed-header,
+        .mobile-frame.dark-theme .map-fixed-footer {
+            background: #132218 !important;
+            border-color: #233C2A !important;
+        }
+
+        .mobile-frame.dark-theme .map-scroll-area {
+            background: #0F1A13 !important;
+        }
+
+        .mobile-frame.dark-theme .map-scroll-area::-webkit-scrollbar-thumb {
+            background: #2E5039 !important;
+        }
+
+        .mobile-frame.dark-theme .progress-banner {
+            background: #182B1F !important;
+            border-color: #2C4E36 !important;
+            color: #E8F5E9 !important;
+        }
+
+        .mobile-frame.dark-theme .progress-banner div {
+            color: #C8E6C9 !important;
+        }
+
+        .mobile-frame.dark-theme .trail-winding-track {
+            background: repeating-linear-gradient(to bottom, #2A4834 0px, #2A4834 14px, transparent 14px, transparent 24px) !important;
+        }
+
+        .mobile-frame.dark-theme .trail-milestone-banner {
+            background: linear-gradient(135deg, #2D2313, #3B2E15) !important;
+            border-color: #7A591A !important;
+            color: #FFE082 !important;
+        }
+
+        .mobile-frame.dark-theme .map-node.locked {
+            background: #16241C !important;
+            border-color: #263C2E !important;
+            color: #5B7262 !important;
+        }
+
+        .mobile-frame.dark-theme .pro-hud {
+            background: #12232E !important;
+            border-color: #1E3D50 !important;
+            color: #E0F2FE !important;
+        }
+
+        .mobile-frame.dark-theme .pro-badge {
+            color: #38BDF8 !important;
+        }
+
+        .mobile-frame.dark-theme .arcade-card {
+            background: #142430 !important;
+            border-color: #1F3F54 !important;
+            color: #E0F2FE !important;
+        }
+
+        .mobile-frame.dark-theme .arcade-card div {
+            color: #CBD5E1 !important;
+        }
+
+        /* 6. ACTIVE QUIZ CANVAS */
+        .mobile-frame.dark-theme #screen-quiz {
+            background: #0F1A13 !important;
+        }
+
+        .mobile-frame.dark-theme .timer-bar {
+            background: #192D20 !important;
+        }
+
+        .mobile-frame.dark-theme .quiz-card {
+            background: #16281D !important;
+            border-color: #2A4834 !important;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3) !important;
+        }
+
+        .mobile-frame.dark-theme #problem-text {
+            color: #FFE082 !important;
+        }
+
+        .mobile-frame.dark-theme #quiz-level-indicator {
+            color: #FFB085 !important;
+        }
+
+        .mobile-frame.dark-theme #quiz-mode-tag,
+        .mobile-frame.dark-theme #quiz-instruction-tag {
+            color: #94A3B8 !important;
+        }
+
+        .mobile-frame.dark-theme .visual-display {
+            color: #F8FAFC !important;
+        }
+
+        .mobile-frame.dark-theme .btn-option {
+            background: #1B2F22 !important;
+            border-color: #2F5039 !important;
+            color: #F1F8E9 !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+        }
+
+        .mobile-frame.dark-theme .btn-option:hover {
+            background: #24412E !important;
+            border-color: #FFB085 !important;
+            color: #FFB085 !important;
+        }
+
+        .mobile-frame.dark-theme .btn-option.junior-btn {
+            background: #292415 !important;
+            border-color: #5C4A1F !important;
+            color: #FFE082 !important;
+        }
+
+        .mobile-frame.dark-theme .btn-hint {
+            background: #252315 !important;
+            border-color: #63501F !important;
+            color: #FFE082 !important;
+        }
+
+        .mobile-frame.dark-theme .btn-secondary {
+            background: #16281D !important;
+            border-color: #2A4834 !important;
+            color: #C8E6C9 !important;
+        }
+
+        /* 7. DRAWERS & MODALS */
+        .mobile-frame.dark-theme .drawer-overlay {
+            background: rgba(0, 0, 0, 0.75) !important;
+        }
+
+        .mobile-frame.dark-theme .drawer-content {
+            background: #15251B !important;
+            border-top-color: #81C784 !important;
+            color: #E8F5E9 !important;
+        }
+
+        .mobile-frame.dark-theme .drawer-title {
+            color: #FFE082 !important;
+        }
+
+        .mobile-frame.dark-theme .drawer-body {
+            color: #C8E6C9 !important;
+        }
+
+        .mobile-frame.dark-theme .level-cell {
+            background: #1B2F22 !important;
+            border-color: #2E5039 !important;
+            color: #A7F3D0 !important;
+        }
+
+        .mobile-frame.dark-theme .level-cell.unlocked {
+            background: #24422E !important;
+            border-color: #4CAF50 !important;
+            color: #FFFFFF !important;
+        }
+
+        .mobile-frame.dark-theme .level-cell.current {
+            background: #3B2E15 !important;
+            border-color: #FFB300 !important;
+            color: #FFE082 !important;
+        }
+
+        .mobile-frame.dark-theme .level-cell.locked {
+            background: #142018 !important;
+            border-color: #203125 !important;
+            color: #4B6353 !important;
+        }
+
+        .mobile-frame.dark-theme .auto-next-overlay {
+            background: rgba(15, 26, 19, 0.94) !important;
+        }
+
+        .mobile-frame.dark-theme #auto-win-title {
+            color: #81C784 !important;
+        }
+
+        .mobile-frame.dark-theme #auto-win-sub {
+            color: #C8E6C9 !important;
+        }
+
+        .mobile-frame.dark-theme .auto-timer-circle {
+            background: #1C3323 !important;
+            border-color: #4CAF50 !important;
+            color: #A7F3D0 !important;
         }
     </style>
 </head>
@@ -1162,7 +1533,7 @@
         ============================================== -->
         <div class="screen" id="screen-settings">
             <div class="screen-top-bar">
-                <button class="btn-back-arrow" onclick="switchScreen('screen-cover')" title="Back to Home Page">
+                <button class="btn-back-arrow" onclick="closeSettingsScreen()" title="Back">
                     ←
                 </button>
                 <span class="top-bar-title">⚙️ GAME SETTINGS</span>
@@ -1203,18 +1574,24 @@
                     </label>
                 </div>
 
-                <!-- 3. Dark Theme / Light Theme Button -->
-                <div class="setting-item">
+                <!-- 3. Dark Theme / Light Theme Button & Toggle -->
+                <div class="setting-item" style="cursor: pointer;" onclick="toggleThemeMode()">
                     <div class="setting-info">
                         <div class="setting-icon-box" id="theme-icon-box" style="background: #FFFDE7; color: #F57F17;">☀️</div>
                         <div>
-                            <div class="setting-title">Forest Theme</div>
+                            <div class="setting-title" id="theme-title-text">Theme Mode</div>
                             <div class="setting-desc" id="theme-label-desc">Light Meadow Theme</div>
                         </div>
                     </div>
-                    <button class="btn-theme-switch" id="btn-theme-toggle" onclick="toggleThemeMode()">
-                        <span id="theme-switch-icon">🌙</span> <span id="theme-switch-text">Dark Theme</span>
-                    </button>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <button class="btn-theme-switch" id="btn-theme-toggle" onclick="event.stopPropagation(); toggleThemeMode()">
+                            <span id="theme-switch-icon">🌙</span> <span id="theme-switch-text">Dark Mode</span>
+                        </button>
+                        <label class="cute-toggle" onclick="event.stopPropagation();">
+                            <input type="checkbox" id="setting-theme" onchange="toggleThemeMode(this.checked)">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -1226,8 +1603,8 @@
                 </div>
             </div>
 
-            <button class="btn-primary" style="margin-top: auto;" onclick="switchScreen('screen-cover')">
-                ← Back to Home
+            <button class="btn-primary" style="margin-top: auto;" onclick="closeSettingsScreen()">
+                ← Back
             </button>
         </div>
 
@@ -1236,14 +1613,15 @@
         ============================================== -->
         <div class="hud-header" id="main-hud">
             <button class="hud-stat" style="cursor:pointer;" onclick="switchScreen('screen-cover')" title="Back to Title Screen">
-                🏡 Forest Home
+                🏡 Home
             </button>
             <div class="hud-stat">⭐ <span id="hud-stars">120</span></div>
             <div class="hud-stat">🌰 <span id="hud-coins">450</span></div>
             <button class="hud-stat tier-badge" onclick="switchScreen('screen-age')">
-                <span id="hud-tier-label">🦊 5-8</span> ⚙️
+                <span id="hud-tier-label">🦊 5-8</span>
             </button>
-            <button class="hud-stat" style="cursor:pointer;" onclick="openParentGate()">🔒</button>
+            <button class="hud-stat" style="cursor:pointer;" onclick="openSettingsScreen()" title="Game Settings">⚙️</button>
+            <button class="hud-stat" style="cursor:pointer;" onclick="openParentGate()" title="Parent Gate">🔒</button>
         </div>
 
         <!-- ==============================================
@@ -1486,6 +1864,9 @@
                 <button class="btn-primary" id="drawer-action-btn" onclick="closeDrawer()">Got it, Foxy!</button>
             </div>
         </div>
+
+        <!-- Floating In-App Toast Notification -->
+        <div id="app-toast" class="app-toast"></div>
     </div>
 
     <script>
@@ -1525,39 +1906,155 @@
         let vibrateEnabled = true;
         let isDarkTheme = false;
 
+        try {
+            const savedTheme = localStorage.getItem('math_arcade_theme');
+            if (savedTheme === 'dark') {
+                isDarkTheme = true;
+            }
+        } catch(e) {}
+
+        // ==========================================
+        // WEB AUDIO & HAPTIC FEEDBACK ENGINE
+        // ==========================================
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtxClass) {
+                    audioCtx = new AudioCtxClass();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playSoftClickSound() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                // Pleasant soft bubble/wooden chime tap
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(620, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(320, ctx.currentTime + 0.04);
+
+                gain.gain.setValueAtTime(0.12, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.04);
+            } catch (e) {}
+        }
+
+        function playSuccessChime() {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+
+                const notes = [523.25, 659.25, 783.99]; // C5, E5, G5 melody
+                notes.forEach((freq, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    const start = ctx.currentTime + (idx * 0.07);
+
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, start);
+
+                    gain.gain.setValueAtTime(0.14, start);
+                    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.18);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    osc.start(start);
+                    osc.stop(start + 0.18);
+                });
+            } catch (e) {}
+        }
+
+        function triggerHapticTap() {
+            if (!vibrateEnabled) return;
+            try {
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(28);
+                }
+            } catch (e) {}
+        }
+
+        function triggerHapticWin() {
+            if (!vibrateEnabled) return;
+            try {
+                if ('vibrate' in navigator) {
+                    navigator.vibrate([40, 50, 80]);
+                }
+            } catch (e) {}
+        }
+
+        // Global Event Listener: Soft Click & Haptics on all buttons
+        document.addEventListener('click', (e) => {
+            const clickable = e.target.closest('button, .age-card, .map-node, .level-cell, .cute-toggle, .btn-back-arrow, .hud-stat');
+            if (clickable) {
+                playSoftClickSound();
+                triggerHapticTap();
+            }
+        });
+
         function toggleSound(enabled) {
             soundEnabled = enabled;
-            showNotification(enabled ? '🔊 Sound effects turned ON!' : '🔇 Sound effects muted!');
+            if (enabled) {
+                playSoftClickSound();
+                showNotification('🔊 Sound effects turned ON!');
+            } else {
+                showNotification('🔇 Sound effects turned OFF!');
+            }
         }
 
         function toggleVibrate(enabled) {
             vibrateEnabled = enabled;
-            if (enabled && navigator.vibrate) {
-                try { navigator.vibrate(60); } catch(e) {}
+            if (enabled) {
+                triggerHapticTap();
+                showNotification('📳 Haptic vibration turned ON!');
+            } else {
+                showNotification('📳 Haptic vibration turned OFF!');
             }
-            showNotification(enabled ? '📳 Haptic vibration turned ON!' : '📳 Haptic vibration turned OFF!');
         }
 
-        function toggleThemeMode() {
-            isDarkTheme = !isDarkTheme;
+        function applyTheme(isDark) {
+            isDarkTheme = !!isDark;
             const frame = document.querySelector('.mobile-frame');
             const desc = document.getElementById('theme-label-desc');
             const iconBox = document.getElementById('theme-icon-box');
             const switchIcon = document.getElementById('theme-switch-icon');
             const switchText = document.getElementById('theme-switch-text');
+            const toggleCheckbox = document.getElementById('setting-theme');
 
             if (isDarkTheme) {
-                frame.classList.add('dark-theme');
+                document.body.classList.add('dark-theme');
+                if (frame) frame.classList.add('dark-theme');
                 if (desc) desc.innerText = 'Cozy Dark Forest Theme';
                 if (iconBox) {
                     iconBox.innerHTML = '🌙';
-                    iconBox.style.background = '#EDE7F6';
-                    iconBox.style.color = '#512DA8';
+                    iconBox.style.background = '#2B3D30';
+                    iconBox.style.color = '#FFE082';
                 }
                 if (switchIcon) switchIcon.innerText = '☀️';
-                if (switchText) switchText.innerText = 'Light Theme';
+                if (switchText) switchText.innerText = 'Light Mode';
+                if (toggleCheckbox) toggleCheckbox.checked = true;
+                try { localStorage.setItem('math_arcade_theme', 'dark'); } catch(e) {}
             } else {
-                frame.classList.remove('dark-theme');
+                document.body.classList.remove('dark-theme');
+                if (frame) frame.classList.remove('dark-theme');
                 if (desc) desc.innerText = 'Light Meadow Theme';
                 if (iconBox) {
                     iconBox.innerHTML = '☀️';
@@ -1565,8 +2062,18 @@
                     iconBox.style.color = '#F57F17';
                 }
                 if (switchIcon) switchIcon.innerText = '🌙';
-                if (switchText) switchText.innerText = 'Dark Theme';
+                if (switchText) switchText.innerText = 'Dark Mode';
+                if (toggleCheckbox) toggleCheckbox.checked = false;
+                try { localStorage.setItem('math_arcade_theme', 'light'); } catch(e) {}
             }
+        }
+
+        function toggleThemeMode(forceState) {
+            const newState = (typeof forceState === 'boolean') ? forceState : !isDarkTheme;
+            applyTheme(newState);
+            playSoftClickSound();
+            triggerHapticTap();
+            showNotification(newState ? '🌙 Dark Mode applied to all screens!' : '☀️ Light Mode applied to all screens!');
         }
 
         // ==========================================
@@ -1786,6 +2293,20 @@
         // ==========================================
         // UI & NAVIGATION
         // ==========================================
+        let previousScreenBeforeSettings = 'screen-cover';
+
+        function openSettingsScreen() {
+            const activeScreen = document.querySelector('.screen.active');
+            if (activeScreen && activeScreen.id !== 'screen-settings') {
+                previousScreenBeforeSettings = activeScreen.id;
+            }
+            switchScreen('screen-settings');
+        }
+
+        function closeSettingsScreen() {
+            switchScreen(previousScreenBeforeSettings || 'screen-cover');
+        }
+
         function switchScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(screenId);
@@ -1795,7 +2316,7 @@
 
             const hud = document.getElementById('main-hud');
             if (hud) {
-                hud.style.display = (screenId === 'screen-cover') ? 'none' : 'flex';
+                hud.style.display = (screenId === 'screen-cover' || screenId === 'screen-settings') ? 'none' : 'flex';
             }
 
             renderHubStats();
@@ -2153,9 +2674,23 @@
             }
         }
 
+        let toastTimeout = null;
         function showNotification(msg) {
-            alert(msg);
+            const toast = document.getElementById('app-toast');
+            if (!toast) {
+                alert(msg);
+                return;
+            }
+            toast.innerText = msg;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2400);
         }
+
+        // Apply saved theme (Light or Dark) across all screens on startup
+        applyTheme(isDarkTheme);
 
         // Initialize directly to the Cover Page
         switchScreen('screen-cover');
